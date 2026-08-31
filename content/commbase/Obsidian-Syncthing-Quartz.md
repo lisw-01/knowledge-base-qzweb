@@ -660,8 +660,10 @@ Cloudflare Pages 的 `*.pages.dev` 域名在国内访问稳定，且免费额度
 
   ```toml
   name = "knowledge-base"
-  pages_build_output_dir = "public"
   compatibility_date = "2026-08-31"
+
+  [assets]
+  directory = "./public"
   ```
 
   否则报错 `Could not detect a directory containing static files`。
