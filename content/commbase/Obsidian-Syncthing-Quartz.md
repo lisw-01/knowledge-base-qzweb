@@ -10,7 +10,7 @@
 Obsidian (编辑) ──本地仓库──→ Syncthing (同步) ──→ 其他设备
                                    │
                                    ▼
-                            Quartz (生成静态站) ──→ 部署到 GitHub Pages / Vercel / Netlify
+                            Quartz (生成静态站) ──→ 部署到 Cloudflare Pages / Vercel / GitHub Pages
 ```
 
 | 组件        | 角色                         | 平台                                      |
@@ -612,9 +612,77 @@ npx quartz sync
 
 ***
 
-## 六、部署到 Vercel（替代方案）
+## 六、部署到国内可访问的平台（替代方案）
 
-### 6.1 必要配置文件（⚠️ 必须创建）
+> ⚠️ **重要提醒**：GitHub Pages 和 Vercel 的默认域名（`*.github.io`、`*.vercel.app`）在国内访问极不稳定，经常超时或无法打开。如果你在国内使用，**强烈推荐使用 Cloudflare Pages**（`*.pages.dev` 域名国内访问稳定），或给 Vercel 绑定自定义域名。
+
+### 6.0 部署平台对比
+
+| 平台 | 国内访问速度 | 免费额度 | 域名 | 推荐度 |
+|------|-----------|---------|------|-------|
+| **Cloudflare Pages** | ⭐⭐⭐⭐ 稳定 | 无限流量 | `*.pages.dev` | ✅ 国内首选 |
+| **Vercel** + 自定义域名 | ⭐⭐⭐⭐ 快 | 100GB/月 | 自定义域名 | ✅ 有域名时推荐 |
+| **Vercel** 默认域名 | ⭐❌ 经常被墙 | 100GB/月 | `*.vercel.app` | ❌ 不推荐国内使用 |
+| **Netlify** | ⭐⭐⭐ 较稳定 | 100GB/月 | `*.netlify.app` | ⚠️ 可选 |
+| GitHub Pages | ⭐⭐ 不稳定 | 100GB/月 | `*.github.io` | ❌ 不推荐国内使用 |
+
+### 6.1 部署到 Cloudflare Pages（⭐ 国内推荐）
+
+Cloudflare Pages 的 `*.pages.dev` 域名在国内访问稳定，且免费额度无限流量，是国内用户的首选方案。
+
+#### 步骤
+
+1. 打开 <https://pages.cloudflare.com>，用 GitHub 账号登录
+2. 点 **Create a project → Connect to Git**
+3. 选择你的 Quartz 仓库（如 `knowledge-base`）
+4. 配置构建参数：
+
+   | 配置项 | 值 |
+   |-------|---|
+   | Framework preset | `None` |
+   | Root directory | （留空） |
+   | Build command | `npm ci && npx quartz plugin install && npx quartz build` |
+   | Build output directory | `public` |
+
+5. 展开 **Environment variables**，添加：
+
+   | 变量名 | 值 |
+   |-------|---|
+   | `NODE_VERSION` | `24` |
+
+6. 点 **Save and Deploy**，等待 2-3 分钟
+7. 部署完成后获得 `xxx.pages.dev` 访问地址
+
+#### 注意事项
+
+- **不需要 `vercel.json`**，Cloudflare Pages 默认支持 clean URLs
+- ⚠️ **必须创建 `wrangler.toml`**：Cloudflare Pages 构建后会执行 `npx wrangler deploy`，需要 `wrangler.toml` 告诉 Wrangler 静态文件在 `public/` 目录。在项目根目录创建：
+
+  ```toml
+  name = "knowledge-base"
+  pages_build_output_dir = "public"
+  compatibility_date = "2026-08-31"
+  ```
+
+  否则报错 `Could not detect a directory containing static files`。
+
+- 如需修改 `baseUrl`：如果部署到 `xxx.pages.dev` 根路径，`baseUrl` 设为空字符串 `""` 或你的 `xxx.pages.dev` 域名（不含 `https://`）
+- 每次推送到 GitHub 会自动触发重新部署
+
+#### 自定义域名（可选）
+
+1. Cloudflare Pages 项目 → **Custom domains → Set up a domain**
+2. 输入你的域名（如 `notes.yourdomain.com`）
+3. 按提示在 DNS 服务商添加 `CNAME` 记录指向 `xxx.pages.dev`
+4. 如果域名也在 Cloudflare 管理，会自动配置 DNS
+
+---
+
+### 6.2 部署到 Vercel（有自定义域名时可用）
+
+> ⚠️ Vercel 的 `*.vercel.app` 默认域名在国内经常被墙，**必须绑定自定义域名才能正常访问**。如果你没有域名，请使用上面的 Cloudflare Pages。
+
+### 6.2.1 必要配置文件（⚠️ 必须创建）
 
 Quartz 生成的 URL **不带** **`.html`** **后缀**（如 `/notes/my-post`），Vercel 默认不会自动补后缀，会导致除首页外全部 404。在项目根目录创建 `vercel.json`：
 
@@ -624,7 +692,7 @@ Quartz 生成的 URL **不带** **`.html`** **后缀**（如 `/notes/my-post`）
 }
 ```
 
-### 6.2 通过 Vercel Dashboard 部署（推荐）
+### 6.2.2 通过 Vercel Dashboard 部署
 
 1. 打开 <https://vercel.com/dashboard>，点击 **Add New… → Project**
 2. 选择包含 Quartz 项目的 GitHub 仓库 → **Import**
@@ -634,12 +702,14 @@ Quartz 生成的 URL **不带** **`.html`** **后缀**（如 `/notes/my-post`）
 | ---------------- | ----------------------------------------------- |
 | Framework Preset | `Other`                                         |
 | Root Directory   | `./`                                            |
-| Build Command    | `npx quartz plugin install && npx quartz build` |
+| Build Command    | `npm ci && npx quartz plugin install && npx quartz build` |
 | Output Directory | `public`                                        |
 
-1. 点击 **Deploy**。部署完成后获得 `*.vercel.app` 访问地址。
+4. 点击 **Deploy**。部署完成后获得 `*.vercel.app` 访问地址。
 
-### 6.3 命令行方式（备选）
+> ⚠️ 部署成功后，`*.vercel.app` 域名在国内大概率无法访问。必须按 6.2.4 绑定自定义域名。
+
+### 6.2.3 命令行方式（备选）
 
 ```bash
 # 安装 Vercel CLI
@@ -654,7 +724,7 @@ npx quartz build
 vercel --prod
 ```
 
-### 6.4 自定义域名
+### 6.2.4 自定义域名（国内访问必须）
 
 1. 如有必要，更新 `quartz.config.yaml` 中的 `baseUrl` 为新域名（不含 https\://）
 2. Vercel → **Dashboard → Domains** 页面添加域名，按指引连接到你的 Quartz 项目
@@ -671,7 +741,7 @@ vercel --prod
 3. 构建主机上：
    cd my-quartz
    npx quartz sync          # 自动：拉取远端 → 构建 → 提交 → 推送
-4. GitHub Actions / Vercel 自动构建部署，网站几分钟内更新
+4. Cloudflare Pages / GitHub Actions / Vercel 自动构建部署，网站几分钟内更新
 ```
 
 > **`npx quartz sync`** **等效于**：`git pull && npx quartz build && git add . && git commit -m 'update' && git push`，但更智能（处理上游 Quartz 升级冲突、插件 lockfile 等）。
@@ -781,7 +851,7 @@ npx quartz sync
 
    * GitHub Pages 发布功能：**Public** 仓库免费；**Private** 仓库需要 Pro 账户才能启用 Pages。
 
-   * 如果代码要保持私有但公开 Pages：建议升级 GitHub Pro，或改用 Cloudflare Pages / Vercel（免费版支持私有仓库）。
+   * 如果代码要保持私有但公开 Pages：建议升级 GitHub Pro，或改用 Cloudflare Pages / Vercel / Netlify（免费版支持私有仓库）。
 
 4. **Syncthing 加密**：启用 TLS 传输加密（默认已开启）。在不可信网络中，可额外配置「允许的网络」白名单。
 
