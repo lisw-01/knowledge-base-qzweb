@@ -277,7 +277,7 @@ configuration:
   analytics:                                 # 分析工具，null = 不用
     provider: plausible                      # 或 google / umami / goatcounter 等
   locale: "zh-CN"                            # 日期和国际化语言
-  baseUrl: "yourname.github.io/knowledge-base"  # ⚠️ 不含 https://，与 create 时一致
+  baseUrl: "yourname.github.io/knowledge-base"  # ⚠️ 不含 https://，见下方 baseUrl 说明
   ignorePatterns:
     - private                                # 忽略 private 文件夹（敏感笔记）
     - templates                              # 忽略 Obsidian 模板文件夹
@@ -285,6 +285,31 @@ configuration:
     - .stversions                            # Syncthing 版本历史
     - .stfolder
     - "*.sync-conflict-*"                    # Syncthing 冲突文件
+```
+
+#### ⚠️ `baseUrl` 配置说明（极其重要）
+
+`baseUrl` 决定了站点的 URL 路径前缀。**不同部署平台的 `baseUrl` 配置不同**，配错会导致页面路径多一层（如 `/knowledge-base/xxx`）或 404：
+
+| 部署平台 | `baseUrl` 值 | 访问地址示例 |
+|---------|-------------|------------|
+| **Netlify**（根路径部署） | `""`（空字符串） | `https://xxx.netlify.app/` |
+| **Cloudflare Pages**（根路径部署） | `""`（空字符串） | `https://xxx.pages.dev/` |
+| **Vercel**（根路径部署） | `""`（空字符串） | `https://xxx.vercel.app/` |
+| **GitHub Pages**（项目仓库，`用户名.github.io/仓库名`） | `用户名.github.io/仓库名` | `https://用户名.github.io/仓库名/` |
+| **GitHub Pages**（用户站点，`用户名.github.io` 仓库） | `""`（空字符串） | `https://用户名.github.io/` |
+| **自定义域名**（如 `notes.example.com`） | `""`（空字符串） | `https://notes.example.com/` |
+
+> ⚠️ **切换部署平台时必须同步修改 `baseUrl`**。例如从 GitHub Pages 切换到 Netlify 时，`baseUrl` 要从 `用户名.github.io/仓库名` 改为 `""`。否则页面路径会多一层子路径，导致 404 或样式加载失败。
+
+> ⚠️ `baseUrl` **不含** `https://` 前缀，**不含**尾斜杠 `/`。
+
+#### 4.6.1 其他配置项
+
+```yaml
+configuration:
+  # ... pageTitle / baseUrl 等如上
+  ignorePatterns:
   theme:
     fontOrigin: googleFonts                  # googleFonts 或 local
     cdnCaching: true
