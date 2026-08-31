@@ -3,7 +3,7 @@ name: Deploy v5 Preview
 on:
   push:
     branches:
-      - v5
+      - v5  # ⚠️ 当前 Quartz 主线为 v5（稳定版仍可用 v4）
   workflow_dispatch:
 
 permissions:
