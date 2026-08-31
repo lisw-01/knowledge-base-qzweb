@@ -272,7 +272,7 @@ Quartz 的主配置文件是 **YAML 格式**（不再是旧版的 `.ts` 文件�
 configuration:
   pageTitle: "我的知识库"                    # 站点标题
   pageTitleSuffix: ""                       # 浏览器标签页后缀（可选）
-  enableSPA: true                            # SPA 路由（保持 true）
+  enableSPA: true                            # SPA 路由（若部署后页面无限重载，改为 false）
   enablePopovers: true                      # 悬停链接弹出预览（保持 true）
   analytics:                                 # 分析工具，null = 不用
     provider: plausible                      # 或 google / umami / goatcounter 等
@@ -293,18 +293,20 @@ configuration:
 
 | 部署平台 | `baseUrl` 值 | 访问地址示例 |
 |---------|-------------|------------|
-| **Netlify**（根路径部署） | `""`（空字符串） | `https://xxx.netlify.app/` |
-| **Cloudflare Pages**（根路径部署） | `""`（空字符串） | `https://xxx.pages.dev/` |
-| **Vercel**（根路径部署） | `""`（空字符串） | `https://xxx.vercel.app/` |
+| **Netlify**（根路径部署） | `your-site.netlify.app`（实际域名） | `https://your-site.netlify.app/` |
+| **Cloudflare Pages**（根路径部署） | `your-site.pages.dev`（实际域名） | `https://your-site.pages.dev/` |
+| **Vercel**（根路径部署） | `your-site.vercel.app`（实际域名） | `https://your-site.vercel.app/` |
 | **GitHub Pages**（项目仓库，`用户名.github.io/仓库名`） | `用户名.github.io/仓库名` | `https://用户名.github.io/仓库名/` |
-| **GitHub Pages**（用户站点，`用户名.github.io` 仓库） | `""`（空字符串） | `https://用户名.github.io/` |
-| **自定义域名**（如 `notes.example.com`） | `""`（空字符串） | `https://notes.example.com/` |
+| **GitHub Pages**（用户站点，`用户名.github.io` 仓库） | `用户名.github.io` | `https://用户名.github.io/` |
+| **自定义域名**（如 `notes.example.com`） | `notes.example.com` | `https://notes.example.com/` |
 
-> ⚠️ **切换部署平台时必须同步修改 `baseUrl`**。例如从 GitHub Pages 切换到 Netlify 时，`baseUrl` 要从 `用户名.github.io/仓库名` 改为 `""`。否则页面路径会多一层子路径，导致 404 或样式加载失败。
+> ⚠️ **`baseUrl` 不能用空字符串 `""`**！Quartz v5 的 `PageTypeDispatcher` 插件会将其当作 URL 解析，空字符串会报 `Failed to emit from plugin PageTypeDispatcher: Invalid URL` 错误。根路径部署时必须填实际域名。
+
+> ⚠️ **切换部署平台时必须同步修改 `baseUrl`**。例如从 GitHub Pages 切换到 Netlify 时，`baseUrl` 要从 `用户名.github.io/仓库名` 改为 `your-site.netlify.app`。否则页面路径会多一层子路径，导致 404 或样式加载失败。
 
 > ⚠️ `baseUrl` **不含** `https://` 前缀，**不含**尾斜杠 `/`。
 
-#### 4.6.1 其他配置项
+#### 4.6.2 其他配置项
 
 ```yaml
 configuration:
@@ -342,7 +344,7 @@ configuration:
 
 > 以上 `theme.colors` 的 `lightMode` / `darkMode` 双主题结构是 Quartz v5 的标准格式。如果只想要单一主题，可以只保留一个。
 
-#### 4.6.2 插件配置说明（`plugins` 段）
+#### 4.6.3 插件配置说明（`plugins` 段）
 
 模板生成的 `plugins:` 段已经包含全部所需插件，**一般不需要手动修改**。了解格式即可：
 
@@ -396,7 +398,7 @@ plugins:
 
 > 完整插件列表见 <https://quartz.jzhao.xyz/plugins>
 
-#### 4.6.3 布局配置说明（`layout` 段）
+#### 4.6.4 布局配置说明（`layout` 段）
 
 Quartz v5 的布局配置也合并到 `quartz.config.yaml` 中（不再有独立的 `quartz.layout.ts`）。每个插件通过其 `layout` 字段指定位置：
 
@@ -424,7 +426,7 @@ plugins:
 
 模板已自动配置好所有布局，一般不需要手动修改。如需调整某个组件的位置或显示条件，修改对应插件的 `layout` 字段即可。
 
-#### 4.6.4 高级覆盖
+#### 4.6.5 高级覆盖
 
 若某些插件选项需要 JS 回调函数（YAML 无法表达），编辑根目录的 `quartz.ts`，通过 `loadQuartzConfig()` 做覆盖。见 [官方 Configuration 文档](https://quartz.jzhao.xyz/configuration)。
 
@@ -681,7 +683,7 @@ Cloudflare Pages 的 `*.pages.dev` 域名在国内访问稳定，且免费额度
 #### 注意事项
 
 - **不需要 `vercel.json`**，Cloudflare Pages 默认支持 clean URLs
-- ⚠️ **必须创建 `wrangler.toml`**：Cloudflare Pages 构建后会执行 `npx wrangler deploy`，需要 `wrangler.toml` 告诉 Wrangler 静态文件在 `public/` 目录。在项目根目录创建：
+- ⚠️ **关于 `wrangler.toml`**：Cloudflare Pages 新版 Dashboard 构建后会自动执行 `npx wrangler deploy`。如果报错 `Could not detect a directory containing static files`，在项目根目录创建 `wrangler.toml`：
 
   ```toml
   name = "knowledge-base"
@@ -691,9 +693,9 @@ Cloudflare Pages 的 `*.pages.dev` 域名在国内访问稳定，且免费额度
   directory = "./public"
   ```
 
-  否则报错 `Could not detect a directory containing static files`。
+  > ⚠️ 如果创建 `wrangler.toml` 后部署为 `*.workers.dev` 而非 `*.pages.dev`，说明被识别为 Worker 项目。此时删除 `wrangler.toml`，改为在 Cloudflare Pages Dashboard 的 **Settings → Builds & deployments → Build output directory** 中填入 `public`，然后 **Retry deployment**。
 
-- 如需修改 `baseUrl`：如果部署到 `xxx.pages.dev` 根路径，`baseUrl` 设为空字符串 `""` 或你的 `xxx.pages.dev` 域名（不含 `https://`）
+- 如需修改 `baseUrl`：部署到 `xxx.pages.dev` 根路径时，`baseUrl` 设为 `xxx.pages.dev`（实际域名，不含 `https://`，**不能用空字符串**，见 4.6.1 节 baseUrl 说明）
 - 每次推送到 GitHub 会自动触发重新部署
 
 #### 自定义域名（可选）
@@ -818,11 +820,15 @@ npx quartz sync
 | `No files found under content/`       | content 为空，或 ignorePatterns 过滤了全部 | 检查 content/ 是否有 md 文件；检查 ignorePatterns 是否过于宽泛                                         |
 | 页面空白 / 构建出 0 页                        | 同上，或符号链接损坏                        | Windows 管理员权限重建符号链接；或改用 `--strategy copy`                                              |
 | 内部链接返回 404                            | 链接解析策略不匹配，或 OFM 插件未启用             | 确认使用 `obsidian` 模板，或在 yaml 中确认 `@quartz-community/obsidian-flavored-markdown` 已启用 |
-| Vercel 除首页外全 404                      | 缺少 URL clean 配置                   | 添加 `vercel.json` 并设置 `"cleanUrls": true`（见 6.1 节）                                      |
+| Vercel 除首页外全 404                      | 缺少 URL clean 配置                   | 添加 `vercel.json` 并设置 `"cleanUrls": true`（见 6.2.1 节）                                      |
 | Front matter 解析失败                     | YAML 缩进或语法错误                      | 用 VSCode YAML 插件校验；注意冒号后必须有空格                                                          |
 | GitHub Actions 报 environment 保护       | 旧环境残留冲突                           | 仓库 **Settings → Environments** 删除 `github-pages`，下次运行自动重建                              |
 | `npx quartz sync` 推送失败                | upstream 变更未合并，或分支不对              | 确认当前分支是 `v5`；或手动 `git pull` 解决冲突后再 sync                                                |
 | 首页显示 "Either this page is private or doesn't exist." | `content/` 目录下缺少 `index.md` 首页文件 | 在 Obsidian 仓库根目录创建一个 `index.md`（即名为 `index` 的笔记），Quartz 会用它作为 `/` 路径的首页 |
+| `Failed to emit from plugin PageTypeDispatcher: Invalid URL` | `baseUrl` 设为空字符串 `""` | `baseUrl` 不能为空，填实际部署域名（如 `xxx.netlify.app`），见 4.6 节 baseUrl 说明 |
+| 部署后页面路径多了一层（如 `/knowledge-base/xxx`） | `baseUrl` 配置与实际部署域名不匹配 | `baseUrl` 填实际部署域名（如 `xxx.netlify.app`），不要用空字符串（见 4.6 节 baseUrl 说明） |
+| 页面无限重载 / 循环加载资源 | `enableSPA: true` 在部分托管平台上路由冲突 | 将 `quartz.config.yaml` 中 `enableSPA` 改为 `false`，重新构建部署 |
+| Cloudflare 部署后得到 `*.workers.dev` 而非 `*.pages.dev` | `wrangler.toml` 导致项目被识别为 Worker | 删除 `wrangler.toml`，改在 Dashboard Settings 中配置 Build output directory 为 `public`（见 6.1 节） |
 
 ### Obsidian 与 Quartz 的兼容性
 

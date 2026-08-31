@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: en-US
-  baseUrl: "''"
+  baseUrl: "luxury-zuccutto-494b61.netlify.app"
   ignorePatterns:
     - private
     - templates
