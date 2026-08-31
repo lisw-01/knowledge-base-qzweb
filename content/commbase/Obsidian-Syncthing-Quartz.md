@@ -653,6 +653,8 @@ npx quartz sync
 | **Netlify** | ⭐⭐⭐ 较稳定 | 100GB/月 | `*.netlify.app` | ⚠️ 可选 |
 | GitHub Pages | ⭐⭐ 不稳定 | 100GB/月 | `*.github.io` | ❌ 不推荐国内使用 |
 
+> ⚠️ **Netlify 注意事项**：Netlify 会自动将 URL 转为小写并 301 重定向，可能和 Quartz 的 SPA 路由冲突导致页面无限重载。解决方案：在项目根目录创建 `netlify.toml`，配置 `[[redirects]]` 用 `status = 200` 代替 301（见 6.3 节）。
+
 ### 6.1 部署到 Cloudflare Pages（⭐ 国内推荐）
 
 Cloudflare Pages 的 `*.pages.dev` 域名在国内访问稳定，且免费额度无限流量，是国内用户的首选方案。
@@ -759,6 +761,50 @@ vercel --prod
 2. Vercel → **Dashboard → Domains** 页面添加域名，按指引连接到你的 Quartz 项目
 3. 根据页面给出的提示，在 DNS 服务商添加解析记录（CNAME 或 A 记录）
 4. 等待 DNS 生效后，Vercel 自动颁发 HTTPS 证书
+
+---
+
+### 6.3 部署到 Netlify
+
+Netlify 的 `*.netlify.app` 域名国内访问较稳定。
+
+#### 必要配置文件（⚠️ 必须创建）
+
+Netlify 会自动将 URL 转为小写并 301 重定向，和 Quartz 的 SPA 路由冲突会导致**页面无限重载**。在项目根目录创建 `netlify.toml`：
+
+```toml
+[build]
+  command = "npm ci && npx quartz plugin install && npx quartz build"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+```
+
+> `status = 200` 是关键：让所有路径返回 `index.html` 由客户端路由处理，避免 301 重定向循环。
+
+#### 部署步骤
+
+1. 打开 [netlify.com](https://app.netlify.com)，GitHub 登录
+2. **Add new site → Import an existing project**
+3. 选择你的 Quartz 仓库
+4. 如果已创建 `netlify.toml`，配置会自动读取，直接点 **Deploy**
+5. 如果没有 `netlify.toml`，手动配置：
+
+   | 配置项 | 值 |
+   |-------|---|
+   | Build command | `npm ci && npx quartz plugin install && npx quartz build` |
+   | Publish directory | `public` |
+   | 环境变量 `NODE_VERSION` | `24` |
+
+6. 部署完成后获得 `*.netlify.app` 访问地址
+
+> ⚠️ 部署后如果仍然循环加载，确认 `enableSPA: false`（见 4.6.1 节），并清除浏览器缓存后重试。
 
 ***
 
