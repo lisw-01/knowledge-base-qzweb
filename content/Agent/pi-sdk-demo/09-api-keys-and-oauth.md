@@ -1,0 +1,36 @@
+# 09 - API 密钥和 OAuth
+
+通过 ModelRuntime 配置提供者认证。
+
+```typescript
+import { createAgentSession, ModelRuntime, SessionManager } from "@earendil-works/pi-coding-agent";
+
+const modelRuntime = await ModelRuntime.create();
+const { session: defaultAuthSession } = await createAgentSession({
+	sessionManager: SessionManager.inMemory(),
+	modelRuntime,
+});
+console.log("Session with default model runtime");
+defaultAuthSession.dispose();
+
+// 自定义认证和模型路径
+const customRuntime = await ModelRuntime.create({
+	authPath: "/tmp/my-app/auth.json",
+	modelsPath: "/tmp/my-app/models.json",
+});
+const { session: customAuthSession } = await createAgentSession({
+	sessionManager: SessionManager.inMemory(),
+	modelRuntime: customRuntime,
+});
+console.log("Session with custom auth and models locations");
+customAuthSession.dispose();
+
+// 运行时 API 密钥覆盖
+await modelRuntime.setRuntimeApiKey("anthropic", "sk-my-temp-key");
+const { session: runtimeKeySession } = await createAgentSession({
+	sessionManager: SessionManager.inMemory(),
+	modelRuntime,
+});
+console.log("Session with runtime API key override");
+runtimeKeySession.dispose();
+```
