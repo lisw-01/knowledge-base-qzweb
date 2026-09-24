@@ -1,0 +1,3 @@
+- 官网下载：[https://code.visualstudio.com/](https://code.visualstudio.com/)
+- 安装后打开，左侧扩展栏，搜索插件：**Python（微软官方插件）**，点击安装
+- 新建文件夹，专门放 Agent 项目，比如 `D:\agent-study`
