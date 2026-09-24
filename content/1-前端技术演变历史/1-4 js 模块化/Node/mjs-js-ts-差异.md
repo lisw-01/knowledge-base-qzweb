@@ -4,10 +4,10 @@
 
 ## 1. 核心本质
 
-| 扩展名 | 本质 |
-|--------|------|
-| `.mjs` | **强制 ESM 的 JavaScript 文件**。无论 `package.json` 的 `type` 如何设定，该文件始终被视为 ES Module。 |
-| `.js`  | **模块类型取决于上下文的 JavaScript 文件**。若 `package.json` 设置了 `"type": "module"` 则为 ESM；否则（默认或 `"type": "commonjs"`）为 CommonJS。是最模糊、最"依赖约定"的扩展名。 |
+| 扩展名    | 本质                                                                                                                                                                |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.mjs` | **强制 ESM 的 JavaScript 文件**。无论 `package.json` 的 `type` 如何设定，该文件始终被视为 ES Module。                                                                                    |
+| `.js`  | **模块类型取决于上下文的 JavaScript 文件**。若 `package.json` 设置了 `"type": "module"` 则为 ESM；否则（默认或 `"type": "commonjs"`）为 CommonJS。是最模糊、最"依赖约定"的扩展名。                             |
 | `.ts`  | **TypeScript 源文件**。无法被 Node.js 直接运行，必须经过编译（`tsc` / `tsup` / `esbuild` 等）转译为 `.js` / `.mjs` / `.cjs`。编译后的模块格式由 `tsconfig.json` 的 `module` / `moduleResolution` 决定。 |
 
 一句话总结：
