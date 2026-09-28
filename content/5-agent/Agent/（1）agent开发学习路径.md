@@ -33,7 +33,7 @@
 4. **记忆（Memory）**
 
     - 短期记忆：对话历史，塞在 messages 里，受上下文窗口限制 → 超限就摘要压缩
-    - 长期记忆：对话/知识向量化存入向量库，用 Embedding 检索相关记忆（见 LLM/embedding.md）
+    - 长期记忆：对话/知识向量化存入[向量库](5-agent/Agent/link_向量库)，用 Embedding 检索相关记忆（见 LLM/embedding.md）
 
 5. **规划（Planning）**
 
@@ -51,15 +51,21 @@ Prompt 写死格式（Thought/Action/Observation）
 ```
 
 > ✅ 走通这一步，Agent 对你就不黑盒了。后面所有框架只是帮你把这个循环工程化。
+> 📄 示例 Demo 见 [[（2）Agent 阶段1-2 示例Demo]] —— `agent_react.py`（两工具 + 注册表，实测可跑）
 
 ### 阶段 2：原生 Function Calling 版 Agent
 
 用模型自带的 tools 参数 + tool_calls 返回值重写阶段 1，体会两种方式的稳定性差异。
 
-### 阶段 3：加记忆与 [[RAG]]
+> 📄 示例 Demo 见 [[（2）Agent 阶段1-2 示例Demo]] —— `agent_fc.py`（与阶段 1 同任务，只换"声明工具"和"解析输出"两处，对比着看）
+
+### 阶段 3：加记忆与 [RAG](5-agent/Agent/link_RAG)
 
 - 接入向量库（先用内存列表手写余弦检索，再换 FAISS / Chroma）
 - 给 Agent 加一个 `search_knowledge` 工具，实现"知识库问答 Agent"
+
+> 📄 示例 Demo 见 [[（3）Agent 阶段3 示例Demo]] —— `agent_kb.py`（内存向量库 + 手写余弦检索 + FC Agent，实测可跑，含三个踩坑实录）
+> 📄 Chroma 版见 [[（4）Agent 阶段3 Chroma版 示例Demo]] —— `agent_chroma.py`（同一任务只换存储层，体会"Embedding 归你管，存检归向量库管"）
 
 ### 阶段 4：多工具真实场景 Agent
 

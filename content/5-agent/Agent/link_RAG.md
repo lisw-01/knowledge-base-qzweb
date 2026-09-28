@@ -19,27 +19,8 @@ RAG 的做法 = **开卷考试**：
 问题"多久能退货" --编目录--> 去文件柜翻出最像的2张纸条 --> 摆到LLM桌上 --> LLM照着答
 ```
 
-## 二、RAG 和向量库的区别（最容易混淆的点）
 
-**一句话：RAG 是"解决方案/完整流程"，向量库只是流程里负责"存和找"的一个零件。**
-
-| | 向量库 | RAG |
-| --- | --- | --- |
-| 是什么 | 一个**工具/软件**（FAISS、Chroma、Milvus） | 一套**流程方案**（切块→向量化→检索→拼Prompt→LLM回答） |
-| 干什么 | 存向量 + 按相似度快速找 TopK | 让 LLM 能回答"你的"知识 |
-| 缺了对方行不行 | 行：向量库还能做推荐、去重、以图搜图，跟 LLM 没关系 | 行：RAG 早期 demo 用 Python 列表暴力遍历也能跑（本文第三节就是这么写的） |
-
-关系图：
-
-```
-RAG 完整流程：
-  文档 → 切块 → Embedding → 【存进向量库】→ 检索TopK → 拼Prompt → LLM生成
-                          └──── 向量库只负责这一小段 ────┘
-```
-
-> 数据量小（几百条以内），不用向量库，一个列表遍历就够；数据大了才需要向量库这个"专业文件柜"。**先学 RAG 流程本身，向量库随用随换。**
-
-## 三、完整走一遍RAG（带每步的真实数据）
+## 二、完整走一遍RAG（带每步的真实数据）
 
 知识库就 3 句话，问题是 **"买完东西多久能退"**。
 
@@ -77,57 +58,31 @@ LLM回答：签收后7天内可以申请退货，需保持吊牌完好。
 
 看到没——LLM 全程**没读过你的知识库**，它只"照着桌上的纸条"答题。这就是 RAG 的全部。
 
-## 四、可运行代码（智谱 GLM，向量库都不用）
 
-```python
-# rag_demo.py
-import os, math, requests
-from dotenv import load_dotenv
+## 三、RAG 和向量库的区别（最容易混淆的点）
 
-load_dotenv()
-API_KEY = os.getenv("ZHIPU_API_KEY")
-BASE_URL = os.getenv("ZHIPU_BASE_URL")
-HEADERS = {"Authorization": f"Bearer {API_KEY}"}
+**一句话：RAG 是"解决方案/完整流程"，向量库只是流程里负责"存和找"的一个零件。**
 
-def get_embeddings(texts):
-    resp = requests.post(f"{BASE_URL}/embeddings", headers=HEADERS,
-        json={"model": "embedding-2", "input": texts})
-    return [d["embedding"] for d in resp.json()["data"]]
+|         | 向量库                                  | RAG                                           |
+| ------- | ------------------------------------ | --------------------------------------------- |
+| 是什么     | ==一个**工具/软件**==（FAISS、Chroma、Milvus） | ==一套**流程方案**==（切块→向量化→检索→拼Prompt→LLM回答）       |
+| 干什么     | 存向量 + 按相似度快速找 TopK                   | 让 LLM 能回答"你的"知识                               |
+| 缺了对方行不行 | 行：向量库还能做推荐、去重、以图搜图，跟 LLM 没关系         | 行：RAG 早期 demo 用 Python 列表暴力遍历也能跑（本文第三节就是这么写的） |
 
-def chat(prompt):
-    resp = requests.post(f"{BASE_URL}/chat/completions", headers=HEADERS,
-        json={"model": "glm-4-flash", "temperature": 0,
-              "messages": [{"role": "user", "content": prompt}]})
-    return resp.json()["choices"][0]["message"]["content"]
+关系图：
 
-def cosine_sim(a, b):
-    dot = sum(x*y for x, y in zip(a, b))
-    return dot / (math.sqrt(sum(x*x for x in a)) * math.sqrt(sum(x*x for x in b)))
-
-# ===== ① 入库：3条知识 → 向量，先存内存列表 =====
-docs = [
-    "退货需在签收后7天内申请，商品需保持吊牌完好不影响二次销售",
-    "会员积分可在下单时抵扣现金，100积分抵1元，最高抵订单金额的20%",
-    "客服人工服务时间为每天9:00-21:00，节假日不休",
-]
-doc_vecs = get_embeddings(docs)
-
-# ===== ② 问答：问题向量化 → 找最像的 → 拼Prompt让LLM照着答 =====
-def rag_query(question, top_k=2):
-    q_vec = get_embeddings([question])[0]
-    scored = sorted(zip(docs, doc_vecs),
-                    key=lambda x: cosine_sim(q_vec, x[1]), reverse=True)
-    context = "\n".join(f"{i+1}. {d}" for i, (d, _) in enumerate(scored[:top_k]))
-    return chat(f"请仅根据以下资料回答问题，资料里没有就回答'抱歉，资料中未提及'。\n"
-                f"资料：\n{context}\n问题：{question}")
-
-print(rag_query("买完东西多久能退"))
-# 输出：签收后7天内可以申请退货，需保持吊牌完好
+```
+RAG 完整流程：
+  文档 → 切块 → Embedding → 【存进向量库】→ 检索TopK → 拼Prompt → LLM生成
+                          └──── 向量库只负责这一小段 ────┘
 ```
 
-什么时候才需要真向量库？—— docs 从 3 条变成 30 万条时，把 `doc_vecs` 存进 FAISS/Chroma，`cosine_sim` 遍历换成向量库的 `search()` 调用，**其他代码一行不用改**。
+> 数据量小（几百条以内），不用向量库，一个列表遍历就够；数据大了才需要向量库这个"专业文件柜"。**先学 RAG 流程本身，向量库随用随换。**
 
-## 五、为什么需要 RAG（对比只用 LLM）
+
+
+
+## 四、为什么需要 RAG（对比只用 LLM）
 
 | 问题 | 只用 LLM | 用 RAG |
 | --- | --- | --- |
@@ -138,7 +93,7 @@ print(rag_query("买完东西多久能退"))
 
 > RAG vs 微调：**给模型补知识用 RAG；改模型的说话风格/输出习惯才用微调**。
 
-## 六、RAG 效果不好怎么调（按排查顺序）
+## 五、RAG 效果不好怎么调（按排查顺序）
 
 1. **先查切块**（80% 的问题在这）：一篇文档别整篇入库，按标题/段落切成 300~500 字的小块，块间重叠 50~100 字，防止关键句被切断
 2. **打印检索结果看看**：把检索出来的 topK 内容打印出来人工看一眼——检索出来的块本身就不对，那是切块/Embedding 的问题，跟 LLM 无关
@@ -146,13 +101,11 @@ print(rag_query("买完东西多久能退"))
 4. 进阶优化：topK 调大 + Rerank 精排、查询改写（口语→检索句）、混合检索（语义+关键词，匹配型号编号类精确词）、相似度低于阈值直接拒答
 5. **建测试集**：准备 20 个"问题+标准出处"，每次调参回归验证，别凭感觉
 
-## 七、避坑清单
+## 六、避坑清单
 
 1. 换 Embedding 模型 = 全量重新入库（向量空间不兼容）
 2. 检索不准 ≠ LLM 不行，先怀疑切块和检索
 3. 数据少时别急着上向量库/框架，列表暴力遍历先跑通
 4. 评测驱动优化，不做"感觉好像好了"
 
-## 八、一句话总结
 
-RAG = 开卷考试：**切块入库（撕纸条）+ 向量检索（助教翻书）+ 有据生成（照着答题）**；向量库只是那个"文件柜"，RAG 才是整套考试流程。
