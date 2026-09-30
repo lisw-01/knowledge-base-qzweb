@@ -13,21 +13,23 @@ LLM 是能理解、生成人类语言，可完成推理、归纳、文本转换�
         > 例：GLM-4-Flash 上下文窗口支持 128k token，代表一次性最多可以输入 + 输出合计 128k token 的文本。
         
     
-2. **上下文窗口（Context Window）**
+1. **上下文窗口（Context Window）**
     
-    LLM 能一次性 “看到” 的全部内容（历史对话、提示词、文档、工具返回结果）。
-    
+	 ==**大模型本身没有独立 “内存”，它是无状态的。它的短时记忆能力的实现，就是你每次请求传给它的 [messages](5-agent/LLM/link_messages参数)完整对话数组。**==
+	 模型不会主动记住上次对话；你不把历史消息塞到 `messages` 里，它就完全不知道之前聊过啥。
+	 上下文窗口就是LLM能一次性读完的内容(Prompt + 用户 + 回答+ 工具)
     - 超过上限，会丢失最前面的信息；
     - Agent 里很容易遇到：多次工具调用后上下文膨胀，token 超限。
     - 解决方案：摘要压缩、向量 RAG 长期记忆。
+
     
-3. **Prompt / 提示词**
+2. **Prompt / 提示词**
     
     你发给大模型的指令文本，用来告诉模型角色、任务、输出格式、约束规则。
     
     Agent 里的系统提示词（System Prompt）就是用来定义 Agent 身份、可用工具、输出规范。
     
-4. **Temperature（温度）**
+3. **Temperature（温度）**
     
     控制模型输出随机性：
     
@@ -35,7 +37,7 @@ LLM 是能理解、生成人类语言，可完成推理、归纳、文本转换�
     - `0.7`：有创造力，适合写文案、聊天
     - `>1`：非常发散，容易胡编幻觉，Agent 项目不推荐
     
-5. **幻觉 (Hallucination)**
+4. **幻觉 (Hallucination)**
     
     LLM 会编造不存在事实、参数、表名。
     
@@ -48,7 +50,7 @@ LLM 是能理解、生成人类语言，可完成推理、归纳、文本转换�
     - 增加反思校验模块
     - 给模型限定知识库（RAG）
     
-1. [embedding](obsidian://open?vault=knowledge-base&file=5-agent%2FLLM%2Flink_embedding)（嵌入向量）**
+5. [embedding](obsidian://open?vault=knowledge-base&file=5-agent%2FLLM%2Flink_embedding)（嵌入向量）**
     
     把文本转为一串数字向量，用于体现相似度。1：相似   -1： 相反   0：无关
     

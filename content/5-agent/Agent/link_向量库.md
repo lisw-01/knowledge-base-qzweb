@@ -41,46 +41,64 @@
 向量库的本质，就是下面这个类——**先把它的逻辑看懂，向量库对你就不黑盒了**：
 
 ```python
+# mini_vector_db.py —— 实现一个向量库
 # mini_vector_db.py —— 30行实现一个向量库
+
 import math
 import requests, os
 from dotenv import load_dotenv
 load_dotenv()
-
-def get_embeddings(texts):
-    resp = requests.post(f"{os.getenv('ZHIPU_BASE_URL')}/embeddings",
-        headers={"Authorization": f"Bearer {os.getenv('ZHIPU_API_KEY')}"},
-        json={"model": "embedding-2", "input": texts})
-    return [d["embedding"] for d in resp.json()["data"]]
+from mypackage import embed
+#余弦相似度计算
+def cosine_similarity(a, b):
+    dot = sum(x * y for x, y in zip(a, b))
+    norm_a = math.sqrt(sum(x * x for x in a))
+    norm_b = math.sqrt(sum(x * x for x in b))
+    return dot / (norm_a * norm_b)
 
 class MiniVectorDB:
-    def __init__(self):
-        self.data = []   # 每条：{"id", "vector", "text", "metadata"}
 
-    def add(self, texts, metadatas=None):
-        vecs = get_embeddings(texts)
-        for i, (t, v) in enumerate(zip(texts, vecs)):
-            self.data.append({
-                "id": len(self.data), "vector": v, "text": t,
-                "metadata": metadatas[i] if metadatas else {}
-            })
+    def __init__(self):
+        self.data = []   # 每条：{"id", "vector", "text", "metadata"}
 
-    def search(self, query, top_k=3):
-        q_vec = get_embeddings([query])[0]
-        def sim(v):
-            return sum(a*b for a, b in zip(q_vec, v)) / (
-                math.sqrt(sum(a*a for a in q_vec)) * math.sqrt(sum(b*b for b in v)))
-        ranked = sorted(self.data, key=lambda d: sim(d["vector"]), reverse=True)
-        return [{"text": d["text"], "metadata": d["metadata"],
-                 "score": sim(d["vector"])} for d in ranked[:top_k]]
+    def add(self, texts, metadatas=None):
+        vecs = embed(texts)
+        for i, (t, v) in enumerate(zip(texts, vecs)):
+            self.data.append({
+                "id": len(self.data), "vector": v, "text": t,
+                "metadata": metadatas[i] if metadatas else {}
+            })
+
+    def search(self, query, top_k=3):
+        q_vec = embed([query])[0]
+        scores =[cosine_similarity(q_vec, d["vector"]) for d in self.data]
+        print("scores:",scores)
+        ranked = sorted(zip(scores, self.data), key=lambda x: x[0], reverse=True)
+        print("ranked:",ranked)
+        return [{"text": d["text"], "metadata": d["metadata"],  
+                 "score": score} for score, d in ranked[:top_k]]
+
+  
+  
 
 # ===== 用起来 =====
+
 db = MiniVectorDB()
+
 db.add(["退货需在签收后7天内申请，保持吊牌完好",
-        "会员积分100积分抵1元",
-        "客服时间9:00-21:00"])
-print(db.search("买完东西多久能退", top_k=2))
+
+        "会员积分100积分抵1元",
+
+        "客服时间9:00-21:00"])
+
+print('###向量库内容### start')
+
+print(db.data)
+
+print('###向量库内容### end')
+
 # [{'text': '退货需在签收后7天内申请...', 'score': 0.87}, ...]
+print(db.search("买完东西多久能退", top_k=2))
 ```
 
 **Chroma、Milvus 这些真向量库 = 把上面这个类，做成了**：
@@ -98,7 +116,16 @@ Chroma 是入门首选：`pip install chromadb`，数据自动落盘，API 和�
 import chromadb
 
 client = chromadb.PersistentClient(path="./vec_store")   # 自动持久化
+
+# 隐士调用DefaultEmbeddingFunction这个函数
+# 默认模型 all-MiniLM-L6-v2 是英文模型！中文检索效果很差
 col = client.get_or_create_collection("faq")
+
+# 等价于隐式带上
+#from chromadb.utils.embedding_functions import DefaultEmbeddingFunction 
+# col = client.get_or_create_collection("faq",embedding_function=DefaultEmbeddingFunction())
+
+
 
 # ① add：向量和原文一起存（Chroma 能自动调 embedding，也可显式传入）
 texts = ["退货需在签收后7天内申请，保持吊牌完好",

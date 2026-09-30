@@ -1,5 +1,5 @@
 > 本文是 [[（1）agent开发学习路径]] 阶段 3（后半：换 Chroma 向量库）的配套示例 Demo，已实测跑通。
-> 与 [[（3）Agent 阶段3 示例Demo]]（手写内存版）是同一任务、同一套代码结构，**只换"存储与检索"那一层**，对比着看。
+> 与 [[_Demo.阶段3.模拟向量库]]（手写内存版）是同一任务、同一套代码结构，**只换"存储与检索"那一层**，对比着看。
 > 源码文件：`F:\agent-study\agent_chroma.py`（依赖 `pip install chromadb`，本机为 1.5.9）。
 
 ## 核心认知：换向量库换了什么？
@@ -19,96 +19,154 @@
 
 ```python
 # agent_chroma.py —— 阶段3后半：把手写内存向量库换成 Chroma
+
 # 与 agent_kb.py 对比：embed()、工具、Agent 骨架全都不变，只换"存储与检索"那一层
+
 import json
+
 import os
+
 from mypackage import llm, embed
+
 import chromadb
 
 # ① 知识库：与 agent_kb.py 完全相同
+
 KNOWLEDGE = [
-    "年假制度：入职满1年但不满5年的员工，每年享有5天带薪年假；入职满5年的员工，每年享有10天带薪年假；需提前3个工作日在OA系统申请。",
-    "报销制度：差旅报销需在行程结束后15天内提交发票，单笔超过2000元需部门总监审批。",
-    "考勤制度：工作时间为9:00-18:00，每月允许3次弹性打卡，超出按事假处理。",
-    "设备申请：新员工入职当天可领取笔记本电脑，如需外接显示器需组长审批。",
+
+    "年假制度：入职满1年但不满5年的员工，每年享有5天带薪年假；入职满5年的员工，每年享有10天带薪年假；需提前3个工作日在OA系统申请。",
+
+    "报销制度：差旅报销需在行程结束后15天内提交发票，单笔超过2000元需部门总监审批。",
+
+    "考勤制度：工作时间为9:00-18:00，每月允许3次弹性打卡，超出按事假处理。",
+
+    "设备申请：新员工入职当天可领取笔记本电脑，如需外接显示器需组长审批。",
+
 ]
 
 # ② 换 Chroma：PersistentClient 落盘到本地目录（重启进程数据还在）
-#    要纯内存模式就换 chromadb.Client()
+
+#    要纯内存模式就换 chromadb.Client()
+
 client = chromadb.PersistentClient(path="./chroma_data")
 
 # ③ 建集合：指定余弦距离（Chroma 默认是 L2），distance = 1 - 余弦相似度
+
 collection = client.get_or_create_collection(
-    "company_kb",
-    metadata={"hnsw:space": "cosine"},
+    "company_kb",
+    metadata={"hnsw:space": "cosine"},
 )
 
 # ④ 入库：文档 + id + 自定义 embedding
-#    仍然用我们自己的 embed()——Chroma 只管存和检索，向量怎么来的它不管
-if collection.count() == 0:          # 防重复入库（持久化后再运行会保留旧数据）
-    collection.add(
-        documents=KNOWLEDGE,
-        embeddings=embed(KNOWLEDGE),
-        ids=[f"doc_{i}" for i in range(len(KNOWLEDGE))],
-    )
+
+#    仍然用我们自己的 embed()——Chroma 只管存和检索，向量怎么来的它不管
+
+if collection.count() == 0:          # 防重复入库（持久化后再运行会保留旧数据）
+
+    collection.add(
+        documents=KNOWLEDGE,
+        embeddings=embed(KNOWLEDGE),
+        ids=[f"doc_{i}" for i in range(len(KNOWLEDGE))],
+    )
+
 print(f"知识库条数：{collection.count()}")
 
 # ⑤ 检索：query_embeddings 传入查询向量，n_results 即 topK
-#    返回结构：{'documents': [[...]], 'distances': [[...]], 'ids': [[...]]}
+
+#    返回结构：{'documents': [[...]], 'distances': [[...]], 'ids': [[...]]}
+
 def search_knowledge(query: str) -> str:
-    results = collection.query(query_embeddings=embed([query]), n_results=2)
-    docs = results["documents"][0]
-    dists = results["distances"][0]
-    return "\n".join(
-        f"[相关度{1 - d:.2f}] {doc}" for doc, d in zip(docs, dists)
-    )
+    results = collection.query(query_embeddings=embed([query]), n_results=2)
+    docs = results["documents"][0]
+    dists = results["distances"][0]
+    return "\n".join(
+
+        f"[相关度{1 - d:.2f}] {doc}" for doc, d in zip(docs, dists)
+
+    )
 
 # --- 先单独验证检索效果 ---
+
 print("=== 检索测试：查询『我想休年假，能休几天』 ===")
+
 print(search_knowledge("我想休年假，能休几天"))
 
 # ⑥ 以下与 agent_kb.py 完全一致：工具注册 + Agent 主循环
+
 TOOLS = {"search_knowledge": search_knowledge}
 
 tool_schemas = [{
-    "type": "function",
-    "function": {
-        "name": "search_knowledge",
-        "description": "在公司知识库中搜索相关制度信息（年假、报销、考勤、设备等），输入问题关键词",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "query": {"type": "string", "description": "要搜索的问题关键词，如：年假有几天"}
-            },
-            "required": ["query"]
-        }
-    }
+
+    "type": "function",
+
+    "function": {
+
+        "name": "search_knowledge",
+
+        "description": "在公司知识库中搜索相关制度信息（年假、报销、考勤、设备等），输入问题关键词",
+
+        "parameters": {
+
+            "type": "object",
+
+            "properties": {
+
+                "query": {"type": "string", "description": "要搜索的问题关键词，如：年假有几天"}
+
+            },
+
+            "required": ["query"]
+
+        }
+
+    }
+
 }]
 
 SYSTEM_PROMPT = "你是公司制度问答助手。回答任何制度问题前，必须先调用 search_knowledge 检索知识库，且只基于检索到的内容回答；检索不到就说不知道，禁止编造。"
 
 def run(question):
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": question},
-    ]
-    for i in range(5):
-        msg = llm(messages, tools=tool_schemas)
-        print(f"--- 第{i+1}轮 ---\n模型输出：{msg}")
-        if not msg.get("tool_calls"):
-            return msg["content"]
-        messages.append({"role": "assistant",
-                         "content": msg.get("content") or "",
-                         "tool_calls": msg["tool_calls"]})
-        for tc in msg["tool_calls"]:
-            name = tc["function"]["name"]
-            args = json.loads(tc["function"]["arguments"])
-            result = TOOLS[name](**args)
-            print(f"工具调用：{name}({args}) → {result}")
-            messages.append({"role": "tool", "tool_call_id": tc["id"], "content": result})
-    return "达到最大循环次数，未能得到答案"
+
+    messages = [
+
+        {"role": "system", "content": SYSTEM_PROMPT},
+
+        {"role": "user", "content": question},
+
+    ]
+
+    for i in range(5):
+
+        msg = llm(messages, tools=tool_schemas)
+
+        print(f"--- 第{i+1}轮 ---\n模型输出：{msg}")
+
+        if not msg.get("tool_calls"):
+
+            return msg["content"]
+
+        messages.append({"role": "assistant",
+
+                         "content": msg.get("content") or "",
+
+                         "tool_calls": msg["tool_calls"]})
+
+        for tc in msg["tool_calls"]:
+
+            name = tc["function"]["name"]
+
+            args = json.loads(tc["function"]["arguments"])
+
+            result = TOOLS[name](**args)
+
+            print(f"工具调用：{name}({args}) → {result}")
+
+            messages.append({"role": "tool", "tool_call_id": tc["id"], "content": result})
+
+    return "达到最大循环次数，未能得到答案"
 
 print("\n=== Agent 问答 ===")
+
 print("最终答案：", run("我入职3年了，想休年假，能休几天？怎么申请？"))
 ```
 

@@ -136,4 +136,4 @@ print("最终答案：", run("我入职3年了，想休年假，能休几天？�
 
 `MemoryVectorStore` 的 `add/search` 接口和 FAISS / Chroma 几乎一样，替换实现即可入库百万级数据；多轮对话记忆的做法同理：把历史对话向量化入库，新问题先检索相关记忆再拼进 messages。
 
-> Chroma 替换版已实测跑通，见 [[（4）Agent 阶段3 Chroma版 示例Demo]]。
+> Chroma 替换版已实测跑通，见 [[_Demo.阶段3.Chroma版]]。

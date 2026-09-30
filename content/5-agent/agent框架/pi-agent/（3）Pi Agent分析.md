@@ -1,40 +1,27 @@
-# Pi Monorepo 架构分析
+---
+title: Pi Agent 分析
+date: 2026-09-30
+tags:
+  - Agent
+  - 源码分析
+  - 架构
+description: Pi Agent 逐包源码级分析（类型、事件、Agent Loop、协议、扩展系统）与企业级定制落地实战
+---
+
+# Pi Agent 分析
+
+> 核心一句话：**逐包拆开 Pi 的源码看它如何工程化「LLM + 工具 + 循环」，再落到企业级定制的三条路线（Skills / Extensions / SDK）**。
+> 前置阅读：[[（1）Pi Agent简介]] ｜ 分层与调用链：[[（2）Pi Agent架构]] ｜ SDK 逐项示例：[pi-sdk-demo](pi-sdk-demo/README)
 
 ## 产品定位
 
 pi 是一个 **agent harness** monorepo：既提供可直接使用的交互式编码代理 CLI（`pi` 命令），也提供可复用的 agent 运行时、统一 LLM API、终端 UI 框架。全部拆分为可独立发布的 npm 包（`@earendil-works/*`），采用 lockstep 版本策略统一发版。
 
-## 包依赖图
-
-```
-                telemetry (no deps)
-               /       |
-              v        v
-   ai  <-----  agent  <-----  coding-agent
-   |             |                |
-   |             v                v
-   +--->  protocol <-------  client
-                                ^
-                                |
-                             server
-
-   tui (standalone)  <-----  coding-agent
-```
-
-依赖流向：
-
-- **telemetry** — 基础层，无依赖
-- **ai** — 依赖 telemetry
-- **agent** — 依赖 ai + telemetry（session 存储抽象内置于包内，sqlite-node 是其 Node 实现）
-- **protocol** — 独立，仅依赖 typebox
-- **client** — 依赖 protocol
-- **server** — 依赖 agent（harness）+ protocol
-- **tui** — 独立（依赖 marked 等）
-- **coding-agent** — 顶层应用，依赖 agent、ai、client、protocol、tui
-- **session-backends/sqlite-node** — agent 的 session 存储后端
-- **evals** — 独立评测框架
+> 包依赖图、三层分层、调用链路、数据流见 [[（2）Pi Agent架构]]，本篇按包逐个深入。
 
 ---
+
+# 第一部分：逐包源码分析
 
 ## 1. AI 包（@earendil-works/pi-ai）
 
@@ -421,25 +408,225 @@ agent-core sessions 的 Node SQLite 后端。表结构（`src/sqlite/migrations/
 
 ---
 
-## 一次完整调用的数据流
+# 第二部分：企业级定制落地
+
+Pi 的三层定制能力，按投入成本从低到高：Skills（提示词层）→ Extensions（运行时层）→ SDK（进程内嵌层）。
+
+## 1. 路线 1：Skills——把团队经验固化
+
+Skill 是遵循开放 Agent Skills 标准的 Markdown 文件夹，描述"遇到某类任务该怎么做"。模型按需自动加载，不占常驻上下文。
 
 ```
-用户输入 (TUI Editor / RPC client prompt)
-  → AgentSession.prompt() ── 持久化 entry → SQLite 后端
-  → Agent.prompt() → runAgentLoop
-      outer loop (follow-up)
-        inner loop:
-          inject steering/follow-up 消息
-          streamAssistantResponse: transformContext → convertToLlm → ai 层 streamSimple
-            → Provider 解析（lazy 加载 SDK）→ 原生 API 调用
-            ← AssistantMessageEvent 流（text/thinking/toolcall delta…）
-          message_update → TUI 流式渲染 / RPC assistant_delta 转发
-          tool calls → beforeToolCall → execute（可插拔 Operations）→ afterToolCall
-          turn_end → shouldStopAfterTurn → steering 轮询
-  → agent_end → waitForIdle → 会话快照广播（server 模式）
+.pi/skills/
+  release-checklist/
+    SKILL.md
+  db-migration/
+    SKILL.md
 ```
 
-## 设计要点总结
+SKILL.md 示例：
+
+```markdown
+---
+name: release-checklist
+description: 发布前检查流程
+---
+
+# 发布检查清单
+1. 跑全量测试：npm test
+2. 检查 CHANGELOG 是否更新
+3. 确认版本号已递增
+4. 用 git diff --stat 复查改动范围
+5. 打 tag 并推送
+```
+
+企业落地建议：把团队的发布流程、代码规范、排障手册、新人入职指南全部写成 Skills，沉淀在仓库的 .pi/ 目录随代码走，新成员克隆仓库即获得全部团队经验。
+
+## 2. 路线 2：Extensions——自定义工具与拦截
+
+用 TypeScript 写扩展，可以给 Agent 加自定义工具、修改运行时行为。
+
+### 自定义工具示例
+
+```typescript
+import { createAgentSession } from '@earendil-works/pi-coding-agent';
+import { Type } from '@sinclair/typebox';
+
+const myTool = {
+  name: 'query_ticket',
+  description: '查询内部工单系统的工单详情',
+  parameters: Type.Object({
+    ticketId: Type.String({ description: '工单号' }),
+  }),
+  execute: async (_toolCallId, params) => {
+    // 对接企业内部 API
+    const res = await fetch(`https://tickets.internal/api/${params.ticketId}`, {
+      headers: { Authorization: `Bearer ${process.env.TICKET_TOKEN}` },
+    });
+    const data = await res.json();
+    return {
+      content: [{ type: 'text', text: JSON.stringify(data) }],
+      details: {},
+    };
+  },
+};
+
+const { session } = await createAgentSession({
+  customTools: [myTool],
+});
+```
+
+### 安全拦截（企业必备）
+
+Pi 的 Agent 循环暴露了完整事件流钩子，可以在工具调用前做权限拦截：
+
+```typescript
+agent.subscribe((event) => {
+  // 在每次工具调用前检查
+  if (event.type === 'tool_call') {
+    // 禁止危险命令
+    if (event.toolName === 'bash' && /rm -rf|DROP TABLE/.test(event.input)) {
+      throw new Error('危险操作已被企业策略拦截');
+    }
+    // 审计日志
+    auditLog.write({
+      user: currentUser,
+      tool: event.toolName,
+      input: event.input,
+      timestamp: Date.now(),
+    });
+  }
+});
+```
+
+⚠️ Pi 没有内置权限系统和沙箱，它以启动用户的完整权限运行。企业生产环境必须：要么容器化隔离（官方推荐），要么用上面的钩子自建拦截层。
+
+### 会话压缩（长会话成本控制）
+
+```typescript
+// 主动压缩会话，保留关键信息丢弃冗余
+const result = await session.compact('保留所有架构决策，丢弃中间调试过程');
+```
+
+## 3. 路线 3：SDK——进程内嵌完整 Agent
+
+createAgentSession 在调用方进程内构建完整 Agent 会话，可注入自定义存储、配置、认证、模型注册表、资源加载器和工具——无桥接、无子进程、无 socket。
+
+### 最小可用示例
+
+```typescript
+import {
+  createAgentSession,
+  ModelRuntime,
+  SessionManager,
+} from '@earendil-works/pi-coding-agent';
+
+const modelRuntime = await ModelRuntime.create();
+
+const { session } = await createAgentSession({
+  sessionManager: SessionManager.inMemory(),
+  modelRuntime,
+});
+
+// 订阅事件流，拿到逐字流式输出
+session.subscribe((event) => {
+  if (
+    event.type === 'message_update' &&
+    event.assistantMessageEvent.type === 'text_delta'
+  ) {
+    process.stdout.write(event.assistantMessageEvent.delta);
+  }
+});
+
+await session.prompt('当前目录下有哪些文件？');
+```
+
+### AgentSession 核心能力
+
+```typescript
+interface AgentSession {
+  // 发送 Prompt 并等待完成
+  prompt(text: string, options?: PromptOptions): Promise<void>;
+
+  // 流式传输期间插入指令（纠偏）
+  steer(text: string): Promise<void>;
+
+  // 后续问题排队
+  followUp(text: string): Promise<void>;
+
+  // 订阅事件流
+  subscribe(listener: (event: AgentSessionEvent) => void): () => void;
+
+  // 模型控制
+  setModel(model: Model): Promise<void>;
+  setThinkingLevel(level: ThinkingLevel): void;
+
+  // 会话树导航（任意历史消息上分叉）
+  navigateTree(targetId: string, options?: { ... }): Promise<...>;
+
+  // 压缩长会话
+  compact(customInstructions?: string): Promise<CompactionResult>;
+
+  // 中断当前操作
+  abort(): Promise<void>;
+}
+```
+
+### 自定义全部注入项
+
+```typescript
+const { session } = await createAgentSession({
+  model: myModel,                    // 锁定企业指定模型
+  tools: ['read', 'bash'],           // 只开放部分工具（禁 write/edit）
+  sessionManager: SessionManager.create(customDir),  // 会话持久化到企业指定位置
+});
+```
+
+> SDK 全部 13 个能力维度（模型/提示词/技能/工具白名单/扩展/上下文文件/密钥/设置/会话/完全接管/运行时替换）各有一个可运行示例，见 [pi-sdk-demo](pi-sdk-demo/README)。
+
+## 4. 企业级架构参考
+
+一个基于 Pi 的企业级 Agent 整体架构：
+
+```
++---------------------------------------------+
+|  企业入口层                                   |
+|  Web UI / 内部平台 / CI 流水线 / IM 机器人      |
++---------------------------------------------+
+|  网关层（可选，参考 pi-gateway 模式）            |
+|  认证鉴权 / 多渠道接入 / 路由                    |
++---------------------------------------------+
+|  Pi Agent 层（SDK 内嵌 createAgentSession）     |
+|  |- customTools：内部工单/Jenkins/监控查询       |
+|  |- 事件钩子：审计日志 + 危险操作拦截            |
+|  |- Skills：团队流程（发布/迁移/排障手册）        |
+|  |- SessionManager：会话持久化（企业存储）        |
++---------------------------------------------+
+|  模型层（pi-ai 统一接口）                       |
+|  |- 云端：Claude / GPT / DeepSeek（按任务路由）  |
+|  |- 本地：Ollama / llama.cpp（敏感数据不出域）    |
++---------------------------------------------+
+|  执行环境层                                    |
+|  容器隔离（Docker）/ 权限最小化 / 网络策略         |
++---------------------------------------------+
+```
+
+关键决策点：
+
+1. 模型路由：敏感代码用本地模型，日常任务用云模型按成本/能力路由（pi-ai 层切换零成本）
+2. 安全边界：Pi 无内置沙箱，必须在容器中运行，通过事件钩子做二次拦截
+3. 会话资产：Pi 的会话是 JSONL 文件 + 树结构（类似 Git 分支），排查过程、重构脉络可回放共享，方便团队复盘
+4. 上下文工程：AGENTS.md 写项目规则 + SYSTEM.md 定行为边界 + compact 控成本 + 按需加载 Skills
+
+## 5. 成本与可观测性
+
+- Pi 内置 Token 与成本追踪，界面底部实时显示当前模型、思考级别、token 消耗和费用估算
+- SDK 模式下可通过事件流自建监控面板，按用户/项目/任务维度统计
+- compact() 主动压缩长会话，避免上下文膨胀导致成本失控
+
+---
+
+# 第三部分：设计要点总结
 
 1. **严格分层**：产品（coding-agent）→ 运行时（agent）→ AI 抽象（ai）→ 存储（sqlite-node），每层可独立发布
 2. **LLM 边界统一**：`convertToLlm` + `StreamFn`，never-throw 流式契约把错误编码进事件流
