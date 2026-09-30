@@ -15,8 +15,8 @@ LLM 是能理解、生成人类语言，可完成推理、归纳、文本转换�
     
 1. **上下文窗口（Context Window）**
     
-	 ==**大模型本身没有独立 “内存”，它是无状态的。它的短时记忆能力的实现，就是你每次请求传给它的 [messages](5-agent/LLM/link_messages参数)完整对话数组。**==
-	 模型不会主动记住上次对话；你不把历史消息塞到 `messages` 里，它就完全不知道之前聊过啥。
+	 ==**大模型本身没有独立 “内存”，它是无状态的。它的短时记忆能力的实现，就是你每次请求传给它的  messages完整对话数组。**==  
+	 模型不会主动记住上次对话；你不把历史消息塞到 [messages](5-agent/LLM/link_messages参数) 里，它就完全不知道之前聊过啥。
 	 上下文窗口就是LLM能一次性读完的内容(Prompt + 用户 + 回答+ 工具)
     - 超过上限，会丢失最前面的信息；
     - Agent 里很容易遇到：多次工具调用后上下文膨胀，token 超限。
@@ -50,7 +50,7 @@ LLM 是能理解、生成人类语言，可完成推理、归纳、文本转换�
     - 增加反思校验模块
     - 给模型限定知识库（RAG）
     
-5. [embedding](obsidian://open?vault=knowledge-base&file=5-agent%2FLLM%2Flink_embedding)（嵌入向量）**
+2. [embedding](5-agent/LLM/link_embedding)（嵌入向量）**
     
     把文本转为一串数字向量，用于体现相似度。1：相似   -1： 相反   0：无关
     
