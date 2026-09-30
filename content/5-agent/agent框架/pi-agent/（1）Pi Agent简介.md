@@ -11,8 +11,6 @@ description: Pi Agent 是什么、能干什么、整体介绍与使用入门
 # Pi Agent
 
 > 极简开源终端编程智能体（Coding Agent）：模型无关、核心极简、扩展随心。GitHub 90K+ Star，MIT 协议。
-> 三篇系列笔记：**本篇（是什么/能干什么）→ [[（2）Pi Agent架构]]（怎么分层）→ [[（3）Pi Agent分析]]（源码与落地细节）**
-
 - 官网：https://pi.dev
 - 代码仓库：https://github.com/badlogic/pi-mono
 - 协议：MIT（可商用）
