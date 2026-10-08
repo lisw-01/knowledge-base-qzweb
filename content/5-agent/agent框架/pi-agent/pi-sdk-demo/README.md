@@ -8,19 +8,39 @@
 
 | 文件 | 说明 |
 |------|------|
-| `01-minimal.ts` | 使用所有默认值的最简用法 |
-| `02-custom-model.ts` | 选择模型和思考级别 |
-| `03-custom-prompt.ts` | 替换或修改系统提示词 |
-| `04-skills.ts` | 发现、筛选或替换技能 |
-| `05-tools.ts` | 内置工具白名单 |
-| `06-extensions.ts` | 日志记录、拦截、结果修改 |
-| `07-context-files.ts` | AGENTS.md 上下文文件 |
-| `08-prompt-templates.ts` | 基于文件的斜杠命令模板 |
-| `09-api-keys-and-oauth.ts` | API 密钥解析、OAuth 配置 |
-| `10-settings.ts` | 覆盖压缩、重试、终端设置 |
-| `11-sessions.ts` | 内存会话、持久化会话、继续会话、列出会话 |
-| `12-full-control.ts` | 替换所有内容，不进行自动发现 |
-| `13-session-runtime.ts` | 管理运行时会话替换 |
+| `01-minimal.md` | 使用所有默认值的最简用法 |
+| `02-custom-model.md` | 选择模型和思考级别 |
+| `03-custom-prompt.md` | 替换或修改系统提示词 |
+| `04-skills.md` | 发现、筛选或替换技能 |
+| `05-tools.md` | 内置工具白名单 |
+| `06-extensions.md` | 日志记录、拦截、结果修改 |
+| `07-context-files.md` | AGENTS.md 上下文文件 |
+| `08-prompt-templates.md` | 基于文件的斜杠命令模板 |
+| `09-api-keys-and-oauth.md` | API 密钥解析、OAuth 配置 |
+| `10-settings.md` | 覆盖压缩、重试、终端设置 |
+| `11-sessions.md` | 内存会话、持久化会话、继续会话、列出会话 |
+| `12-full-control.md` | 替换所有内容，不进行自动发现 |
+| `13-session-runtime.md` | 管理运行时会话替换 |
+
+## 与功能设计点的对照
+
+每个 Demo 练到的设计点（设计点系列见 [[0-Pi Agent总览]]）：
+
+| 示例 | 练到哪个设计点 |
+|------|---------------|
+| 01-minimal | [[3-事件系统]]（订阅事件流） |
+| 02-custom-model | [[4-模型适配]] |
+| 03-custom-prompt | [[5-上下文工程]] |
+| 04-skills | [[5-上下文工程]] |
+| 05-tools | [[2-工具系统]] |
+| 06-extensions | [[7-扩展系统]] |
+| 07-context-files | [[5-上下文工程]] |
+| 08-prompt-templates | [[5-上下文工程]] |
+| 09-api-keys-and-oauth | [[4-模型适配]] |
+| 10-settings | [[5-上下文工程]]（compaction / retry） |
+| 11-sessions | [[6-会话系统]] |
+| 12-full-control | 全部（完全接管，不自动发现） |
+| 13-session-runtime | [[6-会话系统]]（会话替换与重绑定） |
 
 ## 运行方式
 

@@ -11,7 +11,8 @@ description: Pi Agent 逐包源码级分析（类型、事件、Agent Loop、协
 # Pi Agent 分析
 
 > 核心一句话：**逐包拆开 Pi 的源码看它如何工程化「LLM + 工具 + 循环」，再落到企业级定制的三条路线（Skills / Extensions / SDK）**。
-> 前置阅读：[[1-Pi Agent简介]] ｜ 分层与调用链：[[2-Pi Agent架构]] ｜ SDK 逐项示例：[pi-sdk-demo](pi-sdk-demo/README)
+> 前置阅读：[[0-Pi Agent总览]] ｜ 分层与调用链：[[2-Pi Agent架构]] ｜ SDK 逐项示例：[pi-sdk-demo](pi-sdk-demo/README)
+> 本篇是**参考层**：按包组织的源码细节。按功能设计点组织的**理解层**（问题 → 方案 → 启示）见 `设计点/` 系列 1~9。
 
 ## 产品定位
 

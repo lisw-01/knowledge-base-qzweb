@@ -16,6 +16,8 @@ description: Pi Agent 是什么、能干什么、整体介绍与使用入门
 - 协议：MIT（可商用）
 - 作者：Mario Zechner（libGDX 游戏框架作者，GitHub @badlogic），现由 Earendil Works 维护
 
+> 📌 笔记入口：[[0-Pi Agent总览]]（认知地图 + 三条阅读路径）｜ 功能设计点系列：`设计点/` 1~9 ｜ 下一篇：[[2-Pi Agent架构]]
+
 ***
 
 ## 一、Pi Agent 是什么
@@ -308,7 +310,8 @@ Pi 不仅是成品工具，更是一个可深度定制的 Agent 底座。定制�
 | 路线 2 | Extensions（TS 代码扩展）+ 自定义工具 | 天级 | 接入内部系统、增加领域工具、安全拦截 |
 | 路线 3 | SDK 内嵌（createAgentSession） | 周级 | 做成产品、Web 界面、自动化流水线 |
 
-- 三条路线的**代码级落地细节**（自定义工具、安全拦截、企业架构参考）见 [[3-Pi Agent分析]] 第三部分
+- 三条路线的**代码级落地细节**（自定义工具、安全拦截、企业架构参考）见 [[3-Pi Agent分析]] 第二部分
+- 逐个功能设计点的渐进式讲解见 `设计点/` 系列（工具 → [[2-工具系统]]，扩展 → [[7-扩展系统]]，安全 → [[9-安全与可观测]]……共 9 篇）
 - SDK 各能力逐项示例（13 个可运行 Demo）见 [pi-sdk-demo](pi-sdk-demo/README)
 
 ***
@@ -359,7 +362,7 @@ Pi 拆成职责边界干净的多个 npm 包，依赖单向：
 - GitHub：https://github.com/badlogic/pi-mono
 - 官方文档（SDK / Extensions / Skills）：https://pi.dev/docs
 - 中文指南（社区）：https://pi-agent.org
-- 系列笔记：[[2-Pi Agent架构]] ｜ [[3-Pi Agent分析]] ｜ [pi-sdk-demo](pi-sdk-demo/README)
+- 系列笔记：[[0-Pi Agent总览]] ｜ [[2-Pi Agent架构]] ｜ [[3-Pi Agent分析]] ｜ `设计点/` 系列（1~9）｜ [pi-sdk-demo](pi-sdk-demo/README)
 
 ### npm 包地址
 
