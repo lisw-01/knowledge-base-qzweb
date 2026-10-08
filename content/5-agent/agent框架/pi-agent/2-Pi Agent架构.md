@@ -1,5 +1,5 @@
 ---
-title: Pi Agent 架构
+title: 2-Pi Agent架构
 date: 2026-09-30
 tags:
   - Agent
@@ -10,7 +10,7 @@ description: Pi Agent 的分层架构：核心三层包、调用链路、Remote 
 # Pi Agent 架构
 
 > 核心一句话：**Pi = 严格单向分层的 monorepo——「模型适配层 pi-ai → Agent 内核 pi-agent-core → 产品组装层 pi-coding-agent → 终端 UI pi-tui」，外加一套可选的 CBOR 远程会话栈（pi-protocol / pi-client / pi-server）**。下层不知道上层，每层可独立发布使用。
-> 前置阅读：[[（1）Pi Agent简介]] ｜ 源码细节：[[（3）Pi Agent分析]]
+> 前置阅读：[[1-Pi Agent简介]] ｜ 源码细节：[[3-Pi Agent分析]]
 
 ## 一、全景：包依赖图
 
@@ -149,4 +149,4 @@ LLM 厂商 API
   → agent_end → waitForIdle → 会话快照广播（server 模式）
 ```
 
-> 各层内部实现细节（类型定义、事件生命周期、Agent Loop 双层循环、协议 schema、扩展系统）逐包拆解见 [[（3）Pi Agent分析]]。
+> 各层内部实现细节（类型定义、事件生命周期、Agent Loop 双层循环、协议 schema、扩展系统）逐包拆解见 [[3-Pi Agent分析]]。

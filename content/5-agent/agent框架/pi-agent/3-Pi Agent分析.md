@@ -1,5 +1,5 @@
 ---
-title: Pi Agent 分析
+title: 3-Pi Agent分析
 date: 2026-09-30
 tags:
   - Agent
@@ -11,13 +11,13 @@ description: Pi Agent 逐包源码级分析（类型、事件、Agent Loop、协
 # Pi Agent 分析
 
 > 核心一句话：**逐包拆开 Pi 的源码看它如何工程化「LLM + 工具 + 循环」，再落到企业级定制的三条路线（Skills / Extensions / SDK）**。
-> 前置阅读：[[（1）Pi Agent简介]] ｜ 分层与调用链：[[（2）Pi Agent架构]] ｜ SDK 逐项示例：[pi-sdk-demo](pi-sdk-demo/README)
+> 前置阅读：[[1-Pi Agent简介]] ｜ 分层与调用链：[[2-Pi Agent架构]] ｜ SDK 逐项示例：[pi-sdk-demo](pi-sdk-demo/README)
 
 ## 产品定位
 
 pi 是一个 **agent harness** monorepo：既提供可直接使用的交互式编码代理 CLI（`pi` 命令），也提供可复用的 agent 运行时、统一 LLM API、终端 UI 框架。全部拆分为可独立发布的 npm 包（`@earendil-works/*`），采用 lockstep 版本策略统一发版。
 
-> 包依赖图、三层分层、调用链路、数据流见 [[（2）Pi Agent架构]]，本篇按包逐个深入。
+> 包依赖图、三层分层、调用链路、数据流见 [[2-Pi Agent架构]]，本篇按包逐个深入。
 
 ---
 

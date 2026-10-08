@@ -1,5 +1,5 @@
 ---
-title: Pi Agent
+title: 1-Pi Agent简介
 date: 2026-09-30
 tags:
   - Agent
@@ -308,7 +308,7 @@ Pi 不仅是成品工具，更是一个可深度定制的 Agent 底座。定制�
 | 路线 2 | Extensions（TS 代码扩展）+ 自定义工具 | 天级 | 接入内部系统、增加领域工具、安全拦截 |
 | 路线 3 | SDK 内嵌（createAgentSession） | 周级 | 做成产品、Web 界面、自动化流水线 |
 
-- 三条路线的**代码级落地细节**（自定义工具、安全拦截、企业架构参考）见 [[（3）Pi Agent分析]] 第三部分
+- 三条路线的**代码级落地细节**（自定义工具、安全拦截、企业架构参考）见 [[3-Pi Agent分析]] 第三部分
 - SDK 各能力逐项示例（13 个可运行 Demo）见 [pi-sdk-demo](pi-sdk-demo/README)
 
 ***
@@ -326,7 +326,7 @@ Pi 拆成职责边界干净的多个 npm 包，依赖单向：
 | @earendil-works/pi-coding-agent | 编码业务层：会话、工具、持久化、压缩、扩展、Skills、模式 |
 | @earendil-works/pi-tui | 终端交互层：渲染界面 |
 
-> 分层详解、依赖图、调用链路与远程协议栈见 [[（2）Pi Agent架构]]。
+> 分层详解、依赖图、调用链路与远程协议栈见 [[2-Pi Agent架构]]。
 
 ### 4.2 Pi vs 主流工具对比
 
@@ -340,7 +340,7 @@ Pi 拆成职责边界干净的多个 npm 包，依赖单向：
 | 定制能力 | 有限 | 有限 | Tools/Extensions/SDK 全开 |
 | 沙箱/权限 | 内置审批 | 内置审批 | 无（自行容器化） |
 
-> ⚠️ Pi 没有内置权限系统和沙箱，它以启动用户的完整权限运行。生产环境必须容器化隔离或用扩展钩子自建拦截（见 [[（3）Pi Agent分析]]）。
+> ⚠️ Pi 没有内置权限系统和沙箱，它以启动用户的完整权限运行。生产环境必须容器化隔离或用扩展钩子自建拦截（见 [[3-Pi Agent分析]]）。
 
 ### 4.3 适合谁
 
@@ -359,7 +359,7 @@ Pi 拆成职责边界干净的多个 npm 包，依赖单向：
 - GitHub：https://github.com/badlogic/pi-mono
 - 官方文档（SDK / Extensions / Skills）：https://pi.dev/docs
 - 中文指南（社区）：https://pi-agent.org
-- 系列笔记：[[（2）Pi Agent架构]] ｜ [[（3）Pi Agent分析]] ｜ [pi-sdk-demo](pi-sdk-demo/README)
+- 系列笔记：[[2-Pi Agent架构]] ｜ [[3-Pi Agent分析]] ｜ [pi-sdk-demo](pi-sdk-demo/README)
 
 ### npm 包地址
 
