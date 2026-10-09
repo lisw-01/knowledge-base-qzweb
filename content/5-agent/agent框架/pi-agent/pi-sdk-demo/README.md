@@ -28,19 +28,19 @@
 
 | 示例 | 练到哪个设计点 |
 |------|---------------|
-| 01-minimal | [[3-事件系统]]（订阅事件流） |
-| 02-custom-model | [[4-模型适配]] |
-| 03-custom-prompt | [[5-上下文工程]] |
-| 04-skills | [[5-上下文工程]] |
-| 05-tools | [[2-工具系统]] |
-| 06-extensions | [[7-扩展系统]] |
-| 07-context-files | [[5-上下文工程]] |
-| 08-prompt-templates | [[5-上下文工程]] |
-| 09-api-keys-and-oauth | [[4-模型适配]] |
-| 10-settings | [[5-上下文工程]]（compaction / retry） |
-| 11-sessions | [[6-会话系统]] |
+| 01-minimal | [[7-事件系统]]（订阅事件流） |
+| 02-custom-model | [[1-模型适配]] |
+| 03-custom-prompt | [[2-上下文工程]] |
+| 04-skills | [[2-上下文工程]] |
+| 05-tools | [[3-工具系统]] |
+| 06-extensions | [[6-扩展系统]] |
+| 07-context-files | [[2-上下文工程]] |
+| 08-prompt-templates | [[2-上下文工程]] |
+| 09-api-keys-and-oauth | [[1-模型适配]] |
+| 10-settings | [[2-上下文工程]]（compaction / retry） |
+| 11-sessions | [[4-会话系统]] |
 | 12-full-control | 全部（完全接管，不自动发现） |
-| 13-session-runtime | [[6-会话系统]]（会话替换与重绑定） |
+| 13-session-runtime | [[4-会话系统]]（会话替换与重绑定） |
 
 ## 运行方式
 
