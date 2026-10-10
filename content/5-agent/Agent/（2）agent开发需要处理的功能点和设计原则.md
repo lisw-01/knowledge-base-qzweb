@@ -56,6 +56,7 @@ except Exception as e:
 messages.append({"role": "tool", "content": result})  # 错误也拼回上下文 → 模型下一轮自救
 ```
 
+- 失败分类、有界重试、熔断兜底的完整展开 → [[（3）ReAct工具调用失败处理]]
 - 粒度设计：小而专（`search_order` + `refund_order`）优于大而全（`handle_anything`）
 - 幂等性：同一个调用重试一次，不该重复扣款、重复发消息
 - 返回值精简：截断长文本、只回必要字段——工具返回是下一轮的模型输入，又长又臭会撑爆上下文
