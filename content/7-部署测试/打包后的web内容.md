@@ -131,7 +131,7 @@ prodUrl: "http://192.168.0.236:32000",
 
 以 cpolar 为例（免费版 4 条隧道、1M 带宽、不限流量，支持 http/https）：
 
-1. **注册**：访问 cpolar 官网注册账号，下载 Windows 客户端并安装
+1. **注册**：访问 [cpolar 官网](https://www.cpolar.com/)),  注册账号，下载 Windows 客户端并安装
 2. **认证 token**：官网后台「验证」页复制 token，命令行执行（GUI 版登录后会自动写入）：
 
    ```bash
