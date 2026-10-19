@@ -17,9 +17,7 @@
 
 示例：
 
-js
-
-```
+```js
 // 真实DOM：<div class="box"><p>hello</p></div>
 const vdom = {
   tag: 'div',

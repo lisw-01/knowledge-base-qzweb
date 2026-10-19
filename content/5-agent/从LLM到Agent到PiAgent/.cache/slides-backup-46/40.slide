@@ -1,0 +1,91 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>项目概览：一句话与一套栈</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>自然语言进，结构化结果出，PI 在中间做编排</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 · 非对称双栏 56:44 */}
+    <Box style={{ height: 516, flexDirection: 'row', gap: 32 }}>
+        {/* 左：链路总览 */}
+        <Box style={{ flex: 56, flexDirection: 'column', paddingRight: 30, borderRight: '1px solid rgba(232,238,249,0.12)' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>END-TO-END</Text>
+                <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.42)' }}>HTTP + SSE 全链路流式</Text>
+            </Box>
+
+            <Box style={{ flex: 1, marginTop: 12, flexDirection: 'column' }}>
+                {[
+                    { t: '用户输入', d: '自然语言提问 · 前端 Vue3 + TS + Pinia', tag: 'CLIENT' },
+                    { t: 'Node (Koa) 服务', d: 'JWT 鉴权 · 数据范围注入 · SSE 通道', tag: 'SERVER' },
+                    { t: 'PI 智能体', d: '@earendil-works/pi-coding-agent，编排核心', tag: 'AGENT' },
+                    { t: '查询工具', d: '业务 API · 指标模板 · 受控 SQL · 图表 / 表格 / KPI 发射', tag: 'TOOLS' },
+                    { t: '前端流式渲染', d: '文本 · 表格 · 图表 · KPI 卡片，按 renderer 路由', tag: 'RENDER' },
+                ].map((s, i) => (
+                    <Box key={i} style={{ flex: 1, flexDirection: 'column' }}>
+                        <Box style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 14, paddingLeft: 16, paddingRight: 16, background: i === 2 ? 'rgba(42,212,238,0.14)' : 'rgba(22,35,61,0.92)', border: i === 2 ? '1px solid rgba(42,212,238,0.48)' : '1px solid rgba(232,238,249,0.10)', borderRadius: 3 }}>
+                            <Text style={{ width: 62, fontSize: 12, color: i === 2 ? '#2AD4EE' : 'rgba(232,238,249,0.40)', letterSpacing: 1, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{s.tag}</Text>
+                            <Box style={{ flexDirection: 'column', flex: 1 }}>
+                                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#E8EEF9' }}>{s.t}</Text>
+                                <Text style={{ marginTop: 4, fontSize: 13.5, color: 'rgba(232,238,249,0.60)' }}>{s.d}</Text>
+                            </Box>
+                        </Box>
+                        {i < 4 && (
+                            <Box style={{ height: 18, flexDirection: 'row', alignItems: 'center', paddingLeft: 26 }}>
+                                <Text style={{ fontSize: 13, color: 'rgba(42,212,238,0.7)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>↓</Text>
+                            </Box>
+                        )}
+                    </Box>
+                ))}
+            </Box>
+        </Box>
+
+        {/* 右：技术栈 + 判断 */}
+        <Box style={{ flex: 44, flexDirection: 'column' }}>
+            <Text style={{ fontSize: 15, color: 'rgba(232,238,249,0.52)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>TECH STACK</Text>
+
+            <Box style={{ marginTop: 14, flexDirection: 'column' }}>
+                {[
+                    ['前端', 'Vue3 + TS + Pinia + Router'],
+                    ['服务端', 'Node + TS + Koa'],
+                    ['智能体', '@earendil-works/pi-coding-agent'],
+                    ['数据', '内存 JSON 种子数据，无需外部数据库'],
+                    ['注册', '.pi/ 目录发现式注册，代码零硬编码'],
+                ].map((r, i) => (
+                    <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingTop: 9, paddingBottom: 9, borderBottom: '1px solid rgba(232,238,249,0.08)' }}>
+                        <Text style={{ width: 56, fontSize: 13.5, color: 'rgba(232,238,249,0.45)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[0]}</Text>
+                        <Text style={{ flex: 1, fontSize: 14.5, color: '#E8EEF9', lineHeight: 1.5 }}>{r[1]}</Text>
+                    </Box>
+                ))}
+            </Box>
+
+            <Box style={{ marginTop: 20, paddingTop: 14, paddingBottom: 14, paddingLeft: 16, paddingRight: 16, background: 'rgba(22,35,61,0.92)', border: '1px solid rgba(232,238,249,0.12)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.45)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>要解决的三件事</Text>
+                <Box style={{ marginTop: 10, flexDirection: 'column', gap: 8 }}>
+                    {['用户角色 / 部门的数据范围隔离', '多租户隔离（共享库 + tenant_id）', '指标的准确性与可追溯'].map((t, i) => (
+                        <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                            <Text style={{ fontSize: 13, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>0{i + 1}</Text>
+                            <Text style={{ flex: 1, fontSize: 14.5, color: 'rgba(232,238,249,0.72)' }}>{t}</Text>
+                        </Box>
+                    ))}
+                </Box>
+            </Box>
+
+            <Box style={{ marginTop: 'auto', paddingTop: 14, paddingBottom: 14, paddingLeft: 16, paddingRight: 16, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>所以</Text>
+                <Text style={{ marginTop: 8, fontSize: 16, color: '#E8EEF9', lineHeight: 1.7 }}>
+                    PI 是<span style={{ color: '#2AD4EE' }}>编排核心</span>，不是外挂组件。
+                </Text>
+            </Box>
+        </Box>
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>40 / 46</Text>
+    </Box>
+</Slide>

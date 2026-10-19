@@ -11,9 +11,7 @@
     
     ❌ 动态写法无法 tree-shake：
     
-    js
-    
-    ```
+    ```js
     const name = 'utils'
     import(`./${name}.js`) // 动态import，静态分析失效
     ```
@@ -23,9 +21,7 @@
     - 副作用：引入模块就会执行代码，哪怕不导出任何东西（如直接修改 window、css 文件）
     - package.json `sideEffects` 标记：告诉打包工具哪些文件有副作用，不要删
     
-    json
-    
-    ```
+    ```json
     {
       "sideEffects": ["*.css"] // css有副作用，不能tree-shaking删掉
     }
@@ -42,7 +38,7 @@
 
 
 
-## 2.tree-shaking **只在生产打包生效**，开发环境不会删代码。
+## 2. tree-shaking **只在生产打包生效**，开发环境不会删代码。
 
 
 **默认情况下：Tree‑Shaking 只在生产打包开启，开发环境不做死代码删除。**
@@ -55,7 +51,9 @@ Tree‑Shaking 是**为了减小线上包体积**，而不是给开发环境用�
 
 下面拆开讲原理 + 例外情况。
 
-## 1. Webpack
+## 3. 各工具的开发 / 生产行为
+
+### 3.1 Webpack
 
 - `mode: production`：
     
@@ -76,23 +74,23 @@ Tree‑Shaking 是**为了减小线上包体积**，而不是给开发环境用�
 >     
 >     → **如果没有压缩，就算 production，tree-shaking 也不会生效**
 
-## 2. Rollup
+### 3.2 Rollup
 
 Rollup 本身就具备移除死代码能力，**不需要压缩器也能摇掉**
 
 - 开发构建：默认**不做 tree-shaking**（保留全部代码，方便断点调试）
 - 生产构建：开启 tree-shaking，移除未使用代码
 
-## 3. Vite
+### 3.3 Vite
 
 Vite 开发环境：用原生 ESM，**完全不打包，不存在 tree-shaking**
 
 Vite 生产构建：底层调用 Rollup，Rollup 执行 tree-shaking。
 
-## 4. esbuild
+### 3.4 esbuild
 
-esbuild 的 tree-shaking 由`minify`压缩开关控制：
+esbuild **在 bundle 模式下默认就做 tree-shaking**（`--tree-shaking=true` 是默认值），未使用的导入在打包阶段就会被移除，**与是否开启 minify 无关**：
 
-- `minify: true` 才会移除死代码
-- `minify: false`，哪怕是生产配置，也保留全部代码
+- `minify` 只控制压缩 / 标识符混淆等"格式优化"，不是死代码删除的开关
+- `minify: false` + bundle 模式，未使用的导出同样会被摇掉
 

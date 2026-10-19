@@ -1,0 +1,63 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>messages 里的 role：谁在说话</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>同一句话换个 role，模型对它的理解就完全不一样</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 · 四种 role */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        <Box style={{ flexDirection: 'row', gap: 16 }}>
+            {[
+                { r: 'system', cn: '系统提示 · 定规则', d: '身份、能力边界、输出格式。通常放在第一条，优先级最高——用户说什么都盖不过它。', tag: '永远放最前' },
+                { r: 'user', cn: '用户输入 · 提需求', d: '这一轮用户说的话。方案 A 里，工具执行结果也用 user 身份拼成 Observation 回喂。', tag: '每轮必有' },
+                { r: 'assistant', cn: '模型输出 · 留痕', d: '模型上一轮的回答，包括它要求调用的 tool_calls。必须原样回填，它才知道自己做过什么。', tag: '必须回填' },
+                { r: 'tool', cn: '工具结果 · 外部事实', d: '工具执行完的返回值，用 tool_call_id 绑定到具体那次调用，模型才知道结果属于哪一次请求。', tag: '原生 FC 专用' },
+            ].map((c, i) => (
+                <Box key={i} style={{ width: 272, height: 236, flexDirection: 'column', paddingTop: 18, paddingBottom: 18, paddingLeft: 18, paddingRight: 18, background: 'rgba(22,35,61,0.72)', border: '1px solid rgba(42,212,238,0.20)', borderRadius: 4 }}>
+                    <Text style={{ fontSize: 22, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{c.r}</Text>
+                    <Text style={{ marginTop: 6, fontSize: 14, color: 'rgba(232,238,249,0.55)' }}>{c.cn}</Text>
+                    <Box style={{ marginTop: 12, height: 1, background: 'rgba(232,238,249,0.12)' }} />
+                    <Text style={{ marginTop: 12, fontSize: 14.5, color: 'rgba(232,238,249,0.74)', lineHeight: 1.68 }}>{c.d}</Text>
+                    <Box style={{ marginTop: 'auto' }}>
+                        <Text style={{ fontSize: 12.5, color: 'rgba(42,212,238,0.82)', letterSpacing: 1, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{c.tag}</Text>
+                    </Box>
+                </Box>
+            ))}
+        </Box>
+
+        <Box style={{ marginTop: 14, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+            <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.52)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>MESSAGES · 一次完整工具调用后，数组长这样</Text>
+            <Box style={{ flex: 1, height: 1, background: 'rgba(232,238,249,0.12)' }} />
+        </Box>
+
+        <CodeBlock
+            code={`messages = [
+    {"role": "system",    "content": "你是智数问答助手，只回答指标类问题"},
+    {"role": "user",      "content": "华东区上月销售额多少？"},
+    {"role": "assistant", "content": "", "tool_calls": [{"id": "call_01", ...}]},
+    {"role": "tool",      "tool_call_id": "call_01", "content": "1.28 亿"},
+]`}
+            language='python'
+            width={1136}
+            fontSize={15}
+            theme='github-dark'
+        />
+
+        <Box style={{ marginTop: 'auto', flexDirection: 'row', alignItems: 'center', gap: 14, paddingTop: 14, paddingBottom: 14, paddingLeft: 18, paddingRight: 18, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+            <Text style={{ fontSize: 18, color: '#2AD4EE', fontWeight: 'bold', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>记住</Text>
+            <Text style={{ fontSize: 17, color: '#E8EEF9', lineHeight: 1.55, flex: 1 }}>
+                role 不是日志标签，是对话的<span style={{ color: '#2AD4EE' }}>语法</span>——它决定这段话被当成指令、提问、我自己的话，还是外部事实。
+            </Text>
+        </Box>
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>04 / 45</Text>
+    </Box>
+</Slide>

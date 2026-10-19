@@ -1,14 +1,14 @@
-**Nuxt** 是**基于 Vue.js 的开源全栈 Web 框架**，主打约定式开发、多模式渲染，大幅简化 Vue 的 SSR/SSG 开发，目标是提升开发体验、网站性能与 SEO 友好度Nuxt。
+**Nuxt** 是**基于 Vue.js 的开源全栈 Web 框架**，主打约定式开发、多模式渲染，大幅简化 Vue 的 SSR/SSG 开发，目标是提升开发体验、网站性能与 SEO 友好度。
 
 > 类比：Vue 生态的 Nuxt ≈ React 生态的 Next.js
 > 
-> 当前主流版本：**Nuxt3（Vue3）**，新版 Nuxt4 已发布；**Nuxt2（Vue2）已经停止维护**Nuxt
+> 当前主流版本：**Nuxt3（Vue3）**，新版 Nuxt4 已发布；**Nuxt2（Vue2）已经停止维护**
 
 ## ✅ 核心底层
 
 - 前端：**Vue3 + Composition API**
 - 构建工具：**Vite**（开发热更新极快）
-- 服务引擎：**Nitro**（内置服务端，可写服务端 API、支持边缘部署、Serverless）Nuxt
+- 服务引擎：**Nitro**（内置服务端，可写服务端 API、支持边缘部署、Serverless）
 
 ## 🚀 核心特性
 

@@ -1,0 +1,111 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>DESIGN POINT 08</Text>
+                <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.38)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>· 对应 ⑥ + ⑦</Text>
+            </Box>
+            <Text style={{ marginTop: 6, fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>安全外置：三道防线，一本账</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        <Box style={{ height: 452, flexDirection: 'row', gap: 28 }}>
+
+            {/* 左：哲学 + 三道防线 */}
+            <Box style={{ width: 630, flexDirection: 'column' }}>
+                <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>PHILOSOPHY · 没有权限弹窗</Text>
+
+                <Box style={{ marginTop: 8, paddingTop: 11, paddingBottom: 11, paddingLeft: 14, paddingRight: 14, background: 'rgba(22,35,61,0.72)', border: '1px solid rgba(232,238,249,0.10)', borderRadius: 3 }}>
+                    <Text style={{ fontSize: 14.5, color: '#E8EEF9', lineHeight: 1.55 }}>
+                        「没有权限确认弹窗 —— <span style={{ color: '#2AD4EE' }}>跑在容器里就好</span>。」
+                    </Text>
+                    <Box style={{ marginTop: 8, flexDirection: 'row', gap: 14 }}>
+                        {['内核做权限 = 复杂度爆炸', '容器是更硬的隔离', '钩子已给了完全拦截能力'].map((t, i) => (
+                            <Text key={i} style={{ flex: 1, fontSize: 11.5, color: 'rgba(232,238,249,0.62)', lineHeight: 1.5 }}>{i + 1}. {t}</Text>
+                        ))}
+                    </Box>
+                </Box>
+
+                <Text style={{ marginTop: 16, fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>三道防线 · 一道不能少</Text>
+
+                <Box style={{ marginTop: 9, flex: 1, flexDirection: 'column', gap: 8 }}>
+                    {[
+                        { n: '1', t: '环境隔离', s: '最硬', d: '容器化 Docker / 权限最小化 / 网络策略。应用层弹窗防不住提示注入，操作系统级隔离防得住。', c: 'rgba(42,212,238,0.13)' },
+                        { n: '2', t: '钩子拦截', s: '最灵活', d: 'tool_call 钩子：危险命令返回 block + reason，reason 回喂模型；同时写审计日志。', c: 'rgba(42,212,238,0.08)' },
+                        { n: '3', t: '工具白名单', s: '最简单', d: '只读模式只挂 read / grep / find / ls —— 模型根本看不见写工具。', c: 'rgba(22,35,61,0.62)' },
+                    ].map((r, i) => (
+                        <Box key={i} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 14, paddingTop: 10, paddingBottom: 10, paddingLeft: 15, paddingRight: 15, background: r.c, border: '1px solid rgba(42,212,238,0.16)', borderRadius: 3 }}>
+                            <Text style={{ fontSize: 26, fontWeight: 'bold', color: 'rgba(42,212,238,0.66)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>{r.n}</Text>
+                            <Box style={{ flex: 1, flexDirection: 'column' }}>
+                                <Box style={{ flexDirection: 'row', alignItems: 'baseline', gap: 8 }}>
+                                    <Text style={{ fontSize: 15, fontWeight: 'bold', color: '#E8EEF9' }}>{r.t}</Text>
+                                    <Text style={{ fontSize: 11, color: 'rgba(42,212,238,0.72)' }}>{r.s}</Text>
+                                </Box>
+                                <Text style={{ marginTop: 4, fontSize: 12, color: 'rgba(232,238,249,0.66)', lineHeight: 1.55 }}>{r.d}</Text>
+                            </Box>
+                        </Box>
+                    ))}
+                </Box>
+
+                <Text style={{ marginTop: 9, fontSize: 11.5, color: 'rgba(255,180,120,0.72)', lineHeight: 1.5 }}>
+                    代价：不懂容器化的用户直接裸奔有真实风险。所以上生产必须三道都走。
+                </Text>
+            </Box>
+
+            {/* 右：可观测 */}
+            <Box style={{ flex: 1, flexDirection: 'column' }}>
+                <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>OBSERVABILITY · 记账免费</Text>
+
+                <Box style={{ marginTop: 9, flexDirection: 'column', gap: 9 }}>
+                    <Box style={{ paddingTop: 11, paddingBottom: 11, paddingLeft: 13, paddingRight: 13, background: 'rgba(42,212,238,0.07)', border: '1px solid rgba(42,212,238,0.20)', borderRadius: 3 }}>
+                        <Text style={{ fontSize: 12.5, color: '#2AD4EE', fontWeight: 'bold' }}>usage 挂在每条助手消息上</Text>
+                        <Text style={{ marginTop: 5, fontSize: 11, color: 'rgba(232,238,249,0.72)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1.6 }}>
+                            input · output · cacheRead · cacheWrite · reasoning · totalTokens · cost
+                        </Text>
+                        <Text style={{ marginTop: 6, fontSize: 11.5, color: 'rgba(232,238,249,0.62)', lineHeight: 1.5 }}>
+                            不需要额外埋点，订阅事件流就能建面板。放进消息结构而不是日志——这是关键差别。
+                        </Text>
+                    </Box>
+
+                    <Box style={{ paddingTop: 11, paddingBottom: 11, paddingLeft: 13, paddingRight: 13, background: 'rgba(22,35,61,0.72)', border: '1px solid rgba(232,238,249,0.10)', borderRadius: 3 }}>
+                        <Text style={{ fontSize: 12.5, color: '#2AD4EE', fontWeight: 'bold' }}>telemetry 包</Text>
+                        <Text style={{ marginTop: 5, fontSize: 11.5, color: 'rgba(232,238,249,0.66)', lineHeight: 1.55 }}>
+                            TelemetryContext / TelemetrySpan 抽象（span 带 attributes / events / status），厂商中立，可以接自己的观测后端。
+                        </Text>
+                    </Box>
+
+                    <Box style={{ paddingTop: 11, paddingBottom: 11, paddingLeft: 13, paddingRight: 13, background: 'rgba(22,35,61,0.72)', border: '1px solid rgba(232,238,249,0.10)', borderRadius: 3 }}>
+                        <Text style={{ fontSize: 12.5, color: '#2AD4EE', fontWeight: 'bold' }}>evals · Agent 的回归测试</Text>
+                        <Text style={{ marginTop: 5, fontSize: 11.5, color: 'rgba(232,238,249,0.66)', lineHeight: 1.55 }}>
+                            隔离 workspace + 固定任务集 → 收 transcript / token / 成本 → baseline 与 candidate 对比。改 prompt、换模型、升版本前后各跑一遍。
+                        </Text>
+                    </Box>
+                </Box>
+
+                <Box style={{ marginTop: 'auto', paddingTop: 10, paddingBottom: 10, paddingLeft: 13, paddingRight: 13, borderLeft: '3px solid rgba(42,212,238,0.55)' }}>
+                    <Text style={{ fontSize: 11.5, color: 'rgba(232,238,249,0.66)', lineHeight: 1.6 }}>
+                        企业架构四决策：模型路由（敏感用本地）· 安全边界（容器 + 钩子二次拦截）· 会话资产（JSONL + 树，可复盘）· 上下文工程（AGENTS.md + compact + Skills）。
+                    </Text>
+                </Box>
+            </Box>
+        </Box>
+
+        {/* 底部 */}
+        <Box style={{ height: 52, flexDirection: 'row', alignItems: 'center', gap: 14, paddingLeft: 18, paddingRight: 18, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+            <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>所以</Text>
+            <Text style={{ flex: 1, fontSize: 15, color: '#E8EEF9', lineHeight: 1.5 }}>
+                「安全外置」不等于「安全不做」——能力一项不缺，只是把组装权交给你。你的用户没这个能力，就得内置。
+            </Text>
+        </Box>
+    </Box>
+
+    {/* C 区 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>36 / 46</Text>
+    </Box>
+</Slide>

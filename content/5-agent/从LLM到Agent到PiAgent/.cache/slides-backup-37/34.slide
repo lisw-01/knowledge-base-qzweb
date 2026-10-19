@@ -1,0 +1,72 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>隔离与安全：租户 · 范围 · SQL 守卫</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>三道防线都建在 PI 之外，所以它绕不过去</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 · 非对称双栏 55:45 */}
+    <Box style={{ height: 516, flexDirection: 'row', gap: 32 }}>
+        {/* 左：三层防线 */}
+        <Box style={{ flex: 55, flexDirection: 'column', paddingRight: 30, borderRight: '1px solid rgba(232,238,249,0.12)' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>THREE DEFENSE LINES</Text>
+                <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.42)' }}>自外向内，逐层收紧</Text>
+            </Box>
+
+            <Box style={{ flex: 1, marginTop: 12, flexDirection: 'column', justifyContent: 'space-between' }}>
+                {[
+                    { n: '01', i: 'key', t: '身份与数据范围', d: 'JWT 带出用户 / 租户 / 角色 / 部门；中间件把 tenantId 与 dataScope 显式放进会话上下文，不依赖全局隐式状态；数据访问层由 scoper 统一强制注入 tenant_id 与部门过滤。' },
+                    { n: '02', i: 'lock', t: '会话归属校验', d: '创建与恢复会话时都校验归属：一个会话只属于当前用户与租户。想越权读取别人的历史，在入口就被拒绝，根本进不到模型层。' },
+                    { n: '03', i: 'database', t: 'SQL 守卫（AST 级）', d: '仅允许单条 SELECT，拒绝写操作 / CTE / 子查询 / INTO OUTFILE / FOR UPDATE；表白名单；AST 级强制注入 tenant_id、is_deleted = 0 与数据范围；强制 LIMIT 上限（默认 1000 行）。' },
+                ].map((c, i) => (
+                    <Box key={i} style={{ flex: 1, flexDirection: 'row', gap: 16, alignItems: 'center', paddingTop: 12, paddingBottom: 12, paddingLeft: 16, paddingRight: 16, background: 'rgba(22,35,61,0.90)', borderLeft: '3px solid rgba(42,212,238,0.7)', borderRadius: 3 }}>
+                        <Box style={{ width: 44, height: 44, borderRadius: 4, background: 'rgba(42,212,238,0.12)', border: '1px solid rgba(42,212,238,0.32)', alignItems: 'center', justifyContent: 'center' }}>
+                            <FAIcon name={c.i} style={{ fill: '#2AD4EE', width: 20, height: 20 }} />
+                        </Box>
+                        <Box style={{ flex: 1, flexDirection: 'column' }}>
+                            <Box style={{ flexDirection: 'row', alignItems: 'baseline', gap: 10 }}>
+                                <Text style={{ fontSize: 13, color: 'rgba(42,212,238,0.75)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{c.n}</Text>
+                                <Text style={{ fontSize: 21, fontWeight: 'bold', color: '#E8EEF9' }}>{c.t}</Text>
+                            </Box>
+                            <Text style={{ marginTop: 8, fontSize: 14, color: 'rgba(232,238,249,0.66)', lineHeight: 1.62 }}>{c.d}</Text>
+                        </Box>
+                    </Box>
+                ))}
+            </Box>
+        </Box>
+
+        {/* 右：不变量 + 判断 */}
+        <Box style={{ flex: 45, flexDirection: 'column' }}>
+            <Text style={{ fontSize: 15, color: 'rgba(232,238,249,0.52)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>TWO INVARIANTS</Text>
+
+            <Box style={{ marginTop: 16, flexDirection: 'column', gap: 14 }}>
+                {[
+                    ['注入值不来自模型', 'SQL 里被注入的租户与范围值，全部来自 JWT 会话上下文——模型写的字符串只是「建议」，不改写它的语义。'],
+                    ['执行权永远在代码里', '模型只能说要查什么；怎么改、改完能不能跑、跑多少行，全部由服务端决定。'],
+                ].map((r, i) => (
+                    <Box key={i} style={{ flexDirection: 'column', paddingTop: 14, paddingBottom: 14, paddingLeft: 16, paddingRight: 16, background: 'rgba(22,35,61,0.92)', border: '1px solid rgba(232,238,249,0.12)', borderRadius: 4 }}>
+                        <Text style={{ fontSize: 16.5, fontWeight: '600', color: '#E8EEF9' }}>{r[0]}</Text>
+                        <Text style={{ marginTop: 8, fontSize: 14, color: 'rgba(232,238,249,0.66)', lineHeight: 1.65 }}>{r[1]}</Text>
+                    </Box>
+                ))}
+            </Box>
+
+            <Box style={{ marginTop: 'auto', paddingTop: 16, paddingBottom: 16, paddingLeft: 18, paddingRight: 18, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 15, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>所以</Text>
+                <Text style={{ marginTop: 10, fontSize: 17, color: '#E8EEF9', lineHeight: 1.7 }}>
+                    PI 层对这些<span style={{ color: '#2AD4EE' }}>无感知、也绕不过</span>——安全才成立。
+                </Text>
+            </Box>
+        </Box>
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>34 / 37</Text>
+    </Box>
+</Slide>

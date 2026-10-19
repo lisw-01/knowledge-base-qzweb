@@ -1,0 +1,56 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>设计点 ④–⑥：会话 · 循环 · 扩展</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>再解决「怎么把事做完、还能改」——存得住、转得动、改得动</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 · 三张卡 */}
+    <Box style={{ height: 516, flexDirection: 'column', gap: 12 }}>
+        {[
+            {
+                n: '04', name: '会话系统', layer: '④ 记忆层',
+                q: '怎么存、怎么回放、怎么回到出错前重来',
+                m: 'JSONL 一条 entry 一行、只追加：压缩不删日志，只追加一条 compaction，随时可回溯。树形结构让任意历史消息都能分叉，像 git branch——回到岔路口零成本重试。',
+                t: '日志会越滚越大，换来无损可回溯',
+            },
+            {
+                n: '05', name: 'Agent 循环', layer: '⑤ 控制层',
+                q: '任务做完没、中途插话怎么办、怎么停干净',
+                m: '约 418 行双层 while：内层跑一个任务的工具循环，外层跑「答完接着聊」。插话不打断——进队列，在 turn 边界注入；停止拆成 stopReason、宿主钩子、abort 三类原语。',
+                t: '内核零业务策略，终止条件全外置',
+            },
+            {
+                n: '06', name: '扩展系统', layer: '⑥ 护栏层',
+                q: '不改内核加工具、加拦截，还要能分发出去',
+                m: '一个导出 default 函数的 TS 文件 + 事件钩子 + registerTool / registerCommand。virtual modules 让扩展拿到宿主正在运行的那份模块实例——共享的是同一个对象，不是同一个版本号。',
+                t: '内核不含 MCP、子代理、弹窗，想要就装',
+            },
+        ].map((r, i) => (
+            <Box key={i} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingTop: 16, paddingBottom: 16, paddingLeft: 22, paddingRight: 22, background: 'rgba(22,35,61,0.62)', border: '1px solid rgba(42,212,238,0.18)', borderRadius: 4 }}>
+                <Box style={{ width: 186, flexDirection: 'column' }}>
+                    <Box style={{ flexDirection: 'row', alignItems: 'baseline', gap: 10 }}>
+                        <Text style={{ fontSize: 30, fontWeight: 'bold', color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>{r.n}</Text>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#E8EEF9' }}>{r.name}</Text>
+                    </Box>
+                    <Text style={{ marginTop: 10, fontSize: 12.5, color: 'rgba(232,238,249,0.45)', letterSpacing: 1, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r.layer}</Text>
+                </Box>
+
+                <Box style={{ flex: 1, flexDirection: 'column', paddingLeft: 20, borderLeft: '1px solid rgba(232,238,249,0.12)' }}>
+                    <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.50)' }}>问题 · {r.q}</Text>
+                    <Text style={{ marginTop: 8, fontSize: 14.5, color: 'rgba(232,238,249,0.80)', lineHeight: 1.66 }}>{r.m}</Text>
+                    <Text style={{ marginTop: 8, fontSize: 13, color: 'rgba(42,212,238,0.86)' }}>取舍 · {r.t}</Text>
+                </Box>
+            </Box>
+        ))}
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>27 / 37</Text>
+    </Box>
+</Slide>

@@ -1,0 +1,70 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>七层功能地图</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>Agent 的能力边界不来自模型，来自这七层的工程量</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 */}
+    <Box style={{ height: 516, flexDirection: 'row', gap: 36 }}>
+        {/* 左：巨型数字 + 洞察 */}
+        <Box style={{ width: 372, flexDirection: 'column', paddingRight: 34, borderRight: '1px solid rgba(232,238,249,0.12)' }}>
+            <Text style={{ fontSize: 15, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>FUNCTION MAP</Text>
+            <Text style={{ marginTop: 8, fontSize: 128, fontWeight: 'bold', color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>⑦</Text>
+            <Text style={{ marginTop: 18, fontSize: 24, fontWeight: 'bold', color: '#E8EEF9', lineHeight: 1.45 }}>
+                七层里
+                <br />
+                前五层只是「搭起来」
+            </Text>
+            <Text style={{ marginTop: 18, fontSize: 16, color: 'rgba(232,238,249,0.72)', lineHeight: 1.75 }}>
+                ①~⑤ 决定它<span style={{ color: '#E8EEF9', fontWeight: '600' }}>能不能跑</span>；
+                ⑥~⑦ 决定它<span style={{ color: '#2AD4EE', fontWeight: '600' }}>敢不敢给别人用、出事查不查得清</span>。
+            </Text>
+            <Box style={{ marginTop: 'auto', paddingTop: 18, paddingBottom: 18, paddingLeft: 18, paddingRight: 18, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 16, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>所以</Text>
+                <Text style={{ marginTop: 12, fontSize: 17, color: '#E8EEF9', lineHeight: 1.7 }}>
+                    换模型只动 <span style={{ color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>①</span>，加工具只动 <span style={{ color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>③</span>——分层，是为了让改动可预测。
+                </Text>
+            </Box>
+        </Box>
+
+        {/* 右：七层塔 */}
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: 'rgba(232,238,249,0.52)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>LAYER STACK · 自下而上读</Text>
+                <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                    <Box style={{ width: 8, height: 8, background: 'rgba(42,212,238,0.85)' }} />
+                    <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.52)' }}>越往上，越接近「生产可用」</Text>
+                </Box>
+            </Box>
+
+            <Box style={{ flex: 1, marginTop: 12, flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between' }}>
+                {[
+                    { n: '⑦', t: '运营', d: '观测 · 评测 · 成本', hot: true, w: 520 },
+                    { n: '⑥', t: '护栏', d: '输入审查 · 输出脱敏', hot: true, w: 560 },
+                    { n: '⑤', t: '控制', d: '循环 · 终止条件', hot: false, w: 600 },
+                    { n: '④', t: '记忆', d: '上下文工程', hot: false, w: 632 },
+                    { n: '③', t: '工具', d: '手脚与契约', hot: false, w: 664 },
+                    { n: '②', t: '提示', d: '角色 · 目标 · 格式', hot: false, w: 692 },
+                    { n: '①', t: '模型', d: '选型与接入', hot: false, w: 720 },
+                ].map((r, i) => (
+                    <Box key={i} style={{ width: r.w, height: 52, flexDirection: 'row', alignItems: 'center', gap: 14, paddingLeft: 16, paddingRight: 16, background: r.hot ? 'rgba(42,212,238,0.14)' : 'rgba(22,35,61,0.92)', border: r.hot ? '1px solid rgba(42,212,238,0.42)' : '1px solid rgba(232,238,249,0.10)', borderRadius: 3 }}>
+                        <Text style={{ width: 26, fontSize: 22, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r.n}</Text>
+                        <Text style={{ width: 58, fontSize: 21, fontWeight: 'bold', color: '#E8EEF9' }}>{r.t}</Text>
+                        <Box style={{ width: 1, height: 20, background: 'rgba(232,238,249,0.16)' }} />
+                        <Text style={{ fontSize: 15, color: r.hot ? '#2AD4EE' : 'rgba(232,238,249,0.62)' }}>{r.d}</Text>
+                    </Box>
+                ))}
+            </Box>
+        </Box>
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>16 / 34</Text>
+    </Box>
+</Slide>

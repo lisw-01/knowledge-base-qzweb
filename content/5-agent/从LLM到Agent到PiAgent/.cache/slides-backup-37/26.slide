@@ -1,0 +1,58 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>设计点 ①–③：模型 · 上下文 · 工具</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>先解决「怎么和模型打交道」——统一接口、最小上下文、可控工具</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 · 三条 */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        {[
+            {
+                n: '01', name: '模型适配', layer: '① 模型层',
+                q: '40 家厂商、10 种 wire 格式，连「OpenAI 兼容」都各有残缺',
+                m: '一套统一类型 + 归一化事件流：每个 delta 都自带最新 partial 快照，消费者不用自己拼状态；残缺能力用 8 项 compat 开关逐项关掉；任何失败都不抛异常，编码成流上的 error 事件。',
+                t: '适配层变厚，换来上层循环不认识任何一家厂商',
+            },
+            {
+                n: '02', name: '上下文工程', layer: '② 提示层',
+                q: '每轮到底塞什么？塞多了贵、慢，还淹没重点',
+                m: '常驻的只有 <1000 token 系统提示 + 4 个工具；AGENTS.md、Skills、模板按需注入，Skills 只常驻 name 与 description；放不下就 compaction——threshold 提前压、overflow 事后压，切点绝不在工具结果上。',
+                t: '省 token，但要接受模型多探索几轮',
+            },
+            {
+                n: '03', name: '工具系统', layer: '③ 工具层',
+                q: '参数能不能信、拦截挂哪儿、换个执行环境怎么办',
+                m: 'AgentTool 一个工具三种视角：schema 给模型、label 给人、details 给 UI。执行是四阶段流水线——校验与前置钩子 → execute → 收尾钩子改写脱敏 → 截断保护；执行环境由 Operations 抽走。',
+                t: '多一层包装，换来横切逻辑只写一次',
+            },
+        ].map((r, i) => (
+            <Box key={i} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingTop: 14, paddingBottom: 14, borderBottom: i === 2 ? 'none' : '1px solid rgba(232,238,249,0.10)' }}>
+                <Box style={{ width: 196, flexDirection: 'column' }}>
+                    <Text style={{ fontSize: 34, fontWeight: 'bold', color: 'rgba(42,212,238,0.55)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>{r.n}</Text>
+                    <Text style={{ marginTop: 8, fontSize: 20, fontWeight: 'bold', color: '#E8EEF9' }}>{r.name}</Text>
+                    <Text style={{ marginTop: 6, fontSize: 12.5, color: 'rgba(42,212,238,0.82)', letterSpacing: 1, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r.layer}</Text>
+                </Box>
+
+                <Box style={{ flex: 1, flexDirection: 'column', paddingRight: 24 }}>
+                    <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.50)' }}>问题 · {r.q}</Text>
+                    <Text style={{ marginTop: 9, fontSize: 14.5, color: 'rgba(232,238,249,0.80)', lineHeight: 1.66 }}>{r.m}</Text>
+                </Box>
+
+                <Box style={{ width: 238, flexDirection: 'column', paddingLeft: 18, borderLeft: '1px solid rgba(42,212,238,0.24)' }}>
+                    <Text style={{ fontSize: 11.5, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>取舍</Text>
+                    <Text style={{ marginTop: 8, fontSize: 13.5, color: 'rgba(232,238,249,0.76)', lineHeight: 1.6 }}>{r.t}</Text>
+                </Box>
+            </Box>
+        ))}
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>26 / 37</Text>
+    </Box>
+</Slide>

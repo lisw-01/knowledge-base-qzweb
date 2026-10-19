@@ -8,9 +8,7 @@
     
     配置多个入口，每个入口打包单独 bundle。适合多页应用 MPA。
 
-js
-
-```
+```js
 // webpack
 entry: {
   index: './src/index.js',
@@ -22,9 +20,7 @@ entry: {
     
     `import()` 返回 Promise，触发自动分割。路由懒加载就是这个。
 
-js
-
-```
+```js
 // 访问路由时才加载这个组件
 const Home = () => import('./Home.vue')
 ```

@@ -1,0 +1,58 @@
+<Slide style={{ width: 1280, height: 720, position: 'relative', overflow: 'hidden', background: '#0B1220', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    <Image src="assets/sec_agent.png" style={{ position: 'absolute', left: 0, top: 0, width: 1536, height: 1024 }} />
+
+    <Box style={{ position: 'absolute', left: 0, top: 0, width: 1040, height: 720, background: 'linear-gradient(90deg, rgba(11,18,32,0.97) 0%, rgba(11,18,32,0.84) 50%, rgba(11,18,32,0) 100%)' }} />
+    <Box style={{ position: 'absolute', left: 0, top: 0, width: 6, height: 720, background: 'linear-gradient(180deg, #2AD4EE 0%, rgba(42,212,238,0) 100%)' }} />
+
+    {/* 左：整列分布 */}
+    <Box style={{ position: 'absolute', left: 88, top: 152, width: 700, height: 508, flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 18, color: '#2AD4EE', letterSpacing: 7, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>CHAPTER 02</Text>
+            <Text style={{ marginTop: 22, fontSize: 64, fontWeight: 'bold', color: '#E8EEF9', letterSpacing: 1, lineHeight: 1.2 }}>
+                Agent：
+                <br />
+                <span style={{ color: '#2AD4EE' }}>从“能聊”到“能干”</span>
+            </Text>
+        </Box>
+
+        <Box style={{ flexDirection: 'column' }}>
+            <Box style={{ width: 76, height: 4, background: '#2AD4EE' }} />
+            <Text style={{ marginTop: 24, fontSize: 21, color: 'rgba(232,238,249,0.72)', lineHeight: 1.75 }}>
+                Agent 的核心代码就一个 while 循环；
+                <br />
+                真正的开发量，全在循环之外。
+            </Text>
+        </Box>
+
+        <Box style={{ flexDirection: 'column' }}>
+            <Box style={{ width: 420, height: 1, background: 'rgba(232,238,249,0.18)' }} />
+            <Text style={{ marginTop: 16, fontSize: 13, color: 'rgba(232,238,249,0.42)', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>本章要回答</Text>
+            <Box style={{ marginTop: 12, flexDirection: 'column', gap: 8 }}>
+                {['Agent 的能力边界到底在哪？', '一个 Agent 系统要处理哪些功能点？', '怎么写才不翻车？'].map((t, i) => (
+                    <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                        <Box style={{ width: 5, height: 5, background: '#2AD4EE' }} />
+                        <Text style={{ fontSize: 17, color: 'rgba(232,238,249,0.78)' }}>{t}</Text>
+                    </Box>
+                ))}
+            </Box>
+        </Box>
+    </Box>
+
+    {/* 右：章节号 + 目录 */}
+    <Box style={{ position: 'absolute', right: 88, top: 336, width: 392, flexDirection: 'column', paddingTop: 22, paddingBottom: 22, paddingLeft: 24, paddingRight: 24, background: 'rgba(11,18,32,0.82)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+        <Box style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 76, fontWeight: 'bold', color: 'rgba(42,212,238,0.55)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>02</Text>
+            <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.42)', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', paddingBottom: 8 }}>PAGES 11 – 19</Text>
+        </Box>
+        <Box style={{ marginTop: 18, flexDirection: 'column', gap: 12 }}>
+            {['ReAct 循环与终止条件', '工具、记忆与控制层', '七层功能地图与十条原则'].map((t, i) => (
+                <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <Box style={{ width: 18, height: 1, background: 'rgba(42,212,238,0.6)' }} />
+                    <Text style={{ fontSize: 17, color: 'rgba(232,238,249,0.82)' }}>{t}</Text>
+                </Box>
+            ))}
+        </Box>
+    </Box>
+
+    <Text style={{ position: 'absolute', left: 88, top: 674, fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>11 / 45</Text>
+</Slide>

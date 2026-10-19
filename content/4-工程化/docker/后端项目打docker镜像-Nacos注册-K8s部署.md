@@ -76,7 +76,7 @@ curl http://localhost:3000/health
 FROM node:18-alpine AS builder
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm install --production
+RUN npm ci --omit=dev
 COPY . .
 
 # ---- 阶段2: 运行 ----
@@ -114,10 +114,10 @@ docker build -t node-backend-demo:v1 .
 ### 2.4 本地运行测试
 
 ```bash
-docker run -d -p 30:3000 --name node-backend-demo node-backend-demo:v1
+docker run -d -p 3000:3000 --name node-backend-demo node-backend-demo:v1
 
-curl http://localhost:30/health
-curl http://localhost:30/api/hello
+curl http://localhost:3000/health
+curl http://localhost:3000/api/hello
 ```
 
 ---
@@ -127,14 +127,14 @@ curl http://localhost:30/api/hello
 ### 3.1 打标签
 
 ```bash
-docker tag node-backend-demo:v1 shturl.cc/lSR6/agent/node-backend-demo:v1
+docker tag node-backend-demo:v1 shturl.cc/agent/node-backend-demo:v1
 ```
 
 ### 3.2 登录 & 推送
 
 ```bash
-docker login shturl.cc/lSR6
-docker push shturl.cc/lSR6/agent/node-backend-demo:v1
+docker login shturl.cc
+docker push shturl.cc/agent/node-backend-demo:v1
 ```
 
 > Harbor 项目名 `agent` 需提前在 Harbor 网页创建。
@@ -148,7 +148,7 @@ docker push shturl.cc/lSR6/agent/node-backend-demo:v1
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `docker tag`                                | 给本地镜像**打一个新标签（别名）**，**不会复制镜像文件，只是新增一个引用指针**，磁盘不会变大。                                                                                                     |
 | `node-backend-demo:v1`                      | **本地已有镜像**：镜像名 `node-backend-demo`，版本 tag `v1`                                                                                                          |
-| `shturl.cc/lSR6/agent/node-backend-demo:v1` | **目标镜像完整仓库地址**<br><br>- `shturl.cc`：私有镜像仓库域名（类似 docker.io）<br><br>- `lSR6/agent`：仓库下的命名空间 / 项目分组<br><br>- `node-backend-demo`：镜像名称<br><br>- `v1`：镜像版本标签 |
+| `shturl.cc/agent/node-backend-demo:v1` | **目标镜像完整仓库地址**<br><br>- `shturl.cc`：私有镜像仓库域名（类似 docker.io，只写域名，不能带路径）<br><br>- `agent`：Harbor 里的项目分组<br><br>- `node-backend-demo`：镜像名称<br><br>- `v1`：镜像版本标签 |
 
 ---
 
@@ -174,7 +174,7 @@ kubectl apply -f k8s/namespace.yaml
 
 ```bash
 kubectl create secret docker-registry harbor-secret \
-  --docker-server=shturl.cc/lSR6 \
+  --docker-server=shturl.cc \
   --docker-username=your-username \
   --docker-password=your-password \
   -n agent-system
@@ -205,7 +205,7 @@ spec:
       - name: harbor-secret
       containers:
       - name: node-backend-demo
-        image: shturl.cc/lSR6/agent/node-backend-demo:v1
+        image: shturl.cc/agent/node-backend-demo:v1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
@@ -260,8 +260,8 @@ spec:
   selector:
     app: node-backend-demo   # 必须
   ports:
-  - port: 80   # 内部服务对集群内的端口
-    targetPort: 3000  # 自定义服务对外的端口
+  - port: 80   # Service 对集群内暴露的端口（其他服务访问用这个）
+    targetPort: 3000  # Pod（容器）实际监听的端口，转发目标
   type: ClusterIP
 ```
 
@@ -269,7 +269,7 @@ spec:
 
 | 作用 | 说明 |
 |------|------|
-| **稳定访问入口** | 提供 `node-backend-svc.agent-system.svc.cluster.local:3000` 固定 DNS，Pod 重建不变 |
+| **稳定访问入口** | 提供 `node-backend-svc.agent-system.svc.cluster.local`（Service 端口 80）固定 DNS，Pod 重建不变 |
 | **负载均衡** | 自动将请求分发到所有健康 Pod（replicas: 2） |
 | **服务发现** | K8s 集群内其他服务（网关、Nacos 注册脚本）通过此 DNS 访问 |
 
@@ -296,10 +296,10 @@ kubectl get svc -n agent-system
 # 查看 Pod 日志
 kubectl logs -f deployment/node-backend-demo -n agent-system
 
-# 集群内部访问测试
+# 集群内部访问测试（Service 端口是 80，不用带端口）
 kubectl run curl-test --rm -it --image=curlimages/curl -- sh
-curl http://node-backend-svc.agent-system.svc.cluster.local:3000/health
-curl http://node-backend-svc.agent-system.svc.cluster.local:3000/api/hello
+curl http://node-backend-svc.agent-system.svc.cluster.local/health
+curl http://node-backend-svc.agent-system.svc.cluster.local/api/hello
 ```
 
 ---

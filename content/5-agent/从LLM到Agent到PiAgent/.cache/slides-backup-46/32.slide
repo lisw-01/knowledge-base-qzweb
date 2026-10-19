@@ -1,0 +1,95 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>DESIGN POINT 05</Text>
+                <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.38)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>· 对应 ⑤ 控制层</Text>
+            </Box>
+            <Text style={{ marginTop: 6, fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>Agent 循环：418 行，两层 while</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        <Box style={{ height: 444, flexDirection: 'row', gap: 24 }}>
+
+            {/* 左：代码骨架 */}
+            <Box style={{ width: 590, flexDirection: 'column' }}>
+                <Box style={{ flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>agent-loop.ts · 结构还原</Text>
+                    <Text style={{ fontSize: 12.5, color: 'rgba(232,238,249,0.42)' }}>注释编号对应右侧步骤</Text>
+                </Box>
+
+                <CodeBlock
+                    code={`while (true) {                      // OUTER: keep the conversation going
+  while (true) {                    // INNER: one task, ReAct body
+    emit("turn_start");                              // (1)
+    messages.push(...queue.drain());                 // (2)
+    const a = await streamAssistantResponse();       // (3)
+    if (a.stopReason === "toolUse") {                // (4)
+      for (const c of a.toolCalls) {
+        messages.push(await pipeline.execute(c));
+      }
+    }
+    emit("turn_end");
+    if (a.stopReason !== "toolUse") break;           // (5a) model said stop
+    if (await hooks.shouldStopAfterTurn()) break;    // (5b) host says stop
+  }
+  if (!queue.hasFollowUp()) break;                   // nothing queued: end run
+}`}
+                    language='typescript'
+                    width={590}
+                    fontSize={10.5}
+                    theme='github-dark'
+                />
+
+                <Box style={{ marginTop: 10, flexDirection: 'row', gap: 12, alignItems: 'flex-start' }}>
+                    <Box style={{ width: 4, height: 4, background: '#2AD4EE', marginTop: 7 }} />
+                    <Text style={{ flex: 1, fontSize: 12, color: 'rgba(232,238,249,0.68)', lineHeight: 1.6 }}>
+                        内层跑一个任务的工具循环（调模型 → 执行工具 → 结果拼回去），外层跑多轮续跑——单层 while 写不出「答完接着聊」。
+                    </Text>
+                </Box>
+            </Box>
+
+            {/* 右：逐段说明 */}
+            <Box style={{ flex: 1, flexDirection: 'column' }}>
+                <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>每一段在做什么</Text>
+
+                <Box style={{ marginTop: 10, flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
+                    {[
+                        ['(3) Thought 不是一次 chat', 'transformContext（宿主改上下文）→ convertToLlm（AgentMessage 折叠成原生 Message）→ pi-ai 的 stream()。失败走 never-throw，循环里不用 try/catch。'],
+                        ['(4) Action → Observation', '只有 stopReason = toolUse 才执行；结果无条件拼回 messages，成败都一样（isError 标记）。错误即信息。'],
+                        ['(2) 插话的全部机制', '队列 drain 发生在 turn 边界，抢的是「两轮之间」，不抢正在生成的轮次。内层活着内层消费，内层退了外层消费。'],
+                        ['(5) 停止不是单一条件', 'stopReason（模型说停）+ shouldStopAfterTurn（宿主叫停）+ abort()（用户 Esc），三类原语组合。'],
+                    ].map((r, i) => (
+                        <Box key={i} style={{ flexDirection: 'column', paddingTop: 8, paddingBottom: 8, paddingLeft: 12, borderLeft: '2px solid rgba(42,212,238,0.30)' }}>
+                            <Text style={{ fontSize: 12.5, fontWeight: 'bold', color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[0]}</Text>
+                            <Text style={{ marginTop: 4, fontSize: 12.5, color: 'rgba(232,238,249,0.70)', lineHeight: 1.6 }}>{r[1]}</Text>
+                        </Box>
+                    ))}
+                </Box>
+            </Box>
+        </Box>
+
+        {/* 底部 */}
+        <Box style={{ height: 60, flexDirection: 'row', alignItems: 'center', gap: 18, paddingLeft: 18, paddingRight: 18, background: 'rgba(42,212,238,0.07)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+            <Text style={{ fontSize: 12.5, color: '#2AD4EE', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1.4 }}>与教科书<br />ReAct 的差异</Text>
+            <Box style={{ flex: 1, flexDirection: 'row', gap: 16 }}>
+                {['单层变双层', '插话不打断', '停止原语化', '每一步都是事件'].map((t, i) => (
+                    <Box key={i} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 7 }}>
+                        <Text style={{ fontSize: 12, color: 'rgba(42,212,238,0.60)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>0{i + 1}</Text>
+                        <Text style={{ fontSize: 13, color: '#E8EEF9' }}>{t}</Text>
+                    </Box>
+                ))}
+            </Box>
+        </Box>
+    </Box>
+
+    {/* C 区 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>32 / 46</Text>
+    </Box>
+</Slide>

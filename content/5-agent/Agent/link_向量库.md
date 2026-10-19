@@ -117,7 +117,7 @@ import chromadb
 
 client = chromadb.PersistentClient(path="./vec_store")   # 自动持久化
 
-# 隐士调用DefaultEmbeddingFunction这个函数
+# 隐式调用DefaultEmbeddingFunction这个函数
 # 默认模型 all-MiniLM-L6-v2 是英文模型！中文检索效果很差
 col = client.get_or_create_collection("faq")
 

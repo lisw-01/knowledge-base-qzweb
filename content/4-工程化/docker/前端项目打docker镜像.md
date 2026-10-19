@@ -164,13 +164,13 @@ docker rmi agent-webui:v1
 bash
 
 ```
-#示例harbor地址 shturl.cc/lSR6，项目名：agent
-docker tag agent-webui:v1 shturl.cc/lSR6/agent/agent-webui:v1
+#示例：harbor 域名 shturl.cc，项目名：agent
+docker tag agent-webui:v1 shturl.cc/agent/agent-webui:v1
 ```
 
 > 说明：
 > 
-> - `shturl.cc/lSR6`：你的 harbor 域名
+> - `shturl.cc`：你的 Harbor 域名（**只写域名，可带端口，不能带路径**）
 > - `agent`：harbor 里面的项目名称，要提前在 harbor 网页建好
 > - `agent-webui:v1`：镜像名称版本
 
@@ -179,11 +179,13 @@ docker tag agent-webui:v1 shturl.cc/lSR6/agent/agent-webui:v1
 bash
 
 ```
-docker login shturl.cc/lSR6
+docker login shturl.cc
 ```
 
 输入 harbor 用户名、密码。
 
+> ⚠️ `docker login` 只接受**域名（可带端口）**，不能带 `/路径`。
+> 
 > ⚠️ 如果 harbor 是 http 非 https，docker 需要配置 insecure-registries，否则登录失败。
 > 
 > 编辑 `/etc/docker/daemon.json`
@@ -192,7 +194,7 @@ json
 
 ```
 {
-  "insecure-registries": ["shturl.cc/lSR6"]
+  "insecure-registries": ["shturl.cc"]
 }
 ```
 
@@ -210,7 +212,7 @@ systemctl restart docker
 bash
 
 ```
-docker push shturl.cc/lSR6/agent/agent-webui:v1
+docker push shturl.cc/agent/agent-webui:v1
 ```
 
 推送完成后，去 harbor 网页查看，确认镜像已经存在。
@@ -250,7 +252,7 @@ spec:
     spec:
       containers:
       - name: agent-webui
-        image: shturl.cc/lSR6/agent/agent-webui:v1 # 刚刚推送到仓库镜像地址
+        image: shturl.cc/agent/agent-webui:v1 # 刚刚推送到仓库镜像地址
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80 #容器内部nginx端口
@@ -287,7 +289,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: shturl.cc/fLj49CQ8p # 访问域名，配置DNS解析到ingress controller
+  - host: webui.shturl.cc # 访问域名（只能是域名，不能带路径），配置DNS解析到ingress controller
     http:
       paths:
       - path: /

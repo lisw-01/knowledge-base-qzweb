@@ -1,0 +1,121 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>十条设计原则</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>前三条定生死，后七条定维护成本</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 · 非对称双栏 66:34 */}
+    <Box style={{ height: 516, flexDirection: 'row', gap: 24 }}>
+        {/* 宽侧：十条原则表 */}
+        <Box style={{ flex: 66, flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>TEN PRINCIPLES</Text>
+                <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>违背 = 线上事故的常见来源</Text>
+            </Box>
+            <Box style={{ height: 486, marginTop: 12 }}>
+                <Table
+                    style={{ width: '100%', height: '100%' }}
+                    defaultTextStyle={{ fontSize: 13.5, textAlign: 'left', color: '#E8EEF9' }}
+                    defaultCellStyle={{
+                        border: {
+                            bottom: { width: 1, color: 'rgba(232,238,249,0.12)' },
+                        },
+                    }}
+                    cells={[
+                        [
+                            { text: '1', textStyle: { color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' } },
+                            { text: '能用固定流程就不上自主循环', textStyle: { bold: true, color: '#E8EEF9' } },
+                            '步骤确定就写死 workflow；要「见机行事」才把自主权交给模型',
+                        ],
+                        [
+                            { text: '2', textStyle: { color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' } },
+                            { text: '控制流在代码，判断在模型', textStyle: { bold: true, color: '#E8EEF9' } },
+                            '分支 / 循环 / 重试用代码写死，模型只决定「调哪个工具、传什么参数」',
+                        ],
+                        [
+                            { text: '3', textStyle: { color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' } },
+                            { text: '模型输出 = 不可信输入', textStyle: { bold: true, color: '#2AD4EE' } },
+                            '解析前一律校验格式、类型、范围——幻觉出的参数不该直接进工具',
+                        ],
+                        [
+                            { text: '4', textStyle: { color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' } },
+                            { text: '工具小而专，描述大于实现', textStyle: { bold: true, color: '#E8EEF9' } },
+                            '一个工具干一件事，description 当 API 文档写',
+                        ],
+                        [
+                            { text: '5', textStyle: { color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' } },
+                            { text: '确定性优先', textStyle: { bold: true, color: '#E8EEF9' } },
+                            'temperature = 0，尽量走结构化输出',
+                        ],
+                        [
+                            { text: '6', textStyle: { color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' } },
+                            { text: '失败要回喂，不要吞', textStyle: { bold: true, color: '#E8EEF9' } },
+                            '错误信息拼回上下文，让模型下一轮自救',
+                        ],
+                        [
+                            { text: '7', textStyle: { color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' } },
+                            { text: '高风险必过人', textStyle: { bold: true, color: '#E8EEF9' } },
+                            '删除 / 支付 / 对外发消息，执行前必须人工确认',
+                        ],
+                        [
+                            { text: '8', textStyle: { color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' } },
+                            { text: '可观测先行', textStyle: { bold: true, color: '#E8EEF9' } },
+                            '先加日志，再调 prompt——出了问题不能全靠猜',
+                        ],
+                        [
+                            { text: '9', textStyle: { color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' } },
+                            { text: 'token 是钱，上下文是预算', textStyle: { bold: true, color: '#E8EEF9' } },
+                            '及时摘要压缩，工具返回要精简——膨胀的大头是工具返回',
+                        ],
+                        [
+                            { text: '10', textStyle: { color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' } },
+                            { text: '从最简单的开始', textStyle: { bold: true, color: '#E8EEF9' } },
+                            '单 Agent + 2 个工具 + 一个循环，按需再加复杂度',
+                        ],
+                    ]}
+                />
+            </Box>
+        </Box>
+
+        {/* 窄侧：两档总纲 */}
+        <Box style={{ flex: 34, flexDirection: 'column', paddingLeft: 24, borderLeft: '1px solid rgba(232,238,249,0.12)' }}>
+            <Text style={{ fontSize: 15, color: 'rgba(232,238,249,0.52)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>TWO TIERS</Text>
+
+            <Box style={{ marginTop: 16, paddingTop: 18, paddingBottom: 18, paddingLeft: 18, paddingRight: 18, background: 'rgba(42,212,238,0.12)', border: '1px solid rgba(42,212,238,0.42)', borderRadius: 4 }}>
+                <Box style={{ flexDirection: 'row', alignItems: 'baseline', gap: 10 }}>
+                    <Text style={{ fontSize: 40, fontWeight: 'bold', color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>3</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#E8EEF9' }}>条 · 架构级</Text>
+                </Box>
+                <Text style={{ marginTop: 12, fontSize: 15, color: 'rgba(232,238,249,0.78)', lineHeight: 1.7 }}>
+                    第 1~3 条决定项目<span style={{ color: '#2AD4EE', fontWeight: '600' }}>成败</span>。选错了，后面写得多漂亮都是在给错误的路铺砖。
+                </Text>
+            </Box>
+
+            <Box style={{ marginTop: 14, paddingTop: 18, paddingBottom: 18, paddingLeft: 18, paddingRight: 18, background: 'rgba(22,35,61,0.92)', border: '1px solid rgba(232,238,249,0.12)', borderRadius: 4 }}>
+                <Box style={{ flexDirection: 'row', alignItems: 'baseline', gap: 10 }}>
+                    <Text style={{ fontSize: 40, fontWeight: 'bold', color: 'rgba(232,238,249,0.55)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>7</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#E8EEF9' }}>条 · 工程习惯级</Text>
+                </Box>
+                <Text style={{ marginTop: 12, fontSize: 15, color: 'rgba(232,238,249,0.72)', lineHeight: 1.7 }}>
+                    第 4~10 条决定<span style={{ color: '#E8EEF9', fontWeight: '600' }}>维护成本</span>。单条不致命，累积起来就是「能跑的 demo」和「敢用的系统」的差距。
+                </Text>
+            </Box>
+
+            <Box style={{ marginTop: 'auto', paddingTop: 16, paddingBottom: 16, paddingLeft: 18, paddingRight: 18, background: 'rgba(42,212,238,0.06)', borderLeft: '3px solid #2AD4EE' }}>
+                <Text style={{ fontSize: 17, color: '#E8EEF9', lineHeight: 1.7 }}>
+                    架构级靠<span style={{ color: '#2AD4EE' }}>判断</span>，习惯级靠<span style={{ color: '#2AD4EE' }}>复盘</span>。
+                </Text>
+            </Box>
+        </Box>
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>18 / 46</Text>
+    </Box>
+</Slide>

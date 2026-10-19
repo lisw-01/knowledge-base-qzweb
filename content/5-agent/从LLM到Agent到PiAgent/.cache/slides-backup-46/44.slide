@@ -1,0 +1,93 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>流式链路与前端渲染扩展</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>后端只说「这是什么」，前端决定「长什么样」</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        <Text style={{ fontSize: 15, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>SSE PIPELINE · 一条事件从会话到像素</Text>
+
+        {/* 链路 */}
+        <Box style={{ height: 118, marginTop: 12, flexDirection: 'row', alignItems: 'stretch' }}>
+            {[
+                { n: '01', t: 'session.subscribe', d: '订阅会话事件流' },
+                { n: '02', t: 'relay 事件映射', d: 'PI 事件 → SseEvent' },
+                { n: '03', t: 'SSE 写出', d: 'HTTP 分块推送' },
+                { n: '04', t: '前端分发', d: '按 type 追加 / 插块' },
+                { n: '05', t: 'renderer 注册表', d: 'text · table · chart · kpi' },
+            ].map((s, i) => (
+                <Box key={i} style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                    <Box style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', paddingLeft: 14, paddingRight: 14, background: i === 4 ? 'rgba(42,212,238,0.14)' : 'rgba(22,35,61,0.94)', border: i === 4 ? '1px solid rgba(42,212,238,0.45)' : '1px solid rgba(232,238,249,0.12)', borderRadius: 3 }}>
+                        <Text style={{ fontSize: 12.5, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{s.n}</Text>
+                        <Text style={{ marginTop: 8, fontSize: 16, fontWeight: 'bold', color: '#E8EEF9', lineHeight: 1.35 }}>{s.t}</Text>
+                        <Text style={{ marginTop: 7, fontSize: 12.5, color: 'rgba(232,238,249,0.55)', lineHeight: 1.45 }}>{s.d}</Text>
+                    </Box>
+                    {i < 4 && <Text style={{ width: 22, textAlign: 'center', fontSize: 15, color: 'rgba(42,212,238,0.75)' }}>›</Text>}
+                </Box>
+            ))}
+        </Box>
+
+        {/* 契约 + 渲染路由 */}
+        <Box style={{ flex: 1, marginTop: 16, flexDirection: 'row', gap: 24 }}>
+            <Box style={{ flex: 55, flexDirection: 'column' }}>
+                <Text style={{ fontSize: 15, color: 'rgba(232,238,249,0.52)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>SSE 事件契约（前后端共享）</Text>
+                <Box style={{ flex: 1, marginTop: 10 }}>
+                    <CodeBlock
+                        code={`export type SseEvent =
+  | { type: "connected";       sessionId?: string }
+  | { type: "text_delta";      delta: string }
+  | { type: "thinking_delta";  delta: string }
+  | { type: "turn_reset" }
+  | { type: "tool_start";      tool: string }
+  | { type: "tool_end";        tool: string }
+  | { type: "render";  renderer: RendererType;
+      data: unknown; source?: string }
+  | { type: "error";           message: string }
+  | { type: "done" };`}
+                        language='typescript'
+                        width={596}
+                        fontSize={13}
+                        theme='github-dark'
+                    />
+                </Box>
+            </Box>
+
+            <Box style={{ flex: 45, flexDirection: 'column', paddingLeft: 24, borderLeft: '1px solid rgba(232,238,249,0.12)' }}>
+                <Text style={{ fontSize: 15, color: 'rgba(232,238,249,0.52)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>RENDERER ROUTING</Text>
+                <Box style={{ marginTop: 12, flexDirection: 'column', gap: 9 }}>
+                    {[
+                        ['text', '流式追加的 Markdown 正文'],
+                        ['table', '明细表格'],
+                        ['chart', '柱图 / 折线图 / 饼图'],
+                        ['kpi', '单指标卡片（含同比环比）'],
+                        ['metric_card', '指标口径说明卡'],
+                    ].map((r, i) => (
+                        <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                            <Text style={{ width: 96, fontSize: 13.5, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[0]}</Text>
+                            <Box style={{ width: 1, height: 16, background: 'rgba(232,238,249,0.16)' }} />
+                            <Text style={{ flex: 1, fontSize: 14, color: 'rgba(232,238,249,0.72)' }}>{r[1]}</Text>
+                        </Box>
+                    ))}
+                </Box>
+
+                <Box style={{ marginTop: 'auto', paddingTop: 14, paddingBottom: 14, paddingLeft: 16, paddingRight: 16, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+                    <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>所以</Text>
+                    <Text style={{ marginTop: 8, fontSize: 15.5, color: '#E8EEF9', lineHeight: 1.7 }}>
+                        后端只管发<span style={{ color: '#2AD4EE' }}>结构化事件</span>，前端注册表决定它长什么样。加一种展示 = 注册一个 renderer。
+                    </Text>
+                </Box>
+            </Box>
+        </Box>
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>44 / 46</Text>
+    </Box>
+</Slide>

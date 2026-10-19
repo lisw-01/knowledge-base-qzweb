@@ -1,0 +1,69 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>设计点 ⑦–⑨：事件 · 安全 · 远程</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>最后解决「怎么看清、怎么管住、怎么服务出去」</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 · 上二下一 */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        <Box style={{ flexDirection: 'row', gap: 14, height: 244 }}>
+            {[
+                {
+                    n: '07', name: '事件系统', layer: '⑦ 运营层',
+                    q: 'TUI、RPC、扩展、落盘、记账都要数据，内核不能挨个去调',
+                    m: '两套事件：内核 10 种，覆盖 run / turn / message / 工具执行四档粒度；产品层再叠 queue_update、compaction、auto_retry。message_update 把模型层 delta 原样套壳转发，usage 直接挂在消息上。',
+                    t: '事件面变大，换来所有消费者零耦合',
+                },
+                {
+                    n: '08', name: '安全与可观测', layer: '⑥ + ⑦',
+                    q: '内核不做权限、不给弹窗，那安全靠谁兜',
+                    m: '无沙箱哲学 + 三道防线：容器隔离（最硬）→ tool_call 钩子拦截（最灵活）→ 工具白名单（最简单）。可观测靠 usage 记账、telemetry 抽象与 evals 回归。',
+                    t: '默认裸奔有真实风险，内核才保住 418 行',
+                },
+            ].map((r, i) => (
+                <Box key={i} style={{ flex: 1, flexDirection: 'column', paddingTop: 18, paddingBottom: 16, paddingLeft: 20, paddingRight: 20, background: 'rgba(22,35,61,0.62)', border: '1px solid rgba(42,212,238,0.18)', borderRadius: 4 }}>
+                    <Box style={{ flexDirection: 'row', alignItems: 'baseline', gap: 10 }}>
+                        <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>{r.n}</Text>
+                        <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#E8EEF9' }}>{r.name}</Text>
+                        <Text style={{ marginLeft: 'auto', fontSize: 12, color: 'rgba(232,238,249,0.42)', letterSpacing: 1, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r.layer}</Text>
+                    </Box>
+                    <Text style={{ marginTop: 12, fontSize: 13.5, color: 'rgba(232,238,249,0.50)' }}>问题 · {r.q}</Text>
+                    <Text style={{ marginTop: 8, fontSize: 14, color: 'rgba(232,238,249,0.80)', lineHeight: 1.66 }}>{r.m}</Text>
+                    <Text style={{ marginTop: 'auto', paddingTop: 8, fontSize: 13, color: 'rgba(42,212,238,0.86)' }}>取舍 · {r.t}</Text>
+                </Box>
+            ))}
+        </Box>
+
+        <Box style={{ marginTop: 14, height: 152, flexDirection: 'row', alignItems: 'center', paddingLeft: 22, paddingRight: 22, background: 'rgba(42,212,238,0.06)', border: '1px solid rgba(42,212,238,0.24)', borderRadius: 4 }}>
+            <Box style={{ width: 186, flexDirection: 'column' }}>
+                <Box style={{ flexDirection: 'row', alignItems: 'baseline', gap: 10 }}>
+                    <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>09</Text>
+                    <Text style={{ fontSize: 19, fontWeight: 'bold', color: '#E8EEF9' }}>远程会话栈</Text>
+                </Box>
+                <Text style={{ marginTop: 10, fontSize: 12.5, color: 'rgba(232,238,249,0.45)', letterSpacing: 1, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>七层之外 · 可选</Text>
+            </Box>
+            <Box style={{ flex: 1, flexDirection: 'column', paddingLeft: 20, borderLeft: '1px solid rgba(232,238,249,0.12)' }}>
+                <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.50)' }}>问题 · Web UI 与多端同时看一个会话，传输还各不相同</Text>
+                <Text style={{ marginTop: 8, fontSize: 14.5, color: 'rgba(232,238,249,0.80)', lineHeight: 1.66 }}>CBOR 帧（4 字节长度头 + payload）+ ByteTransport 传输无关 + TranscriptItem 归一化 + 快照/增量同步 + 会话租约。server 不重写循环，内部复用的还是那个 AgentSession。</Text>
+                <Text style={{ marginTop: 8, fontSize: 13, color: 'rgba(42,212,238,0.86)' }}>取舍 · 二进制更省更稳，但接 HTTP/SSE 得自己加网关</Text>
+            </Box>
+        </Box>
+
+        <Box style={{ marginTop: 'auto', flexDirection: 'row', alignItems: 'center', gap: 14, paddingTop: 12, paddingBottom: 12, paddingLeft: 18, paddingRight: 18, borderLeft: '3px solid #2AD4EE' }}>
+            <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>所以</Text>
+            <Text style={{ fontSize: 16.5, color: '#E8EEF9', lineHeight: 1.55, flex: 1 }}>
+                九点连起来是一套骨架：适配 → 上下文 → 工具 → 会话 → 循环 → 扩展 → 事件 → 护栏 → 远程。照着填，就是一个能上生产的 Agent。
+            </Text>
+        </Box>
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>28 / 37</Text>
+    </Box>
+</Slide>

@@ -1,0 +1,84 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>学习路径：五个阶段</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>从「手写一遍」到「工程化」，每个阶段解决一类新问题</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        {/* 上半 · 五阶段时间轴 */}
+        <Box style={{ height: 300, flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 15, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>LEARNING PATH · 5 STAGES</Text>
+                <Text style={{ fontSize: 15, color: 'rgba(232,238,249,0.42)' }}>难度与工程量 : 依次递增 →</Text>
+            </Box>
+
+            <Box style={{ position: 'relative', marginTop: 24, flex: 1 }}>
+                <Box style={{ position: 'absolute', left: 12, right: 12, top: 13, height: 2, background: 'linear-gradient(90deg, rgba(42,212,238,0.85) 0%, rgba(42,212,238,0.18) 100%)' }} />
+                <Box style={{ flexDirection: 'row', gap: 14 }}>
+                    {[
+                        { n: '01', t: '手写 ReAct', d: '自己拼 Prompt、自己正则解析输出，把循环每个环节摸一遍。', o: '一个能跑的 while 循环' },
+                        { n: '02', t: '原生 FC', d: '改用 JSON Schema 声明工具，模型直接返回结构化 tool_calls。', o: '稳定的工具契约' },
+                        { n: '03', t: '记忆与 RAG', d: '上下文裁剪、摘要压缩、向量检索，让 Agent 记得住事。', o: '可控的上下文预算' },
+                        { n: '04', t: '多工具实战', d: '工具变多、结果变脏、失败变常态，开始处理真实的边界。', o: '敢给业务用的 Agent' },
+                        { n: '05', t: '框架与工程', d: '上框架、做观测、加护栏、建评测，从 demo 走到系统。', o: '可维护的 Agent 系统' },
+                    ].map((s, i) => (
+                        <Box key={i} style={{ flex: 1, flexDirection: 'column' }}>
+                            <Box style={{ width: 28, height: 28, borderRadius: 14, background: '#0B1220', border: '2px solid #2AD4EE', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ fontSize: 12, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{s.n}</Text>
+                            </Box>
+                            <Text style={{ marginTop: 18, fontSize: 21, fontWeight: 'bold', color: '#E8EEF9' }}>{s.t}</Text>
+                            <Text style={{ marginTop: 10, fontSize: 15, color: 'rgba(232,238,249,0.66)', lineHeight: 1.7 }}>{s.d}</Text>
+                            <Box style={{ marginTop: 'auto', paddingTop: 8, paddingBottom: 8, paddingLeft: 10, paddingRight: 10, background: 'rgba(22,35,61,0.92)', borderLeft: '2px solid rgba(42,212,238,0.55)' }}>
+                                <Text style={{ fontSize: 13, color: '#2AD4EE', lineHeight: 1.45 }}>产出 · {s.o}</Text>
+                            </Box>
+                        </Box>
+                    ))}
+                </Box>
+            </Box>
+        </Box>
+
+        {/* 下半 · 左说明 + 右判断 */}
+        <Box style={{ height: 200, marginTop: 16, flexDirection: 'row', gap: 24 }}>
+            <Box style={{ flex: 60, flexDirection: 'column', paddingRight: 24, borderRight: '1px solid rgba(232,238,249,0.12)' }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#E8EEF9' }}>为什么顺序不能颠倒</Text>
+                <Box style={{ marginTop: 12, flexDirection: 'column', gap: 9 }}>
+                    {[
+                        ['阶段 1–2 是「看穿黑盒」', '：不亲手拼一次 Prompt，你永远不知道模型为什么不听话。'],
+                        ['阶段 3 是「成本与记忆」', '：上下文是所有 Agent 问题的共同源头。'],
+                        ['阶段 4 是「边界」', '：真实世界的错误，几乎都发生在工具与数据的接缝处。'],
+                        ['阶段 5 才轮到工程化', '：没有前四步的直觉，框架只会让你更糊涂。'],
+                    ].map((p, i) => (
+                        <Box key={i} style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 10 }}>
+                            <Box style={{ width: 5, height: 5, background: '#2AD4EE', marginTop: 8 }} />
+                            <Text style={{ fontSize: 16, color: 'rgba(232,238,249,0.72)', lineHeight: 1.6, flex: 1 }}>
+                                <span style={{ color: '#E8EEF9', fontWeight: '600' }}>{p[0]}</span>{p[1]}
+                            </Text>
+                        </Box>
+                    ))}
+                </Box>
+            </Box>
+
+            <Box style={{ flex: 40, flexDirection: 'column', justifyContent: 'center', paddingTop: 20, paddingBottom: 20, paddingLeft: 22, paddingRight: 22, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 16, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>所以</Text>
+                <Text style={{ marginTop: 14, fontSize: 19, color: '#E8EEF9', lineHeight: 1.7 }}>
+                    先手写，再上框架。
+                    <br />
+                    跳过手写阶段，出问题时你连
+                    <span style={{ color: '#2AD4EE' }}>日志该看哪一行</span>
+                    都不知道。
+                </Text>
+            </Box>
+        </Box>
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>15 / 34</Text>
+    </Box>
+</Slide>

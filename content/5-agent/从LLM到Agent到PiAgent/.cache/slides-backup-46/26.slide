@@ -1,0 +1,115 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>DESIGN POINT 01</Text>
+                <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.38)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>· 对应 ① 模型层</Text>
+            </Box>
+            <Text style={{ marginTop: 6, fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>模型适配：40 家厂商，一个 stream()</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        <Box style={{ height: 470, flexDirection: 'row', gap: 26 }}>
+
+            {/* 左：统一类型 */}
+            <Box style={{ width: 386, flexDirection: 'column', paddingRight: 24, borderRight: '1px solid rgba(232,238,249,0.12)' }}>
+                <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>TYPES</Text>
+                <Text style={{ marginTop: 10, fontSize: 21, fontWeight: 'bold', color: '#E8EEF9', lineHeight: 1.45 }}>
+                    适配层只产出
+                    <br />
+                    两样东西
+                </Text>
+                <Text style={{ marginTop: 8, fontSize: 13.5, color: 'rgba(232,238,249,0.55)', lineHeight: 1.6 }}>统一类型 + 归一化事件流。这两样定好，上层就稳了。</Text>
+
+                <Box style={{ marginTop: 14, flexDirection: 'column', gap: 7 }}>
+                    {[
+                        ['Model<TApi>', 'id · api · baseUrl · contextWindow · compat'],
+                        ['Context', 'systemPrompt? · messages[] · tools?'],
+                        ['Message', 'User | Assistant | ToolResult'],
+                        ['Usage', 'input · output · cacheRead · cacheWrite · cost'],
+                        ['StopReason', 'stop · length · toolUse · error · aborted'],
+                    ].map((r, i) => (
+                        <Box key={i} style={{ flexDirection: 'column', paddingTop: 6, paddingBottom: 6, paddingLeft: 11, borderLeft: '2px solid rgba(42,212,238,0.42)' }}>
+                            <Text style={{ fontSize: 13, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[0]}</Text>
+                            <Text style={{ marginTop: 3, fontSize: 12, color: 'rgba(232,238,249,0.58)' }}>{r[1]}</Text>
+                        </Box>
+                    ))}
+                </Box>
+
+                <Box style={{ marginTop: 'auto', flexDirection: 'row', alignItems: 'flex-end', gap: 10 }}>
+                    <Text style={{ fontSize: 40, fontWeight: 'bold', color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>10</Text>
+                    <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.62)', lineHeight: 1.5, paddingBottom: 4 }}>
+                        种 wire 格式
+                        <br />
+                        约 40 家 · 300+ 模型
+                    </Text>
+                </Box>
+            </Box>
+
+            {/* 右：归一化 */}
+            <Box style={{ flex: 1, flexDirection: 'column' }}>
+                <Box style={{ flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>AssistantMessageEvent</Text>
+                    <Text style={{ fontSize: 12.5, color: 'rgba(232,238,249,0.42)' }}>所有适配器实现的同一个出口契约</Text>
+                </Box>
+
+                <Box style={{ marginTop: 8, flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
+                    {['start', 'text_start / delta / end', 'thinking_*', 'toolcall_*', 'done', 'error'].map((t, i) => (
+                        <Box key={i} style={{ paddingTop: 4, paddingBottom: 4, paddingLeft: 9, paddingRight: 9, background: 'rgba(42,212,238,0.09)', border: '1px solid rgba(42,212,238,0.24)', borderRadius: 3 }}>
+                            <Text style={{ fontSize: 11.5, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{t}</Text>
+                        </Box>
+                    ))}
+                </Box>
+
+                <Text style={{ marginTop: 14, fontSize: 13, color: 'rgba(232,238,249,0.46)' }}>type 是怎么翻译的：以 anthropic-messages 为例</Text>
+                <Box style={{ marginTop: 6, flexDirection: 'column' }}>
+                    <Box style={{ flexDirection: 'row', paddingBottom: 5, borderBottom: '1px solid rgba(232,238,249,0.14)' }}>
+                        <Text style={{ width: 300, fontSize: 11.5, color: 'rgba(232,238,249,0.40)', letterSpacing: 1 }}>厂商原始事件</Text>
+                        <Text style={{ flex: 1, fontSize: 11.5, color: 'rgba(232,238,249,0.40)', letterSpacing: 1 }}>归一化后</Text>
+                    </Box>
+                    {[
+                        ['message_start', 'start（携带空 partial）'],
+                        ['content_block_start (text / thinking / tool_use)', 'text_start / thinking_start / toolcall_start'],
+                        ['content_block_delta (text_delta / input_json_delta)', '对应的 *_delta'],
+                        ['content_block_stop', '对应的 *_end'],
+                        ['message_delta 的 stop_reason', 'done，reason 折叠成枚举'],
+                    ].map((r, i) => (
+                        <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 6, paddingBottom: 6, borderBottom: '1px solid rgba(232,238,249,0.07)' }}>
+                            <Text style={{ width: 300, fontSize: 12, color: 'rgba(232,238,249,0.66)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[0]}</Text>
+                            <Text style={{ flex: 1, fontSize: 12.5, color: '#E8EEF9', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[1]}</Text>
+                        </Box>
+                    ))}
+                </Box>
+
+                <Box style={{ marginTop: 12, flexDirection: 'row', gap: 12 }}>
+                    <Box style={{ flex: 1, paddingTop: 9, paddingBottom: 9, paddingLeft: 12, paddingRight: 12, background: 'rgba(22,35,61,0.72)', border: '1px solid rgba(232,238,249,0.10)', borderRadius: 3 }}>
+                        <Text style={{ fontSize: 12.5, color: '#2AD4EE', fontWeight: 'bold' }}>② 没有边界就造边界</Text>
+                        <Text style={{ marginTop: 5, fontSize: 12, color: 'rgba(232,238,249,0.68)', lineHeight: 1.55 }}>OpenAI 的 chunk 流没有 content_block：首次见 delta.content 补发 text_start，finish 时补 text_end；tool_calls 按 index 映射成 contentIndex。</Text>
+                    </Box>
+                    <Box style={{ flex: 1, paddingTop: 9, paddingBottom: 9, paddingLeft: 12, paddingRight: 12, background: 'rgba(22,35,61,0.72)', border: '1px solid rgba(232,238,249,0.10)', borderRadius: 3 }}>
+                        <Text style={{ fontSize: 12.5, color: '#2AD4EE', fontWeight: 'bold' }}>③ 终止原因折叠</Text>
+                        <Text style={{ marginTop: 5, fontSize: 12, color: 'rgba(232,238,249,0.68)', lineHeight: 1.55 }}>end_turn / stop → stop；max_tokens / length → length；tool_use / tool_calls → toolUse。加 error / aborted 即 StopReason 全集。</Text>
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
+
+        {/* 底部通栏 */}
+        <Box style={{ height: 46, flexDirection: 'row', alignItems: 'center', gap: 14, paddingLeft: 18, paddingRight: 18, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+            <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>关键</Text>
+            <Text style={{ flex: 1, fontSize: 15, color: '#E8EEF9', lineHeight: 1.5 }}>
+                每个 delta 都携带最新的完整 <span style={{ color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>partial</span>：归一化不只是改名，还把状态模型也统一了——消费者拿任何一个事件都是自洽快照。
+            </Text>
+        </Box>
+    </Box>
+
+    {/* C 区 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>26 / 46</Text>
+    </Box>
+</Slide>

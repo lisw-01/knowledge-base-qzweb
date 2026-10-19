@@ -1,0 +1,66 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>极简的代价与回报</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>三个数字，说明它凭什么又快又便宜</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        {/* 三个数字 */}
+        <Box style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-start', paddingBottom: 26, borderBottom: '1px solid rgba(232,238,249,0.12)' }}>
+            {[
+                { num: '418', unit: '行', size: 132, label: '核心 Agent 循环的代码量', note: '同类工具的核心实现通常是数千行 TypeScript' },
+                { num: '4', unit: '个', size: 104, label: '默认工具', note: 'read · write · edit · bash，够完成绝大多数编码任务' },
+                { num: '1/3', unit: '×', size: 84, label: '每轮发送的上下文', note: 'Databricks 基准测试的实测结果' },
+            ].map((c, i) => (
+                <Box key={i} style={{ flex: i === 0 ? 40 : 30, flexDirection: 'column', paddingLeft: i === 0 ? 0 : 34, paddingRight: 34, borderRight: i === 2 ? 'none' : '1px solid rgba(232,238,249,0.10)' }}>
+                    <Box style={{ height: 146, flexDirection: 'row', alignItems: 'flex-end', gap: 8 }}>
+                        <Text style={{ fontSize: c.size, fontWeight: 'bold', color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 0.92 }}>{c.num}</Text>
+                        <Text style={{ fontSize: 24, color: 'rgba(42,212,238,0.62)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', paddingBottom: 10 }}>{c.unit}</Text>
+                    </Box>
+                    <Text style={{ marginTop: 14, fontSize: 20, fontWeight: '600', color: '#E8EEF9' }}>{c.label}</Text>
+                    <Text style={{ marginTop: 8, fontSize: 15, color: 'rgba(232,238,249,0.58)', lineHeight: 1.65 }}>{c.note}</Text>
+                </Box>
+            ))}
+        </Box>
+
+        {/* 补充说明 */}
+        <Box style={{ height: 132, marginTop: 18, flexDirection: 'row', gap: 24 }}>
+            <Box style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 18, paddingLeft: 20, paddingRight: 20, background: 'rgba(22,35,61,0.92)', border: '1px solid rgba(232,238,249,0.10)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 40, fontWeight: 'bold', color: 'rgba(232,238,249,0.82)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>&lt;1000</Text>
+                <Text style={{ flex: 1, fontSize: 15.5, color: 'rgba(232,238,249,0.68)', lineHeight: 1.7 }}>
+                    <span style={{ color: '#E8EEF9', fontWeight: '600' }}>系统提示的 token 数</span>
+                    <br />
+                    别家动辄数千。省掉的每一行，都会在每一轮里重复付费。
+                </Text>
+            </Box>
+            <Box style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 18, paddingLeft: 20, paddingRight: 20, background: 'rgba(22,35,61,0.92)', border: '1px solid rgba(232,238,249,0.10)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 40, fontWeight: 'bold', color: 'rgba(232,238,249,0.82)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>0</Text>
+                <Text style={{ flex: 1, fontSize: 15.5, color: 'rgba(232,238,249,0.68)', lineHeight: 1.7 }}>
+                    <span style={{ color: '#E8EEF9', fontWeight: '600' }}>内置的编排与审批机制</span>
+                    <br />
+                    不塞进内核，能力全部外置成扩展——按需注入。
+                </Text>
+            </Box>
+        </Box>
+
+        {/* 判断 */}
+        <Box style={{ height: 62, marginTop: 18, flexDirection: 'row', alignItems: 'center', gap: 16, paddingLeft: 20, paddingRight: 20, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+            <Text style={{ fontSize: 18, color: '#2AD4EE', fontWeight: 'bold', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>所以</Text>
+            <Box style={{ width: 1, height: 28, background: 'rgba(42,212,238,0.35)' }} />
+            <Text style={{ fontSize: 18, color: '#E8EEF9', flex: 1, lineHeight: 1.6 }}>
+                省下来的上下文，就是省下来的<span style={{ color: '#2AD4EE' }}>钱</span>和<span style={{ color: '#2AD4EE' }}>准确率</span>。
+            </Text>
+        </Box>
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>22 / 34</Text>
+    </Box>
+</Slide>

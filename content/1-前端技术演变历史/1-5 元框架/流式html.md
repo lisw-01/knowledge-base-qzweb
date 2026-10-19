@@ -1,6 +1,6 @@
 # 流式 HTML（Streaming HTML / 流式 SSR）
 
-> 一句话：**传统 SSR 要等整个页面全部渲染完成，一次性返回完整 HTML；流式 HTML 基于 HTTP 分块编码（Chunked Transfer Encoding），服务端一边渲染，一边把 HTML 分片（chunk）陆续发给浏览器，浏览器收到一块就直接渲染一块，不用等全部内容**Next.js
+> 一句话：**传统 SSR 要等整个页面全部渲染完成，一次性返回完整 HTML；流式 HTML 基于 HTTP 分块编码（Chunked Transfer Encoding），服务端一边渲染，一边把 HTML 分片（chunk）陆续发给浏览器，浏览器收到一块就直接渲染一块，不用等全部内容**
 
 ## 传统 SSR（非流式）
 

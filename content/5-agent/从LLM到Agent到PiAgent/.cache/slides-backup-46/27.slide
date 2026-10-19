@@ -1,0 +1,91 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>DESIGN POINT 01 · 续</Text>
+                <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.38)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>· 归一化之后的收尾</Text>
+            </Box>
+            <Text style={{ marginTop: 6, fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>「OpenAI 兼容」的残缺，逐个关掉</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 */}
+    <Box style={{ height: 516, flexDirection: 'row', gap: 30 }}>
+        {/* 左：compat 表 */}
+        <Box style={{ flex: 1, flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between' }}>
+                <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>COMPAT · 8 个开关</Text>
+                <Text style={{ fontSize: 12.5, color: 'rgba(232,238,249,0.42)' }}>接国产服务，前两项最常手动关</Text>
+            </Box>
+
+            <Box style={{ marginTop: 12, flex: 1, flexDirection: 'column' }}>
+                {[
+                    ['supportsDeveloperRole', '改用 system 角色发系统提示'],
+                    ['supportsReasoningEffort', '不发 reasoning_effort 参数'],
+                    ['supportsStore', '不传 store 字段，禁用服务端留存'],
+                    ['supportsUsageInStreaming', '不解析流里的 usage'],
+                    ['supportsFinishReason', '忽略 finish_reason，只认内容结束'],
+                    ['maxTokensField', '换 max tokens 的字段名'],
+                    ['requiresToolResultName', '给工具结果补上 name 字段'],
+                    ['requiresAssistantAfterToolResult', '工具结果后补一条 assistant 消息'],
+                ].map((r, i) => (
+                    <Box key={i} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', borderBottom: i === 7 ? 'none' : '1px solid rgba(232,238,249,0.08)' }}>
+                        <Text style={{ width: 300, fontSize: 13, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[0]}</Text>
+                        <Text style={{ flex: 1, fontSize: 13.5, color: 'rgba(232,238,249,0.80)' }}>{r[1]}</Text>
+                    </Box>
+                ))}
+            </Box>
+
+            <Text style={{ marginTop: 10, fontSize: 13, color: 'rgba(232,238,249,0.50)', lineHeight: 1.6 }}>
+                默认按 baseUrl 自动探测；接自建厂商时，在 <span style={{ color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>models.json</span> 写 provider + baseUrl + api + models 即可，不动一行适配代码。
+            </Text>
+        </Box>
+
+        {/* 右：三块 */}
+        <Box style={{ width: 420, flexDirection: 'column', gap: 12 }}>
+            <Box style={{ flexDirection: 'column', paddingTop: 14, paddingBottom: 14, paddingLeft: 16, paddingRight: 16, background: 'rgba(42,212,238,0.07)', border: '1px solid rgba(42,212,238,0.26)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>NEVER THROW</Text>
+                <Text style={{ marginTop: 8, fontSize: 15.5, fontWeight: 'bold', color: '#E8EEF9', lineHeight: 1.4 }}>错误也是数据</Text>
+                <Text style={{ marginTop: 6, fontSize: 13, color: 'rgba(232,238,249,0.74)', lineHeight: 1.62 }}>
+                    StreamFn 一旦调用，请求、模型、运行时的任何失败都必须编码成流上的 error 事件（stopReason = error / aborted），不允许同步抛出。上层循环因此一个 try/catch 都不用写。
+                </Text>
+            </Box>
+
+            <Box style={{ flexDirection: 'column', paddingTop: 14, paddingBottom: 14, paddingLeft: 16, paddingRight: 16, background: 'rgba(22,35,61,0.72)', border: '1px solid rgba(232,238,249,0.10)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>LAZY LOAD</Text>
+                <Text style={{ marginTop: 8, fontSize: 13, color: 'rgba(232,238,249,0.74)', lineHeight: 1.62 }}>
+                    <span style={{ color: '#E8EEF9', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>lazyApi(() =&gt; import(...))</span> 把每家 SDK 包成 ProviderStreams，首次调用才动态加载。不用 Claude，就不加载 Anthropic SDK。
+                </Text>
+            </Box>
+
+            <Box style={{ flex: 1, flexDirection: 'column', paddingTop: 14, paddingBottom: 12, paddingLeft: 16, paddingRight: 16, background: 'rgba(22,35,61,0.72)', border: '1px solid rgba(232,238,249,0.10)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>AUTH · 四级优先</Text>
+                <Box style={{ marginTop: 9, flexDirection: 'column', gap: 6 }}>
+                    {[
+                        ['1', '--api-key', '仅内存，不落盘'],
+                        ['2', 'auth.json', 'OAuth 登录态也在这'],
+                        ['3', '环境变量', 'ANTHROPIC_API_KEY 等'],
+                        ['4', 'models.json', 'provider.apiKey，可引用变量'],
+                    ].map((r, i) => (
+                        <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                            <Text style={{ width: 14, fontSize: 12, color: 'rgba(42,212,238,0.66)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[0]}</Text>
+                            <Text style={{ width: 96, fontSize: 12.5, color: '#E8EEF9', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[1]}</Text>
+                            <Text style={{ flex: 1, fontSize: 12.5, color: 'rgba(232,238,249,0.56)' }}>{r[2]}</Text>
+                        </Box>
+                    ))}
+                </Box>
+                <Text style={{ marginTop: 'auto', paddingTop: 10, fontSize: 10.5, color: 'rgba(232,238,249,0.44)', lineHeight: 1.5 }}>
+                    SDK 侧：modelRuntime.setRuntimeApiKey("anthropic", key) 运行时注入。
+                </Text>
+            </Box>
+        </Box>
+    </Box>
+
+    {/* 底部 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>27 / 46</Text>
+    </Box>
+</Slide>

@@ -127,7 +127,7 @@ TypeScript 源码中若目标为 ESM，同样需要上述写法。若目标为 C
 | 格式 | 加载 JSON |
 |------|----------|
 | CJS (`.js`) | `const data = require('./data.json')` ✅ |
-| ESM (`.mjs`) | `import data from './data.json' with { type: 'json' }` ✅（Node 18.1+，需 `--experimental-json-modules` 已稳定） |
+| ESM (`.mjs`) | `import data from './data.json' with { type: 'json' }` ✅（Node 22 起稳定；Node 18.19 / 20.10 起可用，需 `--experimental-json-modules`） |
 | ESM (旧写法) | `import { createRequire } from 'node:module'; const req = createRequire(import.meta.url); const data = req('./data.json')` |
 | `.ts` | 源码用 `import`，需 `tsconfig` 设置 `resolveJsonModule: true` |
 

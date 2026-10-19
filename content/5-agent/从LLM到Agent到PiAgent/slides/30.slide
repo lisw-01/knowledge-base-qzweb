@@ -1,0 +1,107 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>DESIGN POINT 03</Text>
+                <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.38)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>· 对应 ③ 工具层</Text>
+            </Box>
+            <Text style={{ marginTop: 6, fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>工具系统：三种视角，四段流水</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        <Box style={{ height: 452, flexDirection: 'row', gap: 28 }}>
+
+            {/* 左：类型与视角 */}
+            <Box style={{ width: 470, flexDirection: 'column', paddingRight: 24, borderRight: '1px solid rgba(232,238,249,0.12)' }}>
+                <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>AgentTool · 一个对象三种视角</Text>
+
+                <Box style={{ marginTop: 12, flexDirection: 'column', gap: 8 }}>
+                    {[
+                        ['给模型', 'name · description · parameters', '模型靠这三样决定调不调。description 写得烂，模型 90% 会选错工具。', 'rgba(42,212,238,0.16)'],
+                        ['给人', 'label', '终端里显示的人类可读名，不影响模型决策。', 'rgba(42,212,238,0.09)'],
+                        ['给 UI / 扩展', 'details', '结构化细节，不进模型上下文，前端拿去渲染。', 'rgba(42,212,238,0.06)'],
+                    ].map((r, i) => (
+                        <Box key={i} style={{ flexDirection: 'column', paddingTop: 10, paddingBottom: 10, paddingLeft: 13, paddingRight: 13, background: r[3], border: '1px solid rgba(42,212,238,0.20)', borderRadius: 3 }}>
+                            <Box style={{ flexDirection: 'row', alignItems: 'baseline', gap: 10 }}>
+                                <Text style={{ fontSize: 12.5, color: '#2AD4EE', fontWeight: 'bold' }}>{r[0]}</Text>
+                                <Text style={{ fontSize: 11.5, color: 'rgba(232,238,249,0.82)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[1]}</Text>
+                            </Box>
+                            <Text style={{ marginTop: 5, fontSize: 12, color: 'rgba(232,238,249,0.60)', lineHeight: 1.55 }}>{r[2]}</Text>
+                        </Box>
+                    ))}
+                </Box>
+
+                <Text style={{ marginTop: 14, fontSize: 13, color: 'rgba(232,238,249,0.46)' }}>返回值同样是分开的</Text>
+                <Box style={{ marginTop: 8, flexDirection: 'column', gap: 5 }}>
+                    {[
+                        ['content', '给模型看，进上下文'],
+                        ['details', '给 UI 看，不进上下文'],
+                        ['terminate', '让整个 agent 直接停下'],
+                    ].map((r, i) => (
+                        <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                            <Text style={{ width: 78, fontSize: 12, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[0]}</Text>
+                            <Text style={{ flex: 1, fontSize: 12.5, color: 'rgba(232,238,249,0.66)' }}>{r[1]}</Text>
+                        </Box>
+                    ))}
+                </Box>
+
+                <Box style={{ marginTop: 'auto', flexDirection: 'row', alignItems: 'center', gap: 14, paddingTop: 11, paddingBottom: 11, paddingLeft: 14, paddingRight: 14, background: 'rgba(22,35,61,0.72)', border: '1px solid rgba(232,238,249,0.10)', borderRadius: 3 }}>
+                    <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>8</Text>
+                    <Text style={{ flex: 1, fontSize: 12.5, color: 'rgba(232,238,249,0.70)', lineHeight: 1.55 }}>
+                        内置工具，默认只挂 4 个（read / bash / edit / write）。其余按白名单启用——工具越多，模型选错率越高。
+                    </Text>
+                </Box>
+            </Box>
+
+            {/* 右：四阶段 */}
+            <Box style={{ flex: 1, flexDirection: 'column' }}>
+                <Box style={{ flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>PIPELINE · 四阶段</Text>
+                    <Text style={{ fontSize: 12.5, color: 'rgba(232,238,249,0.42)' }}>包装在 execute 之外，不在工具内部</Text>
+                </Box>
+
+                <Box style={{ marginTop: 10, flex: 1, flexDirection: 'column', gap: 7 }}>
+                    {[
+                        { n: '①', t: 'Prepare', s: 'Schema 校验 + beforeToolCall', d: '钩子返回 { block: true, reason } → 不执行，reason 包成失败结果回喂模型。合法 ≠ 安全。', tag: '钩子 · 可拦截', c: 'rgba(42,212,238,0.11)' },
+                        { n: '②', t: 'Execute', s: 'tool.execute(...)', d: '唯一必须自己写的一段。signal 接 Esc 中止，onUpdate 报进度，长任务两个都要接。', tag: '业务 · 必写', c: 'rgba(22,35,61,0.72)' },
+                        { n: '③', t: 'Finalize', s: 'afterToolCall', d: '返回新 result 就覆盖原结果——脱敏、改写、补记账都在这。undefined 原样放行。', tag: '钩子 · 可改写', c: 'rgba(42,212,238,0.07)' },
+                        { n: '④', t: '截断保护', s: 'stopReason = length', d: '全部 tool call 直接标记失败，残缺参数绝不执行。', tag: '兜底 · 无干预点', c: 'rgba(22,35,61,0.50)' },
+                    ].map((r, i) => (
+                        <Box key={i} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 13, paddingTop: 7, paddingBottom: 7, paddingLeft: 14, paddingRight: 14, background: r.c, border: '1px solid rgba(42,212,238,0.16)', borderRadius: 3 }}>
+                            <Text style={{ fontSize: 22, color: 'rgba(42,212,238,0.72)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1 }}>{r.n}</Text>
+                            <Box style={{ flex: 1, flexDirection: 'column' }}>
+                                <Box style={{ flexDirection: 'row', alignItems: 'baseline', gap: 10 }}>
+                                    <Text style={{ fontSize: 15.5, fontWeight: 'bold', color: '#E8EEF9' }}>{r.t}</Text>
+                                    <Text style={{ fontSize: 11, color: 'rgba(42,212,238,0.78)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r.s}</Text>
+                                </Box>
+                                <Text style={{ marginTop: 4, fontSize: 11.5, color: 'rgba(232,238,249,0.66)', lineHeight: 1.5 }}>{r.d}</Text>
+                            </Box>
+                            <Text style={{ width: 92, fontSize: 10.5, color: 'rgba(232,238,249,0.40)', textAlign: 'right', lineHeight: 1.4 }}>{r.tag}</Text>
+                        </Box>
+                    ))}
+                </Box>
+            </Box>
+        </Box>
+
+        {/* 底部：分界 */}
+        <Box style={{ height: 64, flexDirection: 'row', alignItems: 'center', gap: 16, paddingLeft: 18, paddingRight: 18, background: 'rgba(42,212,238,0.07)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+            <Text style={{ fontSize: 12.5, color: '#2AD4EE', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1.4 }}>框架定机制<br />开发者填策略</Text>
+            <Text style={{ flex: 1, fontSize: 13.5, color: 'rgba(232,238,249,0.86)', lineHeight: 1.55 }}>
+                默认裸奔也能跑：不写钩子，校验和截断保护照样生效。拦截、审计、脱敏、终止是可选增强——一个钩子管住所有工具，插入点收敛了，但没有消失。
+            </Text>
+            <Text style={{ fontSize: 12, color: 'rgba(232,238,249,0.50)', lineHeight: 1.45, textAlign: 'right' }}>
+                Operations 抽象<br />本地 / 容器 / SSH 可换
+            </Text>
+        </Box>
+    </Box>
+
+    {/* C 区 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>30 / 45</Text>
+    </Box>
+</Slide>

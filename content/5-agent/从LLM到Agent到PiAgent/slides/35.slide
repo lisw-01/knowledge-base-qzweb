@@ -1,0 +1,123 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>DESIGN POINT 07</Text>
+                <Text style={{ fontSize: 13, color: 'rgba(232,238,249,0.38)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>· 对应 ⑦ 运营层</Text>
+            </Box>
+            <Text style={{ marginTop: 6, fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>事件系统：两套事件，四档粒度</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        <Box style={{ height: 452, flexDirection: 'row', gap: 26 }}>
+
+            {/* 左：四档 */}
+            <Box style={{ width: 620, flexDirection: 'column', paddingRight: 24, borderRight: '1px solid rgba(232,238,249,0.12)' }}>
+                <Box style={{ flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>AgentEvent · 10 种</Text>
+                    <Text style={{ fontSize: 12, color: 'rgba(232,238,249,0.42)' }}>pi-agent-core 的稳定契约</Text>
+                </Box>
+
+                <Box style={{ marginTop: 10, flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
+                    {[
+                        { tag: 'RUN', d: '一次任务的首尾', list: ['agent_start', 'agent_end'] },
+                        { tag: 'TURN', d: '每一轮的首尾', list: ['turn_start', 'turn_end'] },
+                        { tag: 'MESSAGE', d: '一条助手消息 · 流式最小粒度', list: ['message_start', 'message_update', 'message_end'] },
+                        { tag: 'EXECUTION', d: '每个工具调用 · 成败都发', list: ['tool_execution_start', 'tool_execution_update', 'tool_execution_end'] },
+                    ].map((r, i) => (
+                        <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10, paddingBottom: 10, borderTop: '1px solid rgba(232,238,249,0.09)' }}>
+                            <Box style={{ width: 116, flexDirection: 'column' }}>
+                                <Text style={{ fontSize: 12.5, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r.tag}</Text>
+                                <Text style={{ marginTop: 2, fontSize: 10.5, color: 'rgba(232,238,249,0.38)' }}>{r.list.length} 种</Text>
+                            </Box>
+                            <Box style={{ flex: 1, flexDirection: 'column', gap: 4 }}>
+                                {r.list.map((e, j) => (
+                                    <Text key={j} style={{ fontSize: 11.5, color: '#E8EEF9', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{e}</Text>
+                                ))}
+                            </Box>
+                            <Text style={{ width: 178, fontSize: 11.5, color: 'rgba(232,238,249,0.50)', textAlign: 'right', lineHeight: 1.45 }}>{r.d}</Text>
+                        </Box>
+                    ))}
+                </Box>
+
+                <Box style={{ paddingTop: 10, paddingBottom: 10, paddingLeft: 12, paddingRight: 12, background: 'rgba(22,35,61,0.62)', border: '1px solid rgba(232,238,249,0.08)', borderRadius: 3 }}>
+                    <Text style={{ fontSize: 11.5, color: 'rgba(232,238,249,0.62)', lineHeight: 1.55 }}>
+                        <span style={{ color: '#2AD4EE' }}>产品层再叠一层：</span>
+                        queue_update · compaction_start / end · auto_retry_start / end · agent_settled · entry_appended · session_info_changed
+                    </Text>
+                </Box>
+            </Box>
+
+            {/* 右：两套事件的关系 */}
+            <Box style={{ flex: 1, flexDirection: 'column' }}>
+                <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2.5, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>原料流 vs 产品流</Text>
+
+                <Box style={{ marginTop: 10, flexDirection: 'column', gap: 6 }}>
+                    {[
+                        ['{ type: "start" }', 'message_start'],
+                        ['{ type: "text_delta" }', 'message_update  { assistantMessageEvent: ↑ }'],
+                        ['{ type: "toolcall_delta" }', 'message_update  { assistantMessageEvent: ↑ }'],
+                        ['{ type: "done" }', 'message_end'],
+                    ].map((r, i) => (
+                        <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                            <Text style={{ flex: 1, fontSize: 11, color: 'rgba(232,238,249,0.60)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[0]}</Text>
+                            <Text style={{ fontSize: 12, color: 'rgba(42,212,238,0.55)' }}>→</Text>
+                            <Text style={{ flex: 1.15, fontSize: 11, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[1]}</Text>
+                        </Box>
+                    ))}
+                </Box>
+
+                <Text style={{ marginTop: 8, fontSize: 11.5, color: 'rgba(232,238,249,0.48)', lineHeight: 1.55 }}>
+                    左侧是 pi-ai 的 AssistantMessageEvent（一条消息一份），右侧是 AgentEvent（一个 run 一份）。message_* 三件套只是它的信封，agent 层不改写内容。
+                </Text>
+
+                <Text style={{ marginTop: 12, fontSize: 13, color: 'rgba(232,238,249,0.46)' }}>一个广播，六个订阅者</Text>
+                <Box style={{ marginTop: 7, flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
+                    {['TUI 逐字渲染', 'RPC 转发 delta', '扩展拦截', '会话落盘', '成本记账', '服务器快照'].map((t, i) => (
+                        <Box key={i} style={{ paddingTop: 4, paddingBottom: 4, paddingLeft: 8, paddingRight: 8, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.18)', borderRadius: 2 }}>
+                            <Text style={{ fontSize: 10.5, color: 'rgba(232,238,249,0.74)' }}>{t}</Text>
+                        </Box>
+                    ))}
+                </Box>
+
+                <Box style={{ marginTop: 10, paddingTop: 9, paddingBottom: 9, paddingLeft: 12, paddingRight: 12, background: 'rgba(22,35,61,0.62)', border: '1px solid rgba(42,212,238,0.16)', borderRadius: 3 }}>
+                    <Text style={{ fontSize: 11.5, color: '#2AD4EE', fontWeight: 'bold' }}>钩子不是事件</Text>
+                    <Box style={{ marginTop: 6, flexDirection: 'column', gap: 5 }}>
+                        <Box style={{ flexDirection: 'row', gap: 8 }}>
+                            <Text style={{ width: 48, fontSize: 10.5, color: 'rgba(232,238,249,0.44)' }}>事件</Text>
+                            <Text style={{ flex: 1, fontSize: 11, color: 'rgba(232,238,249,0.68)' }}>fire-and-forget，发完继续走 —— 给旁观者</Text>
+                        </Box>
+                        <Box style={{ flexDirection: 'row', gap: 8 }}>
+                            <Text style={{ width: 48, fontSize: 10.5, color: 'rgba(232,238,249,0.44)' }}>钩子</Text>
+                            <Text style={{ flex: 1, fontSize: 11, color: 'rgba(232,238,249,0.68)' }}>循环停下来 await 返回值 —— 给参与者</Text>
+                        </Box>
+                    </Box>
+                </Box>
+
+                <Box style={{ marginTop: 'auto', paddingTop: 9, paddingBottom: 9, paddingLeft: 12, paddingRight: 12, borderLeft: '3px solid rgba(255,180,120,0.55)', background: 'rgba(255,180,120,0.05)' }}>
+                    <Text style={{ fontSize: 11.5, color: 'rgba(232,238,249,0.70)', lineHeight: 1.55 }}>
+                        两个容易混的点：toolcall_delta 是「模型在输出参数」，tool_execution_* 是「框架真的在执行」，两者没有对应关系；钩子是「停下等返回值」，事件是 fire-and-forget。
+                    </Text>
+                </Box>
+            </Box>
+        </Box>
+
+        {/* 底部 */}
+        <Box style={{ height: 52, marginTop: 8, flexDirection: 'row', alignItems: 'center', gap: 14, paddingLeft: 18, paddingRight: 18, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+            <Text style={{ fontSize: 13, color: '#2AD4EE', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>所以</Text>
+            <Text style={{ flex: 1, fontSize: 15, color: '#E8EEF9', lineHeight: 1.5 }}>
+                内核不认识任何一个消费者。加一个功能不用改循环——可观测、拦截、记账，都是「订阅」而不是「埋点」。
+            </Text>
+        </Box>
+    </Box>
+
+    {/* C 区 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>35 / 45</Text>
+    </Box>
+</Slide>

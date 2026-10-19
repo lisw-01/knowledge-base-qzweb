@@ -1,0 +1,54 @@
+<Slide style={{ width: 1280, height: 720, position: 'relative', overflow: 'hidden', background: '#0B1220', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* L1 全幅底图：显示宽度大于画布，裁掉右下角，保证画面干净 */}
+    <Image src="assets/cover_hero.png" style={{ position: 'absolute', left: 0, top: 0, width: 1536, height: 1024 }} />
+
+    {/* 左侧压暗，保证文字可读 */}
+    <Box style={{ position: 'absolute', left: 0, top: 0, width: 940, height: 720, background: 'linear-gradient(90deg, rgba(11,18,32,0.97) 0%, rgba(11,18,32,0.86) 52%, rgba(11,18,32,0) 100%)' }} />
+    {/* 底部压暗 */}
+    <Box style={{ position: 'absolute', left: 0, top: 500, width: 1280, height: 220, background: 'linear-gradient(0deg, rgba(11,18,32,0.94) 0%, rgba(11,18,32,0) 100%)' }} />
+
+    {/* 顶部极细节线 */}
+    <Box style={{ position: 'absolute', left: 88, top: 56, width: 1104, height: 1, background: 'rgba(232,238,249,0.12)' }} />
+
+    {/* 骑线文字区 */}
+    <Box style={{ position: 'absolute', left: 88, top: 116, width: 760, flexDirection: 'column' }}>
+        <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+            <Box style={{ width: 46, height: 3, background: '#2AD4EE' }} />
+            <Text style={{ fontSize: 17, color: '#2AD4EE', letterSpacing: 4 }}>内部技术分享</Text>
+            <Text style={{ fontSize: 17, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', letterSpacing: 1 }}>2026.10</Text>
+        </Box>
+
+        <Text style={{ marginTop: 34, fontSize: 84, fontWeight: 'bold', color: '#E8EEF9', lineHeight: 1.14, letterSpacing: 1 }}>
+            从 LLM 到 Agent
+            <br />
+            <span style={{ color: '#2AD4EE' }}>再到 Pi Agent</span>
+        </Text>
+
+        <Box style={{ marginTop: 30, width: 3, height: 60, background: 'linear-gradient(180deg, #2AD4EE 0%, rgba(42,212,238,0) 100%)' }} />
+
+        <Text style={{ marginTop: 18, fontSize: 21, color: 'rgba(232,238,249,0.70)', lineHeight: 1.7 }}>
+            模型是原料，工程才是产品。
+            <br />
+            一条从「会聊天」到「能干活的系统」的完整链路：认知 → 工程 → 框架 → 落地。
+        </Text>
+    </Box>
+
+    {/* 右上：四章刻度（置于暗区，保证可读） */}
+    <Box style={{ position: 'absolute', right: 88, top: 148, width: 210, paddingTop: 8, paddingBottom: 8, paddingLeft: 20, paddingRight: 20, flexDirection: 'column', gap: 18, alignItems: 'flex-end', background: 'rgba(11,18,32,0.72)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+        {[
+            { n: '01', t: 'LLM' },
+            { n: '02', t: 'AGENT' },
+            { n: '03', t: 'PI AGENT' },
+            { n: '04', t: 'PRACTICE' },
+        ].map((c, i) => (
+            <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                <Text style={{ fontSize: 14, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', letterSpacing: 1 }}>{c.n}</Text>
+                <Text style={{ fontSize: 15, color: 'rgba(232,238,249,0.86)', letterSpacing: 3 }}>{c.t}</Text>
+            </Box>
+        ))}
+    </Box>
+
+    {/* 左下角标 */}
+    <Text style={{ position: 'absolute', left: 88, top: 648, fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+    <Text style={{ position: 'absolute', right: 88, top: 648, fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>01 / 34</Text>
+</Slide>

@@ -1,0 +1,61 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>方案 A：手写 Prompt 的 ReAct 循环</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>自己发明格式、自己解析、自己执行——理解原理最直观的一条路</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 · 上大图 + 下方清单 */}
+    <Box style={{ height: 516, flexDirection: 'column' }}>
+        {/* 上：代码 */}
+        <Box style={{ height: 340, flexDirection: 'column' }}>
+            <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+                <Text style={{ fontSize: 15, color: '#2AD4EE', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>fc_demo_a.py</Text>
+                <Box style={{ width: 1, height: 14, background: 'rgba(232,238,249,0.22)' }} />
+                <Text style={{ fontSize: 15, color: 'rgba(232,238,249,0.62)' }}>PROMPT 约定：Thought → Action: tool[参数] → Answer，并明令禁止编造 Observation</Text>
+            </Box>
+            <CodeBlock
+                code={`def run(q):
+    messages = [{"role":"system","content":PROMPT}, {"role":"user","content":q}]
+    for _ in range(5):                                   # 最大轮数兜底
+        out = llm(messages, stop=["Observation:"])       # 生成阶段强制截断
+        hit = re.search(r"Action:\\s*(\\w+)\\[(.+?)\\]", out)
+        if not hit:                                      # 没有 Action = 答完了
+            return re.search(r"Answer:\\s*(.+)", out).group(1)
+        result = globals()[hit.group(1)](hit.group(2))   # 真正执行工具
+        messages.append({"role":"assistant",
+                         "content": out.split("Observation:")[0]})   # 截干净再拼回
+        messages.append({"role":"user", "content": f"Observation: {result}"})
+    return "达到最大轮数，未能得到答案"                    # 兜底返回`}
+                language='python'
+                width={1136}
+                fontSize={14}
+                theme='github-dark'
+            />
+        </Box>
+
+        {/* 下：三条踩坑 */}
+        <Box style={{ flex: 1, flexDirection: 'row', marginTop: 14 }}>
+            {[
+                { n: '坑 01', t: '模型自演 Observation', d: 'Prompt 太弱时，模型会把 Thought / Action / Observation / Answer 一口气全「演」出来，甚至编造 Observation: 58848（真实值是 58368）。' },
+                { n: '坑 02', t: '编造结果被原样拼回', d: '把模型输出整段 append 进历史，编造的 Observation 与真实结果打架，模型每轮重复同样的幻觉，5 轮全部耗尽。' },
+                { n: '坑 03', t: '循环耗尽返回 None', d: 'run() 没有兜底 return，最终打印 None；报错信息只有一个空值，排查全靠猜。' },
+            ].map((c, i) => (
+                <Box key={i} style={{ flex: 1, flexDirection: 'column', paddingLeft: i === 0 ? 0 : 26, paddingRight: i === 2 ? 0 : 26, borderRight: i === 2 ? 'none' : '1px solid rgba(232,238,249,0.12)' }}>
+                    <Text style={{ fontSize: 14, color: '#2AD4EE', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{c.n}</Text>
+                    <Text style={{ marginTop: 8, fontSize: 19, fontWeight: '600', color: '#E8EEF9' }}>{c.t}</Text>
+                    <Text style={{ marginTop: 8, fontSize: 15, color: 'rgba(232,238,249,0.66)', lineHeight: 1.6 }}>{c.d}</Text>
+                </Box>
+            ))}
+        </Box>
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>08 / 37</Text>
+    </Box>
+</Slide>

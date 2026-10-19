@@ -1,0 +1,78 @@
+<Slide style={{ width: 1280, height: 720, padding: '20px 72px', flexDirection: 'column', background: 'linear-gradient(160deg, #0B1220 0%, #16233D 100%)', fontFamily: '"Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif' }}>
+    {/* A 区 · 标题块 */}
+    <Box style={{ height: 100, flexDirection: 'row', gap: 16, alignItems: 'flex-start', paddingTop: 6 }}>
+        <Box style={{ width: 4, height: 36, background: '#2AD4EE', marginTop: 5 }} />
+        <Box style={{ flexDirection: 'column' }}>
+            <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#E8EEF9' }}>Pi 是什么：三个反常识设计</Text>
+            <Text style={{ marginTop: 8, fontSize: 17, color: 'rgba(232,238,249,0.52)' }}>它把「不做什么」写成了设计原则</Text>
+        </Box>
+    </Box>
+
+    {/* B 区 · 非对称双栏 58:42 */}
+    <Box style={{ height: 516, flexDirection: 'row', gap: 34 }}>
+        {/* 左：三个反常识 */}
+        <Box style={{ flex: 58, flexDirection: 'column', paddingRight: 32, borderRight: '1px solid rgba(232,238,249,0.12)' }}>
+            <Text style={{ fontSize: 15, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>COUNTER-INTUITIVE BY DESIGN</Text>
+
+            <Box style={{ flex: 1, marginTop: 14, flexDirection: 'column', justifyContent: 'space-between' }}>
+                {[
+                    { i: 'box', n: '01', t: '刻意「不内置」', d: '不内置 MCP、子智能体、计划模式、任务清单、权限弹窗。核心只保留最必要的部分，多余能力全部外置成扩展——需要什么，自己装。' },
+                    { i: 'unlock', n: '02', t: '没有沙箱', d: '以启动用户的完整权限运行。这既是它「真能干完活」的原因，也意味着生产环境必须自己做容器化隔离，或用扩展钩子自建拦截。' },
+                    { i: 'compass', n: '03', t: '不给「计划模式」', d: '怎么拆步骤、先做哪一步，交给模型自己判断。框架不预设流程，也就不会用错误的流程绑住模型的手脚。' },
+                ].map((c, i) => (
+                    <Box key={i} style={{ flex: 1, flexDirection: 'row', gap: 18, paddingTop: 14, paddingBottom: 14, borderTop: i === 0 ? 'none' : '1px solid rgba(232,238,249,0.08)' }}>
+                        <Box style={{ width: 44, height: 44, borderRadius: 4, background: 'rgba(42,212,238,0.12)', border: '1px solid rgba(42,212,238,0.35)', alignItems: 'center', justifyContent: 'center' }}>
+                            <FAIcon name={c.i} style={{ fill: '#2AD4EE', width: 20, height: 20 }} />
+                        </Box>
+                        <Box style={{ flexDirection: 'column', flex: 1 }}>
+                            <Box style={{ flexDirection: 'row', alignItems: 'baseline', gap: 10 }}>
+                                <Text style={{ fontSize: 14, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{c.n}</Text>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#E8EEF9' }}>{c.t}</Text>
+                            </Box>
+                            <Text style={{ marginTop: 10, fontSize: 16, color: 'rgba(232,238,249,0.68)', lineHeight: 1.7 }}>{c.d}</Text>
+                        </Box>
+                    </Box>
+                ))}
+            </Box>
+        </Box>
+
+        {/* 右：定位 + 判断 */}
+        <Box style={{ flex: 42, flexDirection: 'column' }}>
+            <Text style={{ fontSize: 15, color: 'rgba(232,238,249,0.52)', letterSpacing: 2, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>WHAT IT IS</Text>
+
+            <Box style={{ marginTop: 14, paddingTop: 18, paddingBottom: 18, paddingLeft: 18, paddingRight: 18, background: 'rgba(22,35,61,0.92)', border: '1px solid rgba(42,212,238,0.28)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 15, color: '#2AD4EE', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace', lineHeight: 1.5 }}>minimal terminal{"\n"}coding harness</Text>
+                <Text style={{ marginTop: 12, fontSize: 15.5, color: 'rgba(232,238,249,0.72)', lineHeight: 1.7 }}>
+                    不是聊天机器人，也不是 IDE 插件，而是把模型、工具、上下文、会话与扩展串起来的终端执行框架。
+                </Text>
+            </Box>
+
+            <Box style={{ marginTop: 14, flexDirection: 'column', gap: 8 }}>
+                {[
+                    ['协议', 'MIT · 完全开源，可商用'],
+                    ['运行', '完全本地，模型调用走自己的 Key / 订阅'],
+                    ['默认工具', 'read · write · edit · bash，只有 4 个'],
+                    ['模型接入', '内置 30+ 家，/model 一键切换'],
+                ].map((r, i) => (
+                    <Box key={i} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingTop: 6, paddingBottom: 6, borderBottom: '1px solid rgba(232,238,249,0.08)' }}>
+                        <Text style={{ width: 68, fontSize: 14, color: 'rgba(232,238,249,0.45)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>{r[0]}</Text>
+                        <Text style={{ flex: 1, fontSize: 15, color: '#E8EEF9', lineHeight: 1.5 }}>{r[1]}</Text>
+                    </Box>
+                ))}
+            </Box>
+
+            <Box style={{ marginTop: 'auto', paddingTop: 16, paddingBottom: 16, paddingLeft: 18, paddingRight: 18, background: 'rgba(42,212,238,0.08)', border: '1px solid rgba(42,212,238,0.22)', borderRadius: 4 }}>
+                <Text style={{ fontSize: 15, color: '#2AD4EE', letterSpacing: 3, fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>所以</Text>
+                <Text style={{ marginTop: 10, fontSize: 17, color: '#E8EEF9', lineHeight: 1.7 }}>
+                    这不是功能少，而是把<span style={{ color: '#2AD4EE' }}>指导权还给了模型</span>。
+                </Text>
+            </Box>
+        </Box>
+    </Box>
+
+    {/* C 区 · 页脚 */}
+    <Box style={{ height: 40, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)' }}>从 LLM 到 Agent 再到 Pi Agent</Text>
+        <Text style={{ fontSize: 14, color: 'rgba(232,238,249,0.42)', fontFamily: '"JetBrains Mono", "Cascadia Mono", Consolas, monospace' }}>21 / 46</Text>
+    </Box>
+</Slide>

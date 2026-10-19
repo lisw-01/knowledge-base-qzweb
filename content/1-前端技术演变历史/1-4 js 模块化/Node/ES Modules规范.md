@@ -37,7 +37,7 @@ if (condition) {
 }
 ```
 
-动态场景请使用 `import()` 函数（见第 7 节）。
+动态场景请使用 `import()` 函数（见第 6 节）。
 
 ---
 
@@ -91,8 +91,10 @@ export { add as default };
 
 ```javascript
 // 以下两种写法等价
-export default function() {}
-export { function as default };
+function fn() {}
+export default fn;
+// 等价于
+export { fn as default };
 ```
 
 ### 3.4 聚合导出（Re-export）
@@ -487,19 +489,24 @@ import from './mod.js'
 
 ```javascript
 // a.mjs
-import { loaded } from './b.mjs';
-export let loaded = false;
-loaded = true;
-console.log('b.loaded in a:', loaded); // 取决于执行顺序
+import { bLoaded, readB } from './b.mjs';
+export let aLoaded = false;
+aLoaded = true;
+// 此时 b.mjs 已执行完，通过绑定读 b 的最新值：
+console.log('bLoaded in a:', bLoaded); // true
 
-// b.mjs
-import { loaded } from './a.mjs';
-export let loaded = false;
-loaded = true;
-console.log('a.loaded in b:', loaded);
+// b.mjs（先于 a.mjs 执行）
+import { aLoaded } from './a.mjs';
+export let bLoaded = false;
+bLoaded = true;
+// ⚠️ 这里不能直接读 aLoaded：a.mjs 还没执行，aLoaded 处于 TDZ，
+// 直接 console.log(aLoaded) 会抛 ReferenceError
+export function readA() {
+  return aLoaded; // 延迟到函数调用时访问，a.mjs 执行完后能拿到最新值 true
+}
 ```
 
-ESM 的 live binding 机制意味着循环依赖中，一方修改了变量后，另一方通过绑定可以读到最新值，而非像 CJS 那样拿到不完整快照。但由于执行顺序问题，**仍然应尽量避免循环依赖**。
+ESM 的 live binding 机制意味着循环依赖中，**延迟访问**（如放进函数里）能读到对方的最新值，而非像 CJS 那样拿到不完整快照。但若在对方模块初始化之前访问绑定，会因 TDZ（暂时性死区）直接抛 `ReferenceError`。总之：**仍然应尽量避免循环依赖**。
 
 ---
 
