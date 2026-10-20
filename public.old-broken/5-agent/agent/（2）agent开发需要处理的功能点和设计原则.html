@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>（2）agent开发需要处理的功能点和设计原则 - 知识库</title><meta charset="utf-8"/><link rel="preload" href="../../index-bb6c1746.css" as="style"/><link rel="preload" href="../../prescript-2bfc6315.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="文档"/><meta property="og:title" content="（2）agent开发需要处理的功能点和设计原则 - 知识库"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="（2）agent开发需要处理的功能点和设计原则 - 知识库"/><meta name="twitter:description" content="核心一句话：Agent 的核心代码就一个 while 循环，真正的开发量全在循环之外的工程问题——功能点清单回答”要写什么”，设计原则回答”怎么写不翻车”。 上一篇：（1）agent开发学习路径（怎么学）；本篇：开发 Agent 具体要处理哪些功能点、遵循哪些设计原则。 一、功能点全景：七层地图 不管用什么框架，一个 Agent 系统剥掉外壳，要处理的功能点就这七层（自下而上搭）： ⑦ 运营层：日志 · 追踪 · 成本 · 评估 —— 出了问题怎么查、花了多少钱 ⑥ 护栏层：权限 · 确认 · 容错 · 限额 —— 出了事怎么兜住 ⑤ 控制层：循环 · 终止 · 规划 —— 流程怎么走、什么..."/><meta property="og:description" content="核心一句话：Agent 的核心代码就一个 while 循环，真正的开发量全在循环之外的工程问题——功能点清单回答”要写什么”，设计原则回答”怎么写不翻车”。 上一篇：（1）agent开发学习路径（怎么学）；本篇：开发 Agent 具体要处理哪些功能点、遵循哪些设计原则。 一、功能点全景：七层地图 不管用什么框架，一个 Agent 系统剥掉外壳，要处理的功能点就这七层（自下而上搭）： ⑦ 运营层：日志 · 追踪 · 成本 · 评估 —— 出了问题怎么查、花了多少钱 ⑥ 护栏层：权限 · 确认 · 容错 · 限额 —— 出了事怎么兜住 ⑤ 控制层：循环 · 终止 · 规划 —— 流程怎么走、什么..."/><meta property="og:image:alt" content="核心一句话：Agent 的核心代码就一个 while 循环，真正的开发量全在循环之外的工程问题——功能点清单回答”要写什么”，设计原则回答”怎么写不翻车”。 上一篇：（1）agent开发学习路径（怎么学）；本篇：开发 Agent 具体要处理哪些功能点、遵循哪些设计原则。 一、功能点全景：七层地图 不管用什么框架，一个 Agent 系统剥掉外壳，要处理的功能点就这七层（自下而上搭）： ⑦ 运营层：日志 · 追踪 · 成本 · 评估 —— 出了问题怎么查、花了多少钱 ⑥ 护栏层：权限 · 确认 · 容错 · 限额 —— 出了事怎么兜住 ⑤ 控制层：循环 · 终止 · 规划 —— 流程怎么走、什么..."/><meta property="twitter:domain" content="lisw-01.github.io/knowledge-base-qzweb"/><meta property="og:url" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent/（2）agent开发需要处理的功能点和设计原则"/><meta property="twitter:url" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent/（2）agent开发需要处理的功能点和设计原则"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="核心一句话：Agent 的核心代码就一个 while 循环，真正的开发量全在循环之外的工程问题——功能点清单回答”要写什么”，设计原则回答”怎么写不翻车”。 上一篇：（1）agent开发学习路径（怎么学）；本篇：开发 Agent 具体要处理哪些功能点、遵循哪些设计原则。 一、功能点全景：七层地图 不管用什么框架，一个 Agent 系统剥掉外壳，要处理的功能点就这七层（自下而上搭）： ⑦ 运营层：日志 · 追踪 · 成本 · 评估 —— 出了问题怎么查、花了多少钱 ⑥ 护栏层：权限 · 确认 · 容错 · 限额 —— 出了事怎么兜住 ⑤ 控制层：循环 · 终止 · 规划 —— 流程怎么走、什么..."/><meta name="generator" content="Quartz"/><link href="../../index-bb6c1746.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-735924e0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-e427079e.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-53b25b2b.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-6ee21cee.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-1ea6ad18.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-788c9ca3.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-58d5ff56.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-34bdfded.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-11d41004.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-26a99b87.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-9857b007.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-d3a1a224.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../../prescript-2bfc6315.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted%20Grotesk%3Awght%40400%3B700&amp;family=Source%20Sans%20Pro%3Aital%2Cwght%400%2C400%3B0%2C600%3B1%2C400%3B1%2C600&amp;family=IBM%20Plex%20Mono%3Awght%40400%3B600&amp;display=swap"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent/（2）agent开发需要处理的功能点和设计原则-og-image.webp"/><meta property="og:image:url" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent/（2）agent开发需要处理的功能点和设计原则-og-image.webp"/><meta name="twitter:image" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent/（2）agent开发需要处理的功能点和设计原则-og-image.webp"/><meta property="og:image:type" content="image/webp"/></head><body data-slug="5-agent/agent/（2）agent开发需要处理的功能点和设计原则" data-basepath="/knowledge-base-qzweb"><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">文档</a></h2><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="Search" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something..." placeholder="Search for something..."/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="Dark mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode" aria-label="Reader mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer nav-files-container" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a2, b2) => {\n    if (!a2.isFolder &amp;&amp; !b2.isFolder || a2.isFolder &amp;&amp; b2.isFolder) {\n      return (a2.displayName || \&quot;\&quot;).localeCompare(b2.displayName || \&quot;\&quot;, void 0, {\n        numeric: true,\n        sensitivity: \&quot;base\&quot;\n      });\n    }\n    if (!a2.isFolder &amp;&amp; b2.isFolder) {\n      return 1;\n    }\n    return -1;\n  }&quot;,&quot;filterFn&quot;:&quot;(node) => node.slugSegment !== \&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;(node) => {\n    return node;\n  }&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-41" aria-label="Explorer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-41" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#" class="nav-file-title tree-item-self"></a></li></template><template id="template-folder"><li><div class="folder-container nav-folder-title tree-item-self"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon nav-folder-collapse-indicator collapse-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content tree-item-children"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../5-agent/">5-agent</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../5-agent/agent/">Agent</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>（2）agent开发需要处理的功能点和设计原则</a></div></nav><h1 class="article-title">（2）agent开发需要处理的功能点和设计原则</h1><p show-comma="true" class="content-meta"><time datetime="2026-10-10T05:42:02.000Z">Oct 10, 2026</time><span>12 min read</span></p></div></div><article class="popover-hint"><div class="markdown-preview-view markdown-rendered"><blockquote>
+<p>核心一句话：<strong>Agent 的核心代码就一个 while 循环，真正的开发量全在循环之外的工程问题</strong>——功能点清单回答”要写什么”，设计原则回答”怎么写不翻车”。<br/>
+上一篇：<a href="../../5-agent/agent/（1）agent开发学习路径" class="internal internal-link alias" data-slug="5-agent/agent/（1）agent开发学习路径">（1）agent开发学习路径</a>（怎么学）；本篇：开发 Agent 具体要处理哪些功能点、遵循哪些设计原则。</p>
+</blockquote>
+<h2 id="一功能点全景七层地图">一、功能点全景：七层地图<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#一功能点全景七层地图" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>不管用什么框架，一个 Agent 系统剥掉外壳，要处理的功能点就这七层（自下而上搭）：</p>
+<pre><code>⑦ 运营层：日志 · 追踪 · 成本 · 评估       —— 出了问题怎么查、花了多少钱
+⑥ 护栏层：权限 · 确认 · 容错 · 限额       —— 出了事怎么兜住
+⑤ 控制层：循环 · 终止 · 规划              —— 流程怎么走、什么时候停
+④ 记忆层：短期上下文 · 长期记忆           —— 记住什么、忘掉什么
+③ 工具层：注册 · 校验 · 执行 · 错误回喂    —— 真正干活的地方
+② 提示层：system · 工具描述 · 格式约束    —— 怎么&quot;指挥&quot;模型
+① 模型层：LLM 调用 · 重试 · 流式          —— 地基，上面六层都压在它身上
+</code></pre>
+<ul>
+<li><strong>①~⑤ = 把 Agent 搭起来</strong>（构建期），<strong>⑥~⑦ = 让它别出事、出事能查</strong>（运行期）</li>
+<li>分层的意义：换模型只动①，加工具只动③，改流程只动⑤——各层独立演进，互不牵连</li>
+</ul>
+<h2 id="二逐层拆解每层要处理什么">二、逐层拆解：每层要处理什么<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#二逐层拆解每层要处理什么" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="-模型层--地基">① 模型层 —— 地基<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-模型层--地基" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>LLM 调用封装：起步只要 <code>chat()</code> / <code>embed()</code> 两个函数</li>
+<li>密钥管理：key 放 .env，绝不硬编码进代码、绝不提交 git</li>
+<li>超时 + 重试：网络抖动、429 限流是家常便饭，指数退避重试 2~3 次</li>
+<li>流式输出：长回答别让用户干等</li>
+<li>多模型分工（进阶）：便宜模型干提取/摘要，强模型干决策</li>
+</ul>
+<blockquote>
+<p>关键决策：<strong>先锁定一个模型跑通，再谈多模型</strong>。把调用封装成一层的意义就是：换模型不改业务代码。</p>
+</blockquote>
+<h3 id="-提示层--说明书">② 提示层 —— 说明书<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-提示层--说明书" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>System Prompt 四要素：<strong>角色</strong>（你是谁）、<strong>目标</strong>（干什么）、<strong>边界</strong>（不许干什么）、<strong>输出格式</strong>（怎么答）</li>
+<li>工具描述三件套：name + description + 参数 JSON Schema，写给”没看过你代码的模型”看</li>
+<li>格式约束：手写 ReAct 约定格式，或 Function Calling 结构化输出</li>
+<li>Few-shot 示例：格式总出错时，给 1~2 个示例比讲十句规则都管用</li>
+<li>Prompt 版本管理：改 prompt = 改代码，留档、可回滚、可对比</li>
+</ul>
+<blockquote>
+<p>模型选错工具、输出格式崩，90% 的锅在提示层——<strong>description 就是给模型看的 API 文档</strong>。</p>
+</blockquote>
+<h3 id="-工具层--手脚">③ 工具层 —— 手脚<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-工具层--手脚" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>工具注册：注册表（名字 → 函数 + schema），统一入口</li>
+<li>参数校验：模型给的参数<strong>先验证再执行</strong>（类型/范围），它真的会瞎传</li>
+<li>结果回填：执行结果作为 Observation 拼回 messages</li>
+<li>错误回喂：工具抛错别让程序崩，把报错给模型让它自己调整：</li>
+</ul>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="python" data-theme="github-light github-dark"><code data-language="python" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">try</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">:</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> TOOLS</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">[action[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;name&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">]](</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="function">action[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;args&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">])</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">except</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="property"> Exception</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword"> as</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> e:</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword"> f</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;工具执行失败：</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">{</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">e</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">}</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">，请检查参数或换个思路&quot;</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">messages.append({</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;role&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;tool&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;content&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: result})  </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># 错误也拼回上下文 → 模型下一轮自救</span></span></code></pre></figure>
+<ul>
+<li>失败分类、有界重试、熔断兜底的完整展开 → <a href="../../5-agent/agent/（3）react工具调用失败处理" class="internal internal-link alias" data-slug="5-agent/agent/（3）react工具调用失败处理">（3）ReAct工具调用失败处理</a></li>
+<li>粒度设计：小而专（<code>search_order</code> + <code>refund_order</code>）优于大而全（<code>handle_anything</code>）</li>
+<li>幂等性：同一个调用重试一次，不该重复扣款、重复发消息</li>
+<li>返回值精简：截断长文本、只回必要字段——工具返回是下一轮的模型输入，又长又臭会撑爆上下文</li>
+</ul>
+<h3 id="-记忆层--上下文">④ 记忆层 —— 上下文<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-记忆层--上下文" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>短期：<a href="../../5-agent/llm/link_messages参数" class="internal internal-link alias" data-slug="5-agent/llm/link_messages参数">messages</a> 拼装规则（system + 历史 + 本轮）、超窗裁剪/摘要压缩</li>
+<li>上下文膨胀的大头：多轮工具调用后，messages 里涨最快的不是聊天记录，而是<strong>工具返回</strong></li>
+<li>长期（进阶）：写入时机（会话结束总结 / 每轮提取）、检索 topK、去重合并；原理见 <a href="../../5-agent/agent/link_llm长期记忆原理" class="internal internal-link alias" data-slug="5-agent/agent/link_llm长期记忆原理">LLM长期记忆原理</a>，存储选型见 <a href="../../5-agent/agent/link_向量库" class="internal internal-link alias" data-slug="5-agent/agent/link_向量库">向量库</a>，知识库问答见 <a href="../../5-agent/agent/link_rag" class="internal internal-link alias" data-slug="5-agent/agent/link_rag">RAG</a></li>
+</ul>
+<blockquote>
+<p>一句话口诀：<strong>近期带原文，远期压摘要，事实存卡片，知识进向量库</strong>。</p>
+</blockquote>
+<h3 id="-控制层--流程">⑤ 控制层 —— 流程<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-控制层--流程" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>主循环：<code>while → 调模型 → 解析 Action → 执行 → 拼回 Observation</code>（阶段 1 那个循环）</li>
+<li><strong>终止条件四个都要有</strong>：
+<ol>
+<li>模型输出 Answer（正常结束）</li>
+<li>最大轮数（防死循环）</li>
+<li>超时（防卡死）</li>
+<li>token 预算（防烧钱）</li>
+</ol>
+</li>
+<li>规划：简单任务直接干；复杂任务先让模型列计划、再逐步执行（别过度设计）</li>
+<li>中断恢复（进阶）：长任务存检查点，挂了能续跑</li>
+</ul>
+<blockquote>
+<p>终止条件是保险丝：<strong>没有最大轮数兜底的 Agent，一次死循环就能烧掉一个月的 token 预算</strong>。</p>
+</blockquote>
+<h3 id="-护栏层--安全网">⑥ 护栏层 —— 安全网<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-护栏层--安全网" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>解析兜底：模型输出不合格式 → 把报错喂回去让它重出，重试 2 次仍失败就人工接管</li>
+<li>危险操作确认：删除 / 支付 / 对外发消息，执行前必须人工点一下</li>
+<li>权限白名单：工具能碰的目录、数据表、URL 提前列好，白名单外一律拒绝</li>
+<li>限额：单任务最大轮数、最大 token、调用频率</li>
+<li>脱敏：工具返回的内容进模型前过滤敏感字段（密钥、手机号）</li>
+</ul>
+<blockquote>
+<p>信任要分两个方向看：<strong>工具返回 = 模型可见的输入</strong>（别喂敏感信息进去）；<strong>模型输出 = 不可信数据</strong>（先校验再执行）。</p>
+</blockquote>
+<h3 id="-运营层--仪表盘">⑦ 运营层 —— 仪表盘<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#-运营层--仪表盘" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>日志：每轮 Thought / Action / Observation 落盘——调试 Agent 的唯一靠山</li>
+<li>追踪：一个 trace_id 串起一次任务的所有 LLM / 工具调用</li>
+<li>成本：记录每次 token 用量，算出”单任务成本”，知道一次对话花几毛钱</li>
+<li>评估：攒一组固定测试问题，每次改 prompt / 换模型后回归跑一遍，防止按下葫芦浮起瓢</li>
+</ul>
+<blockquote>
+<p>没有日志的 Agent 是黑盒中的黑盒：出了问题，你连它”当时是怎么想的”都不知道。</p>
+</blockquote>
+<h2 id="三设计原则十条">三、设计原则（十条）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#三设计原则十条" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>#</th><th>原则</th><th>一句话解释</th><th>违背的下场</th></tr></thead><tbody><tr><td>1</td><td>能用固定流程就不上自主循环</td><td>步骤确定 → 写死 workflow；要”见机行事”才给模型自主权</td><td>简单任务硬上 Agent：更贵、更慢、更不可控</td></tr><tr><td>2</td><td>控制流在代码，判断在模型</td><td>分支/循环/重试用 Python 写死，模型只判断”调哪个工具、传什么参数”</td><td>把流程逻辑写进 prompt：一改就崩、没法调试</td></tr><tr><td>3</td><td>模型输出 = 不可信输入</td><td>解析前一律校验格式、类型、范围</td><td>模型幻觉出一个参数，工具照单全收直接出事故</td></tr><tr><td>4</td><td>工具小而专，描述大于实现</td><td>一个工具干一件事，description 当 API 文档写</td><td>大杂烩工具：模型不会用、用错、不敢用</td></tr><tr><td>5</td><td>确定性优先</td><td>temperature=0、结构化输出</td><td>同一任务时好时坏，问题无法复现</td></tr><tr><td>6</td><td>失败要回喂，不要吞</td><td>错误信息拼回上下文，让模型自救</td><td>程序直接崩，或模型反复踩同一个坑</td></tr><tr><td>7</td><td>高风险必过人</td><td>写操作默认要人工确认</td><td>Agent 自作主张删库、付款、群发消息</td></tr><tr><td>8</td><td>可观测先行</td><td>先加日志，再调 prompt</td><td>出了问题全靠猜</td></tr><tr><td>9</td><td>token 是钱，上下文是预算</td><td>及时摘要压缩，工具返回精简</td><td>成本失控、窗口爆掉、重点被淹没</td></tr><tr><td>10</td><td>从最简单的开始</td><td>单 Agent + 2 个工具 + 一个循环，按需加复杂度</td><td>一上来就多 Agent 编排：永远在 debug 框架</td></tr></tbody></table></div>
+<blockquote>
+<p>前 3 条是架构级的（决定项目成败），后 7 条是工程习惯级的（决定维护成本）。</p>
+</blockquote>
+<h2 id="四七层怎么落地对应学习路径">四、七层怎么落地（对应学习路径）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#四七层怎么落地对应学习路径" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>功能层</th><th>落地在</th><th>对应 Demo</th></tr></thead><tbody><tr><td>①②③⑤</td><td>阶段 1/2：手写 ReAct + Function Calling</td><td><a href="../../5-agent/agent/_demo.阶段1-and-2" class="internal internal-link alias" data-slug="5-agent/agent/_demo.阶段1-and-2">_Demo.阶段1&amp;2</a>（agent_react.py / agent_fc.py）</td></tr><tr><td>④</td><td>阶段 3：知识库 Agent + 向量库</td><td><a href="../../5-agent/agent/_demo.阶段3.模拟向量库" class="internal internal-link alias" data-slug="5-agent/agent/_demo.阶段3.模拟向量库">_Demo.阶段3.模拟向量库</a>、<a href="../../5-agent/agent/_demo.阶段3.chroma版" class="internal internal-link alias" data-slug="5-agent/agent/_demo.阶段3.chroma版">_Demo.阶段3.Chroma版</a></td></tr><tr><td>⑥⑦</td><td>阶段 5：工程化重点（框架帮你做一部分）</td><td>—</td></tr></tbody></table></div>
+<p>注意：⑥⑦ 不是”最后才做”——<strong>最大轮数兜底和 Thought/Action 日志，从第一个 demo 就该带上</strong>，成本几乎为零，救命的时候真救命。</p>
+<h2 id="五上线前自查清单">五、上线前自查清单<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#五上线前自查清单" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul class="contains-task-list">
+<li class="task-list-item" data-task=" "><input type="checkbox" class="checkbox-toggle"/> 有最大轮数 / token 上限兜底（防死循环烧钱）</li>
+<li class="task-list-item" data-task=" "><input type="checkbox" class="checkbox-toggle"/> 工具报错不会崩程序（错误回喂给模型）</li>
+<li class="task-list-item" data-task=" "><input type="checkbox" class="checkbox-toggle"/> 模型输出先校验再执行（格式、类型、范围）</li>
+<li class="task-list-item" data-task=" "><input type="checkbox" class="checkbox-toggle"/> 危险操作有人工确认（删除、支付、对外发消息）</li>
+<li class="task-list-item" data-task=" "><input type="checkbox" class="checkbox-toggle"/> 每轮 Thought / Action / Observation 有日志可回放</li>
+<li class="task-list-item" data-task=" "><input type="checkbox" class="checkbox-toggle"/> key 不在代码里，prompt 不散落在业务代码里</li>
+<li class="task-list-item" data-task=" "><input type="checkbox" class="checkbox-toggle"/> 有固定测试问题集，改动后能回归</li>
+</ul>
+<blockquote>
+<p>全部打勾，才算从”能跑的 demo”变成”敢给别人用的 Agent”。</p>
+</blockquote></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="toc"><button type="button" class="toc-header" aria-controls="toc-39" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-0"><a href="#一功能点全景七层地图" data-for="一功能点全景七层地图">一、功能点全景：七层地图</a></li><li class="depth-0"><a href="#二逐层拆解每层要处理什么" data-for="二逐层拆解每层要处理什么">二、逐层拆解：每层要处理什么</a></li><li class="depth-1"><a href="#-模型层--地基" data-for="-模型层--地基">① 模型层 —— 地基</a></li><li class="depth-1"><a href="#-提示层--说明书" data-for="-提示层--说明书">② 提示层 —— 说明书</a></li><li class="depth-1"><a href="#-工具层--手脚" data-for="-工具层--手脚">③ 工具层 —— 手脚</a></li><li class="depth-1"><a href="#-记忆层--上下文" data-for="-记忆层--上下文">④ 记忆层 —— 上下文</a></li><li class="depth-1"><a href="#-控制层--流程" data-for="-控制层--流程">⑤ 控制层 —— 流程</a></li><li class="depth-1"><a href="#-护栏层--安全网" data-for="-护栏层--安全网">⑥ 护栏层 —— 安全网</a></li><li class="depth-1"><a href="#-运营层--仪表盘" data-for="-运营层--仪表盘">⑦ 运营层 —— 仪表盘</a></li><li class="depth-0"><a href="#三设计原则十条" data-for="三设计原则十条">三、设计原则（十条）</a></li><li class="depth-0"><a href="#四七层怎么落地对应学习路径" data-for="四七层怎么落地对应学习路径">四、七层怎么落地（对应学习路径）</a></li><li class="depth-0"><a href="#五上线前自查清单" data-for="五上线前自查清单">五、上线前自查清单</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>Backlinks</h3><ul id="list-0" class="overflow"><li><a href="../../5-agent/agent/（3）react工具调用失败处理" class="internal">（3）ReAct工具调用失败处理</a></li><li><a href="../../5-agent/agent框架/pi-agent/0-pi-agent总览" class="internal">0-Pi Agent总览</a></li><li><a href="../../5-agent/agent框架/pi-agent/设计点/1-模型适配" class="internal">设计点1-模型适配</a></li><li><a href="../../5-agent/agent框架/pi-agent/设计点/5-agent循环" class="internal">设计点5-Agent循环</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jackyzha0/quartz">GitHub</a></li><li><a href="https://discord.gg/cRFFHYye7t">Discord Community</a></li></ul></footer></div></div></body><script src="../../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../../postscript-4afe16b2.js" type="module" data-persist="true"></script></html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>3-3 React核心原理 - 知识库</title><meta charset="utf-8"/><link rel="preload" href="../index-bb6c1746.css" as="style"/><link rel="preload" href="../prescript-2bfc6315.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="文档"/><meta property="og:title" content="3-3 React核心原理 - 知识库"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="3-3 React核心原理 - 知识库"/><meta name="twitter:description" content="一句话：React 的核心思想是 UI = f(state)——数据变就把整个组件函数重新执行一遍，配合虚拟 DOM diff + Fiber 架构把”重跑”的开销控制住。 一、JSX 的本质 JSX 不是模板字符串，是 React.createElement 的语法糖，编译后就是普通 JS 对象（虚拟 DOM 节点）： jsx const el = &lt;div className=&quot;box&quot;>hi&lt;/div> // 编译后（经 jsx-runtime 自动引入） const el = jsx('div', { className..."/><meta property="og:description" content="一句话：React 的核心思想是 UI = f(state)——数据变就把整个组件函数重新执行一遍，配合虚拟 DOM diff + Fiber 架构把”重跑”的开销控制住。 一、JSX 的本质 JSX 不是模板字符串，是 React.createElement 的语法糖，编译后就是普通 JS 对象（虚拟 DOM 节点）： jsx const el = &lt;div className=&quot;box&quot;>hi&lt;/div> // 编译后（经 jsx-runtime 自动引入） const el = jsx('div', { className..."/><meta property="og:image:alt" content="一句话：React 的核心思想是 UI = f(state)——数据变就把整个组件函数重新执行一遍，配合虚拟 DOM diff + Fiber 架构把”重跑”的开销控制住。 一、JSX 的本质 JSX 不是模板字符串，是 React.createElement 的语法糖，编译后就是普通 JS 对象（虚拟 DOM 节点）： jsx const el = &lt;div className=&quot;box&quot;>hi&lt;/div> // 编译后（经 jsx-runtime 自动引入） const el = jsx('div', { className..."/><meta property="twitter:domain" content="lisw-01.github.io/knowledge-base-qzweb"/><meta property="og:url" content="https://lisw-01.github.io/knowledge-base-qzweb/3-spa框架/3-3-react核心原理"/><meta property="twitter:url" content="https://lisw-01.github.io/knowledge-base-qzweb/3-spa框架/3-3-react核心原理"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="一句话：React 的核心思想是 UI = f(state)——数据变就把整个组件函数重新执行一遍，配合虚拟 DOM diff + Fiber 架构把”重跑”的开销控制住。 一、JSX 的本质 JSX 不是模板字符串，是 React.createElement 的语法糖，编译后就是普通 JS 对象（虚拟 DOM 节点）： jsx const el = &lt;div className=&quot;box&quot;>hi&lt;/div> // 编译后（经 jsx-runtime 自动引入） const el = jsx('div', { className..."/><meta name="generator" content="Quartz"/><link href="../index-bb6c1746.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-735924e0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-e427079e.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-53b25b2b.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-6ee21cee.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-1ea6ad18.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-788c9ca3.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-58d5ff56.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-34bdfded.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-11d41004.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-26a99b87.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-9857b007.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../static/resource-style-d3a1a224.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../prescript-2bfc6315.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted%20Grotesk%3Awght%40400%3B700&amp;family=Source%20Sans%20Pro%3Aital%2Cwght%400%2C400%3B0%2C600%3B1%2C400%3B1%2C600&amp;family=IBM%20Plex%20Mono%3Awght%40400%3B600&amp;display=swap"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https://lisw-01.github.io/knowledge-base-qzweb/3-spa框架/3-3-react核心原理-og-image.webp"/><meta property="og:image:url" content="https://lisw-01.github.io/knowledge-base-qzweb/3-spa框架/3-3-react核心原理-og-image.webp"/><meta name="twitter:image" content="https://lisw-01.github.io/knowledge-base-qzweb/3-spa框架/3-3-react核心原理-og-image.webp"/><meta property="og:image:type" content="image/webp"/></head><body data-slug="3-spa框架/3-3-react核心原理" data-basepath="/knowledge-base-qzweb"><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="..">文档</a></h2><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="Search" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something..." placeholder="Search for something..."/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="Dark mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode" aria-label="Reader mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer nav-files-container" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a2, b2) => {\n    if (!a2.isFolder &amp;&amp; !b2.isFolder || a2.isFolder &amp;&amp; b2.isFolder) {\n      return (a2.displayName || \&quot;\&quot;).localeCompare(b2.displayName || \&quot;\&quot;, void 0, {\n        numeric: true,\n        sensitivity: \&quot;base\&quot;\n      });\n    }\n    if (!a2.isFolder &amp;&amp; b2.isFolder) {\n      return 1;\n    }\n    return -1;\n  }&quot;,&quot;filterFn&quot;:&quot;(node) => node.slugSegment !== \&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;(node) => {\n    return node;\n  }&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-22" aria-label="Explorer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-22" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#" class="nav-file-title tree-item-self"></a></li></template><template id="template-folder"><li><div class="folder-container nav-folder-title tree-item-self"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon nav-folder-collapse-indicator collapse-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content tree-item-children"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../3-spa框架/">3-spa框架</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>3-3 React核心原理</a></div></nav><h1 class="article-title">3-3 React核心原理</h1><p show-comma="true" class="content-meta"><time datetime="2026-10-19T07:54:06.601Z">Oct 19, 2026</time><span>6 min read</span></p></div></div><article class="popover-hint"><div class="markdown-preview-view markdown-rendered"><blockquote>
+<p>一句话：<strong>React 的核心思想是 <code>UI = f(state)</code>——数据变就把整个组件函数重新执行一遍，配合虚拟 DOM diff + Fiber 架构把”重跑”的开销控制住。</strong></p>
+</blockquote>
+<h2 id="一jsx-的本质">一、JSX 的本质<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#一jsx-的本质" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>JSX 不是模板字符串，是 <code>React.createElement</code> 的语法糖，编译后就是普通 JS 对象（虚拟 DOM 节点）：</p>
+<p>jsx</p>
+<pre><code>const el = &lt;div className=&quot;box&quot;>hi&lt;/div>
+
+// 编译后（经 jsx-runtime 自动引入）
+const el = jsx('div', { className: 'box', children: 'hi' })
+// el = { type: 'div', props: { className: 'box', children: 'hi' } }
+</code></pre>
+<blockquote>
+<p>与 Vue 对比：Vue 模板是<strong>受限 DSL</strong>（编译期能做静态分析、打 patchFlag）；JSX 是<strong>纯 JS 表达力</strong>（灵活但编译期可优化空间小）。这是两大框架优化路线分叉的根源，见 <a href="../3-spa框架/3-2-vue核心原理" class="internal internal-link alias" data-slug="3-spa框架/3-2-vue核心原理">3-2 Vue核心原理</a>。</p>
+</blockquote>
+<h2 id="二fiber为什么需要可中断渲染">二、Fiber：为什么需要可中断渲染<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#二fiber为什么需要可中断渲染" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>问题</strong>：React 15 递归 diff 一棵大树是<strong>同步不可中断</strong>的，主线程被占死 >16ms 就掉帧卡顿。</p>
+<p><strong>解法（React 16+）</strong>：把渲染拆成一个个小单元（Fiber 节点），用<strong>链表</strong>代替递归：</p>
+<pre><code>每个 Fiber: { type, props, child, sibling, return }
+              ↓                ↓         ↓
+              第一个孩子       下一个兄弟   父节点
+</code></pre>
+<ul>
+<li>工作循环：每处理完一个 Fiber 检查时间片，用完了就把控制权还给浏览器（处理输入/动画），下一帧继续——<strong>可中断、可恢复</strong></li>
+<li><strong>双缓存</strong>：current 树（屏幕上）+ workInProgress 树（内存里新构建的），构建完一次性替换（commit），保证不出现半成品 UI</li>
+<li>两个阶段：
+<ol>
+<li><strong>Render 阶段</strong>（可中断）：新旧树 diff，算出变更</li>
+<li><strong>Commit 阶段</strong>（不可中断）：一次性把变更打到真实 DOM（替换 DOM、跑生命周期/useEffect 调度）</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>React 18 的并发特性（<code>startTransition</code>、自动批处理）就建立在 Fiber 的可中断能力上。</p>
+</blockquote>
+<h2 id="三hooks原理与规则">三、Hooks：原理与规则<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#三hooks原理与规则" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="原理一条链表">原理：一条链表<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#原理一条链表" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>组件第一次渲染时，每个 Hook 按调用顺序<strong>挂到 Fiber 的 hooks 链表上</strong>；更新时按同样顺序从链表取值。</p>
+<pre><code>useState(0)  → hooks[0]
+useEffect(…) → hooks[1]
+useState(1)  → hooks[2]
+</code></pre>
+<p><strong>这就是”Hook 不能写在 if/循环里”的原因</strong>：一旦条件导致顺序错位，更新时 state 就会张冠李戴。</p>
+<h3 id="usestate-的快照机制闭包陷阱之源">useState 的快照机制（闭包陷阱之源）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#usestate-的快照机制闭包陷阱之源" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>jsx</p>
+<pre><code>function Counter() {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCount(count + 1)   // ❌ count 永远是这次渲染的 0 → 永远 1
+    }, 1000)
+    return () => clearInterval(id)
+  }, [])                    // 空依赖：effect 只跑一次，捕获的 count 永远是 0
+
+  return &lt;div>{count}&lt;/div>
+}
+</code></pre>
+<ul>
+<li>每次渲染的 <code>count</code> 都是<strong>那次渲染的快照</strong>，闭包把快包住了</li>
+<li>修法一：<code>setCount(c => c + 1)</code>（函数式更新，拿最新值）</li>
+<li>修法二：把 <code>count</code> 加进依赖数组（effect 会随 count 重建）</li>
+<li>本质是闭包问题，见 <a href="../2-html-css-js/js/闭包与作用域链" class="internal internal-link alias" data-slug="2-html-css-js/js/闭包与作用域链">闭包与作用域链</a></li>
+</ul>
+<h3 id="常用-hook-速查">常用 Hook 速查<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#常用-hook-速查" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>Hook</th><th>干什么</th><th>关键点</th></tr></thead><tbody><tr><td>useState</td><td>状态</td><td>更新是替换不是合并（对比 Vue 的响应式赋值）</td></tr><tr><td>useEffect</td><td>副作用</td><td>依赖数组控制重跑时机；返回函数做清理</td></tr><tr><td>useMemo</td><td>缓存计算值</td><td>依赖不变不重算</td></tr><tr><td>useCallback</td><td>缓存函数引用</td><td>配合 memo 子组件才有效</td></tr><tr><td>useRef</td><td>可变盒子</td><td>改 <code>.current</code> 不触发渲染；常拿 DOM/存定时器</td></tr></tbody></table></div>
+<h2 id="四diff-与-key">四、diff 与 key<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#四diff-与-key" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>同层比较 + 类型不同直接重建（组件类型变了，整棵子树推倒重来）</li>
+<li><strong>key 的作用与 Vue 相同</strong>：列表复用的身份证；用 index 当 key 在头部插入/删除时同样会状态错乱，见 <a href="../3-spa框架/3-2-vue核心原理" class="internal internal-link alias" data-slug="3-spa框架/3-2-vue核心原理">3-2 Vue核心原理</a></li>
+<li>React 对”同层级同 key”节点做移动，不做双端预处理（Vue3 有最长递增子序列优化）</li>
+</ul>
+<h2 id="五其他核心概念速记">五、其他核心概念速记<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#五其他核心概念速记" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li><strong>合成事件</strong>：React 把事件代理到根节点统一分发，抹平浏览器差异；17+ 代理到根容器</li>
+<li><strong>受控/非受控</strong>：<code>value + onChange</code> 受控（React 是唯一数据源）；<code>defaultValue</code>/ref 直接读 DOM 非受控</li>
+<li><strong>状态提升</strong>：两个组件要共享状态 → 提到最近公共父组件；跨层级多了就上 Context / 状态库</li>
+<li><strong>React 19</strong>：Server Components 服务端组件化（配合 <a href="../1-前端技术演变历史/1-5-元框架/next.js" class="internal internal-link" data-slug="1-前端技术演变历史/1-5-元框架/next.js">Next.js</a>）、Actions 表单处理、自动 memo 化</li>
+</ul>
+<h2 id="六vue-vs-react-心智对比">六、Vue vs React 心智对比<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#六vue-vs-react-心智对比" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>维度</th><th>Vue</th><th>React</th></tr></thead><tbody><tr><td>更新粒度</td><td>组件级精确知道谁依赖了谁</td><td>组件函数整个重跑 + diff</td></tr><tr><td>可变性</td><td>直接改响应式数据</td><td>不可变数据（setState 生成新值）</td></tr><tr><td>模板</td><td>受限 DSL，编译期可深度优化</td><td>JSX 纯 JS，灵活</td></tr><tr><td>上手曲线</td><td>渐进式、约定多、上手快</td><td>概念少（一切都是 JS）、深水区在闭包/重渲染</td></tr></tbody></table></div></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="toc"><button type="button" class="toc-header" aria-controls="toc-21" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-0"><a href="#一jsx-的本质" data-for="一jsx-的本质">一、JSX 的本质</a></li><li class="depth-0"><a href="#二fiber为什么需要可中断渲染" data-for="二fiber为什么需要可中断渲染">二、Fiber：为什么需要可中断渲染</a></li><li class="depth-0"><a href="#三hooks原理与规则" data-for="三hooks原理与规则">三、Hooks：原理与规则</a></li><li class="depth-1"><a href="#原理一条链表" data-for="原理一条链表">原理：一条链表</a></li><li class="depth-1"><a href="#usestate-的快照机制闭包陷阱之源" data-for="usestate-的快照机制闭包陷阱之源">useState 的快照机制（闭包陷阱之源）</a></li><li class="depth-1"><a href="#常用-hook-速查" data-for="常用-hook-速查">常用 Hook 速查</a></li><li class="depth-0"><a href="#四diff-与-key" data-for="四diff-与-key">四、diff 与 key</a></li><li class="depth-0"><a href="#五其他核心概念速记" data-for="五其他核心概念速记">五、其他核心概念速记</a></li><li class="depth-0"><a href="#六vue-vs-react-心智对比" data-for="六vue-vs-react-心智对比">六、Vue vs React 心智对比</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>Backlinks</h3><ul id="list-0" class="overflow"><li><a href="../2-html-css-js/js/闭包与作用域链" class="internal">闭包与作用域链</a></li><li><a href="../3-spa框架/3-1-spa原理与前端路由" class="internal">3-1 SPA原理与前端路由</a></li><li><a href="../" class="internal">我的知识库</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jackyzha0/quartz">GitHub</a></li><li><a href="https://discord.gg/cRFFHYye7t">Discord Community</a></li></ul></footer></div></div></body><script src="../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../postscript-4afe16b2.js" type="module" data-persist="true"></script></html>

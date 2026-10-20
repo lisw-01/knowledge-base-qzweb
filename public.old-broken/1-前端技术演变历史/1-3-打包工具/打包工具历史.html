@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>打包工具历史 - 知识库</title><meta charset="utf-8"/><link rel="preload" href="../../index-bb6c1746.css" as="style"/><link rel="preload" href="../../prescript-2bfc6315.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="文档"/><meta property="og:title" content="打包工具历史 - 知识库"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="打包工具历史 - 知识库"/><meta name="twitter:description" content="前端打包工具历史演进 核心脉络：无打包 → 模块方案混乱 → 打包工具诞生（Browserify）→ Webpack 一统时代 → Rollup/esbuild/Vite 分流 背景前置：浏览器原生不支持模块化，早期只能通过多个&lt;script>标签引入 js，全局变量污染、依赖顺序难管理。 从把 node 的模块搬到浏览器 → 打包一切资源 → 区分库打包 / 应用打包 → 开发环境免打包，生产打包，追求更快构建速度。 一、萌芽阶段（无打包，2010 年前） 方案：多个 script 标签顺序引入，所有变量挂载 window 全局 问题： 全局变量污染，命名冲突 必须严格控制引入顺..."/><meta property="og:description" content="前端打包工具历史演进 核心脉络：无打包 → 模块方案混乱 → 打包工具诞生（Browserify）→ Webpack 一统时代 → Rollup/esbuild/Vite 分流 背景前置：浏览器原生不支持模块化，早期只能通过多个&lt;script>标签引入 js，全局变量污染、依赖顺序难管理。 从把 node 的模块搬到浏览器 → 打包一切资源 → 区分库打包 / 应用打包 → 开发环境免打包，生产打包，追求更快构建速度。 一、萌芽阶段（无打包，2010 年前） 方案：多个 script 标签顺序引入，所有变量挂载 window 全局 问题： 全局变量污染，命名冲突 必须严格控制引入顺..."/><meta property="og:image:alt" content="前端打包工具历史演进 核心脉络：无打包 → 模块方案混乱 → 打包工具诞生（Browserify）→ Webpack 一统时代 → Rollup/esbuild/Vite 分流 背景前置：浏览器原生不支持模块化，早期只能通过多个&lt;script>标签引入 js，全局变量污染、依赖顺序难管理。 从把 node 的模块搬到浏览器 → 打包一切资源 → 区分库打包 / 应用打包 → 开发环境免打包，生产打包，追求更快构建速度。 一、萌芽阶段（无打包，2010 年前） 方案：多个 script 标签顺序引入，所有变量挂载 window 全局 问题： 全局变量污染，命名冲突 必须严格控制引入顺..."/><meta property="twitter:domain" content="lisw-01.github.io/knowledge-base-qzweb"/><meta property="og:url" content="https://lisw-01.github.io/knowledge-base-qzweb/1-前端技术演变历史/1-3-打包工具/打包工具历史"/><meta property="twitter:url" content="https://lisw-01.github.io/knowledge-base-qzweb/1-前端技术演变历史/1-3-打包工具/打包工具历史"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="前端打包工具历史演进 核心脉络：无打包 → 模块方案混乱 → 打包工具诞生（Browserify）→ Webpack 一统时代 → Rollup/esbuild/Vite 分流 背景前置：浏览器原生不支持模块化，早期只能通过多个&lt;script>标签引入 js，全局变量污染、依赖顺序难管理。 从把 node 的模块搬到浏览器 → 打包一切资源 → 区分库打包 / 应用打包 → 开发环境免打包，生产打包，追求更快构建速度。 一、萌芽阶段（无打包，2010 年前） 方案：多个 script 标签顺序引入，所有变量挂载 window 全局 问题： 全局变量污染，命名冲突 必须严格控制引入顺..."/><meta name="generator" content="Quartz"/><link href="../../index-bb6c1746.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-735924e0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-e427079e.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-53b25b2b.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-6ee21cee.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-1ea6ad18.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-788c9ca3.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-58d5ff56.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-34bdfded.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-11d41004.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-26a99b87.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-9857b007.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-d3a1a224.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../../prescript-2bfc6315.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted%20Grotesk%3Awght%40400%3B700&amp;family=Source%20Sans%20Pro%3Aital%2Cwght%400%2C400%3B0%2C600%3B1%2C400%3B1%2C600&amp;family=IBM%20Plex%20Mono%3Awght%40400%3B600&amp;display=swap"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https://lisw-01.github.io/knowledge-base-qzweb/1-前端技术演变历史/1-3-打包工具/打包工具历史-og-image.webp"/><meta property="og:image:url" content="https://lisw-01.github.io/knowledge-base-qzweb/1-前端技术演变历史/1-3-打包工具/打包工具历史-og-image.webp"/><meta name="twitter:image" content="https://lisw-01.github.io/knowledge-base-qzweb/1-前端技术演变历史/1-3-打包工具/打包工具历史-og-image.webp"/><meta property="og:image:type" content="image/webp"/></head><body data-slug="1-前端技术演变历史/1-3-打包工具/打包工具历史" data-basepath="/knowledge-base-qzweb"><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">文档</a></h2><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="Search" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something..." placeholder="Search for something..."/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="Dark mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode" aria-label="Reader mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer nav-files-container" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a2, b2) => {\n    if (!a2.isFolder &amp;&amp; !b2.isFolder || a2.isFolder &amp;&amp; b2.isFolder) {\n      return (a2.displayName || \&quot;\&quot;).localeCompare(b2.displayName || \&quot;\&quot;, void 0, {\n        numeric: true,\n        sensitivity: \&quot;base\&quot;\n      });\n    }\n    if (!a2.isFolder &amp;&amp; b2.isFolder) {\n      return 1;\n    }\n    return -1;\n  }&quot;,&quot;filterFn&quot;:&quot;(node) => node.slugSegment !== \&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;(node) => {\n    return node;\n  }&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-5" aria-label="Explorer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-5" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#" class="nav-file-title tree-item-self"></a></li></template><template id="template-folder"><li><div class="folder-container nav-folder-title tree-item-self"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon nav-folder-collapse-indicator collapse-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content tree-item-children"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../1-前端技术演变历史/">1-前端技术演变历史</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../1-前端技术演变历史/1-3-打包工具/">1-3 打包工具</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>打包工具历史</a></div></nav><h1 class="article-title">打包工具历史</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-24T01:10:01.000Z">Sep 24, 2026</time><span>6 min read</span></p></div></div><article class="popover-hint"><div class="markdown-preview-view markdown-rendered"><h1 id="前端打包工具历史演进">前端打包工具历史演进<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#前端打包工具历史演进" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<p>核心脉络：<strong>无打包 → 模块方案混乱 → 打包工具诞生（Browserify）→ Webpack 一统时代 → Rollup/esbuild/Vite 分流</strong></p>
+<blockquote>
+<p>背景前置：浏览器原生不支持模块化，早期只能通过多个<code>&lt;script></code>标签引入 js，全局变量污染、依赖顺序难管理。</p>
+</blockquote>
+<p>从<strong>把 node 的模块搬到浏览器</strong> → <strong>打包一切资源</strong> → <strong>区分库打包 / 应用打包</strong> → <strong>开发环境免打包，生产打包</strong>，追求更快构建速度。</p>
+<h2 id="一萌芽阶段无打包2010-年前">一、萌芽阶段（无打包，2010 年前）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#一萌芽阶段无打包2010-年前" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>
+<p>方案：多个 <code>script</code> 标签顺序引入，所有变量挂载 window 全局</p>
+</li>
+<li>
+<p>问题：</p>
+<ol>
+<li>全局变量污染，命名冲突</li>
+<li>必须严格控制引入顺序（依赖先加载）</li>
+<li>无法压缩合并，请求多</li>
+</ol>
+</li>
+<li>
+<p>代表库：jQuery、Underscore</p>
+</li>
+<li>
+<p>简单合并工具：<code>concat</code> + 压缩工具 UglifyJS（只合并压缩，<strong>不处理模块依赖</strong>）</p>
+</li>
+</ul>
+<h2 id="二第一代模块打包鼻祖-browserify2011">二、第一代：模块打包鼻祖 Browserify（2011）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#二第一代模块打包鼻祖-browserify2011" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>目标：让浏览器可以跑 Node.js 的 CommonJS 模块</strong></p>
+<ul>
+<li>
+<p>核心：识别 <code>require()</code>，递归把所有依赖打包成<strong>单个 bundle.js</strong></p>
+</li>
+<li>
+<p>用法：<code>browserify entry.js > bundle.js</code></p>
+</li>
+<li>
+<p>局限：</p>
+<ol>
+<li>只能处理 CommonJS，不支持 ES Module</li>
+<li>只打包 JS，css / 图片等资源处理麻烦</li>
+<li>性能差，全量打包，无代码分割</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p>同期：<a href="../../1-前端技术演变历史/1-4-js-模块化/requirejs" class="internal internal-link" data-slug="1-前端技术演变历史/1-4-js-模块化/requirejs">RequireJS</a>  和  <a href="../../1-前端技术演变历史/1-4-js-模块化/seajs" class="internal internal-link" data-slug="1-前端技术演变历史/1-4-js-模块化/seajs">SeaJS</a>   用在浏览器直接异步加载模块（模块加载器）。</p>
+</blockquote>
+<h2 id="三第二代webpack-崛起2012-发布2014-大火">三、第二代：Webpack 崛起（2012 发布，2014 大火）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#三第二代webpack-崛起2012-发布2014-大火" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>理念：万物皆模块，一切资源都可以被打包</strong></p>
+<ul>
+<li>
+<p>支持：CommonJS、AMD、ES Module</p>
+</li>
+<li>
+<p>loader：处理非 JS 资源（css、less、图片、字体）</p>
+</li>
+<li>
+<p>plugin：扩展能力（压缩、html 生成、代码分割）</p>
+</li>
+<li>
+<p>核心特性：</p>
+<ol>
+<li>Code Splitting 代码分割，按需加载</li>
+<li>依赖图：从入口递归构建依赖图，打包所有模块</li>
+</ol>
+</li>
+<li>
+<p>版本迭代</p>
+<ul>
+<li>Webpack1：只支持 CommonJS，loader 系统</li>
+<li>Webpack2：增加 ES Module 支持，<a href="../../1-前端技术演变历史/1-3-打包工具/tree-shaking" class="internal internal-link" data-slug="1-前端技术演变历史/1-3-打包工具/tree-shaking">Tree-Shaking</a> 雏形</li>
+<li>Webpack3：Scope Hoisting</li>
+<li>Webpack4（2018）：重大升级，零配置，splitChunks，HMR 成熟</li>
+<li>Webpack5（2020）：持久化缓存、module federation、替换旧插件</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>地位：2016~2020 前端工程化标准标配，Vue/React 项目首选。</p>
+</blockquote>
+<h2 id="四同期并行工具2015-左右">四、同期并行工具（2015 左右）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#四同期并行工具2015-左右" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="rollup2015">Rollup（2015）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#rollup2015" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>定位：<strong>库打包工具（library）</strong>，不是应用打包</p>
+<ul>
+<li>主打 ES Module，Tree-Shaking 最早做的很好</li>
+<li>输出干净的 ES 模块、cjs、umd，适合打包 SDK、组件库（Vue、React 源码都是 Rollup 打包）</li>
+<li>短板：对 css、静态资源、HMR 支持弱，<strong>不适合业务应用</strong></li>
+</ul>
+<h3 id="parcel2017">Parcel（2017）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#parcel2017" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>口号：<strong>零配置打包器</strong></p>
+<ul>
+<li>自动识别文件，不需要写配置文件</li>
+<li>内置 babel、postcss，开箱即用</li>
+<li>底层多进程编译</li>
+<li>缺点：大型项目缓存、自定义扩展弱，生态不如 webpack，热度慢慢下降</li>
+</ul>
+<h2 id="五新一代esbuild2020">五、新一代：esbuild（2020）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#五新一代esbuild2020" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Go 语言编写，颠覆速度</strong></p>
+<ul>
+<li>目标：极致编译速度，比 webpack 快几十倍</li>
+<li>只做编译打包，不做复杂插件系统；Tree-shaking、ts 转 js、压缩内置</li>
+<li>局限：插件生态简陋，不适合单独直接构建大型应用</li>
+<li>定位：底层编译引擎，很多工具底层基于 esbuild（Vite、tsup）</li>
+</ul>
+<blockquote>
+<p>tsup：基于 esbuild，专门打包 js 库，替代 rollup 简单场景。</p>
+</blockquote>
+<h2 id="六现代vite2020尤雨溪">六、现代：Vite（2020，尤雨溪）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#六现代vite2020尤雨溪" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>理念：开发环境利用浏览器原生 ES Module，跳过打包；生产打包用 esbuild/rollup</strong></p>
+<ol>
+<li>
+<p><strong>开发阶段</strong>：不打包，浏览器请求时按需转换，冷启动极快</p>
+<ul>
+<li>依赖预构建：用 esbuild 提前把第三方依赖转成浏览器可识别的 esm</li>
+</ul>
+</li>
+<li>
+<p><strong>生产构建</strong>：使用 Rollup 打包</p>
+<p>优势：极快冷启动, <a href="../../1-前端技术演变历史/1-3-打包工具/hmr" class="internal internal-link" data-slug="1-前端技术演变历史/1-3-打包工具/hmr">HMR</a> 秒更新；Vue 官方推荐构建工具，现在新项目首选</p>
+<p>局限：生产打包底层还是 rollup，超大型复杂项目自定义构建逻辑不如 webpack 成熟。</p>
+</li>
+</ol>
+<h1 id="对比总结">对比总结<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#对比总结" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>工具</th><th>定位</th><th>核心特点</th><th>适用场景</th></tr></thead><tbody><tr><td>Browserify</td><td>早期打包</td><td>打包 CommonJS 到浏览器</td><td>古董项目，淘汰</td></tr><tr><td>Webpack</td><td>应用打包</td><td>万物皆模块，插件生态极强</td><td>复杂业务项目，微前端 Module Federation</td></tr><tr><td>Rollup</td><td>库打包</td><td>优秀 Tree-shaking，输出干净 esm</td><td>组件库、SDK</td></tr><tr><td>Parcel</td><td>零配置打包</td><td>零配置，多进程</td><td>中小型简单项目</td></tr><tr><td>esbuild</td><td>编译引擎</td><td>Go 编写，速度爆炸</td><td>底层编译，ts 快速转译</td></tr><tr><td>Vite</td><td>现代应用构建</td><td>开发环境原生 ESM，极速 HMR</td><td>Vue/React 新项目</td></tr></tbody></table></div></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="toc"><button type="button" class="toc-header" aria-controls="toc-5" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-0"><a href="#前端打包工具历史演进" data-for="前端打包工具历史演进">前端打包工具历史演进</a></li><li class="depth-1"><a href="#一萌芽阶段无打包2010-年前" data-for="一萌芽阶段无打包2010-年前">一、萌芽阶段（无打包，2010 年前）</a></li><li class="depth-1"><a href="#二第一代模块打包鼻祖-browserify2011" data-for="二第一代模块打包鼻祖-browserify2011">二、第一代：模块打包鼻祖 Browserify（2011）</a></li><li class="depth-1"><a href="#三第二代webpack-崛起2012-发布2014-大火" data-for="三第二代webpack-崛起2012-发布2014-大火">三、第二代：Webpack 崛起（2012 发布，2014 大火）</a></li><li class="depth-1"><a href="#四同期并行工具2015-左右" data-for="四同期并行工具2015-左右">四、同期并行工具（2015 左右）</a></li><li class="depth-2"><a href="#rollup2015" data-for="rollup2015">Rollup（2015）</a></li><li class="depth-2"><a href="#parcel2017" data-for="parcel2017">Parcel（2017）</a></li><li class="depth-1"><a href="#五新一代esbuild2020" data-for="五新一代esbuild2020">五、新一代：esbuild（2020）</a></li><li class="depth-1"><a href="#六现代vite2020尤雨溪" data-for="六现代vite2020尤雨溪">六、现代：Vite（2020，尤雨溪）</a></li><li class="depth-0"><a href="#对比总结" data-for="对比总结">对比总结</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jackyzha0/quartz">GitHub</a></li><li><a href="https://discord.gg/cRFFHYye7t">Discord Community</a></li></ul></footer></div></div></body><script src="../../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../../postscript-4afe16b2.js" type="module" data-persist="true"></script></html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>流行的agent框架 - 知识库</title><meta charset="utf-8"/><link rel="preload" href="../../index-bb6c1746.css" as="style"/><link rel="preload" href="../../prescript-2bfc6315.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="文档"/><meta property="og:title" content="流行的agent框架 - 知识库"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="流行的agent框架 - 知识库"/><meta name="twitter:description" content="核心一句话：所有框架本质都是在帮你工程化”ReAct 循环 + 工具调用 + 记忆 + 多角色协作”，先手写懂原理，再按场景选框架。 一、总览对比表 框架出品方开源语言定位一句话LangChain / LangGraphLangChain✅ MITPython/JS生态最全的”乐高积木”+ 状态机编排LlamaIndexLlamaIndex✅ MITPython/JS数据接入 + RAG 检索见长AutoGen微软✅ MITPython/.NET多 Agent 对话协作鼻祖Semantic Kernel微软✅ MITC#/Python/Java企业级、.NET 生态集成CrewAICrewA..."/><meta property="og:description" content="核心一句话：所有框架本质都是在帮你工程化”ReAct 循环 + 工具调用 + 记忆 + 多角色协作”，先手写懂原理，再按场景选框架。 一、总览对比表 框架出品方开源语言定位一句话LangChain / LangGraphLangChain✅ MITPython/JS生态最全的”乐高积木”+ 状态机编排LlamaIndexLlamaIndex✅ MITPython/JS数据接入 + RAG 检索见长AutoGen微软✅ MITPython/.NET多 Agent 对话协作鼻祖Semantic Kernel微软✅ MITC#/Python/Java企业级、.NET 生态集成CrewAICrewA..."/><meta property="og:image:alt" content="核心一句话：所有框架本质都是在帮你工程化”ReAct 循环 + 工具调用 + 记忆 + 多角色协作”，先手写懂原理，再按场景选框架。 一、总览对比表 框架出品方开源语言定位一句话LangChain / LangGraphLangChain✅ MITPython/JS生态最全的”乐高积木”+ 状态机编排LlamaIndexLlamaIndex✅ MITPython/JS数据接入 + RAG 检索见长AutoGen微软✅ MITPython/.NET多 Agent 对话协作鼻祖Semantic Kernel微软✅ MITC#/Python/Java企业级、.NET 生态集成CrewAICrewA..."/><meta property="twitter:domain" content="lisw-01.github.io/knowledge-base-qzweb"/><meta property="og:url" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent框架/流行的agent框架"/><meta property="twitter:url" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent框架/流行的agent框架"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="核心一句话：所有框架本质都是在帮你工程化”ReAct 循环 + 工具调用 + 记忆 + 多角色协作”，先手写懂原理，再按场景选框架。 一、总览对比表 框架出品方开源语言定位一句话LangChain / LangGraphLangChain✅ MITPython/JS生态最全的”乐高积木”+ 状态机编排LlamaIndexLlamaIndex✅ MITPython/JS数据接入 + RAG 检索见长AutoGen微软✅ MITPython/.NET多 Agent 对话协作鼻祖Semantic Kernel微软✅ MITC#/Python/Java企业级、.NET 生态集成CrewAICrewA..."/><meta name="generator" content="Quartz"/><link href="../../index-bb6c1746.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-735924e0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-e427079e.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-53b25b2b.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-6ee21cee.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-1ea6ad18.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-788c9ca3.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-58d5ff56.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-34bdfded.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-11d41004.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-26a99b87.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-9857b007.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../static/resource-style-d3a1a224.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../../prescript-2bfc6315.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted%20Grotesk%3Awght%40400%3B700&amp;family=Source%20Sans%20Pro%3Aital%2Cwght%400%2C400%3B0%2C600%3B1%2C400%3B1%2C600&amp;family=IBM%20Plex%20Mono%3Awght%40400%3B600&amp;display=swap"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent框架/流行的agent框架-og-image.webp"/><meta property="og:image:url" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent框架/流行的agent框架-og-image.webp"/><meta name="twitter:image" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent框架/流行的agent框架-og-image.webp"/><meta property="og:image:type" content="image/webp"/></head><body data-slug="5-agent/agent框架/流行的agent框架" data-basepath="/knowledge-base-qzweb"><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">文档</a></h2><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="Search" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something..." placeholder="Search for something..."/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="Dark mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode" aria-label="Reader mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer nav-files-container" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a2, b2) => {\n    if (!a2.isFolder &amp;&amp; !b2.isFolder || a2.isFolder &amp;&amp; b2.isFolder) {\n      return (a2.displayName || \&quot;\&quot;).localeCompare(b2.displayName || \&quot;\&quot;, void 0, {\n        numeric: true,\n        sensitivity: \&quot;base\&quot;\n      });\n    }\n    if (!a2.isFolder &amp;&amp; b2.isFolder) {\n      return 1;\n    }\n    return -1;\n  }&quot;,&quot;filterFn&quot;:&quot;(node) => node.slugSegment !== \&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;(node) => {\n    return node;\n  }&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-80" aria-label="Explorer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-80" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#" class="nav-file-title tree-item-self"></a></li></template><template id="template-folder"><li><div class="folder-container nav-folder-title tree-item-self"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon nav-folder-collapse-indicator collapse-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content tree-item-children"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../5-agent/">5-agent</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../5-agent/agent框架/">agent框架</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>流行的agent框架</a></div></nav><h1 class="article-title">流行的agent框架</h1><p show-comma="true" class="content-meta"><time datetime="2026-09-30T07:48:10.000Z">Sep 30, 2026</time><span>9 min read</span></p></div></div><article class="popover-hint"><div class="markdown-preview-view markdown-rendered"><blockquote>
+<p>核心一句话：<strong>所有框架本质都是在帮你工程化”ReAct 循环 + 工具调用 + 记忆 + 多角色协作”</strong>，先手写懂原理，再按场景选框架。</p>
+</blockquote>
+<h2 id="一总览对比表">一、总览对比表<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#一总览对比表" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>框架</th><th>出品方</th><th>开源</th><th>语言</th><th>定位一句话</th></tr></thead><tbody><tr><td>LangChain / LangGraph</td><td>LangChain</td><td>✅ MIT</td><td>Python/JS</td><td>生态最全的”乐高积木”+ 状态机编排</td></tr><tr><td>LlamaIndex</td><td>LlamaIndex</td><td>✅ MIT</td><td>Python/JS</td><td>数据接入 + RAG 检索见长</td></tr><tr><td>AutoGen</td><td>微软</td><td>✅ MIT</td><td>Python/.NET</td><td>多 Agent 对话协作鼻祖</td></tr><tr><td>Semantic Kernel</td><td>微软</td><td>✅ MIT</td><td>C#/Python/Java</td><td>企业级、.NET 生态集成</td></tr><tr><td>CrewAI</td><td>CrewAI</td><td>✅ MIT</td><td>Python</td><td>角色化”团队”编排，上手最快</td></tr><tr><td>OpenAI Agents SDK</td><td>OpenAI</td><td>✅ MIT</td><td>Python</td><td>轻量官方方案，Swarm 的正式版</td></tr><tr><td>smolagents</td><td>HuggingFace</td><td>✅ Apache</td><td>Python</td><td>极简 Code Agent（写代码当行动）</td></tr><tr><td>Dify</td><td>LangGenius</td><td>✅ 修改版Apache</td><td>Web平台</td><td>可视化工作流，低代码平台</td></tr><tr><td>Coze</td><td>字节跳动</td><td>⚠️ 国内版闭源 / Coze开源版可自部署</td><td>Web平台</td><td>Bot 搭建平台，零代码</td></tr><tr><td>Claude Agent SDK</td><td>Anthropic</td><td>✅ MIT</td><td>Python/TS</td><td>官方长任务 Agent + MCP 工具生态</td></tr><tr><td>Pi (pi-mono)</td><td>earendil-works (Mario Zechner)</td><td>✅ MIT</td><td>TypeScript</td><td>极简 Agent Harness + 自扩展编码 Agent</td></tr></tbody></table></div>
+<h2 id="二逐个拆解">二、逐个拆解<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#二逐个拆解" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="1-langchain--langgraph">1. LangChain / LangGraph<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#1-langchain--langgraph" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>核心功能</strong>
+<ul>
+<li>LangChain：统一的模型/工具/记忆/提示词抽象层，集成上千个组件</li>
+<li>LangGraph：基于图的状态机编排，节点=步骤，边=流转，支持循环、分支、人工介入（human-in-the-loop）、状态持久化</li>
+</ul>
+</li>
+<li><strong>优点</strong>：生态最大、文档社区最全；LangGraph 适合复杂可控流程；LangSmith 可做链路追踪调试</li>
+<li><strong>缺点</strong>：抽象层过厚，“为简单事情包十层”；版本迭代快、Breaking change 多；早期 API 被诟病过度封装</li>
+<li><strong>开源</strong>：✅ MIT，商业化靠 LangSmith（观测）/ LangServe（部署）</li>
+</ul>
+<h3 id="2-llamaindex">2. LlamaIndex<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#2-llamaindex" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>核心功能</strong>：数据框架——PDF/数据库/API 等异构数据 → 索引 → 检索 → 交给 LLM；Query Engine / Agent / Workflow 三层 API</li>
+<li><strong>优点</strong>：RAG 场景最专业，数据连接器（LlamaHub）丰富；比 LangChain 聚焦，RAG 场景下代码更简洁</li>
+<li><strong>缺点</strong>：RAG 之外的能力（多 Agent 协作等）相对弱；国内社区资料少于 LangChain</li>
+<li><strong>开源</strong>：✅ MIT</li>
+</ul>
+<h3 id="3-autogen微软">3. AutoGen（微软）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#3-autogen微软" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>核心功能</strong>：多 Agent 以”对话”方式协作——GroupChat、代码执行器、人工介入；v0.4 后重构为事件驱动 + AutoGen Studio 可视化</li>
+<li><strong>优点</strong>：多角色讨论/互相纠错能力强；微软背书，适合研究多 Agent 范式</li>
+<li><strong>缺点</strong>：概念多、学习曲线陡；对话轮数不可控时 Token 消耗大；v0.2→v0.4 API 变动剧烈</li>
+<li><strong>开源</strong>：✅ MIT</li>
+</ul>
+<h3 id="4-semantic-kernel微软">4. Semantic Kernel（微软）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#4-semantic-kernel微软" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>核心功能</strong>：插件（Plugin/函数）+ 规划器（Planner）+ 内存；原生融入 .NET/Azure 生态</li>
+<li><strong>优点</strong>：企业级稳定性，C#/Java 支持最好；和 Azure OpenAI 无缝集成；适合存量企业系统接入</li>
+<li><strong>缺点</strong>：Python 生态不如 .NET 完善；国内教程少；偏”企业味”，快速原型不如 CrewAI 爽</li>
+<li><strong>开源</strong>：✅ MIT</li>
+</ul>
+<h3 id="5-crewai">5. CrewAI<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#5-crewai" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>核心功能</strong>：以”团队”为隐喻——定义角色（Role）、目标（Goal）、背景故事（Backstory），按流程（Process）协作</li>
+<li><strong>优点</strong>：概念直观，10 行代码跑起多 Agent；内置工具多；社区增长快</li>
+<li><strong>缺点</strong>：灵活性有限，复杂流程控制力不如 LangGraph；调试偏黑盒，Token 消耗不小</li>
+<li><strong>开源</strong>：✅ MIT，企业版闭源收费</li>
+</ul>
+<h3 id="6-openai-agents-sdk">6. OpenAI Agents SDK<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#6-openai-agents-sdk" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>核心功能</strong>：Agent（指令+工具）+ Handoff（Agent 间移交）+ Guardrails（输入输出护栏）+ Tracing；前身是实验品 Swarm</li>
+<li><strong>优点</strong>：极简、官方维护、原-function calling 风格，无过度抽象；Handoff 做多 Agent 很轻</li>
+<li><strong>缺点</strong>：模型绑定 OpenAI（虽支持其他模型但体验打折）；能力较薄，复杂记忆/编排要自己写</li>
+<li><strong>开源</strong>：✅ MIT</li>
+</ul>
+<h3 id="7-smolagentshuggingface">7. smolagents（HuggingFace）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#7-smolagentshuggingface" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>核心功能</strong>：CodeAgent——Agent 直接<strong>写 Python 代码</strong>作为行动（比 JSON 工具调用更灵活），核心代码极薄</li>
+<li><strong>优点</strong>：动作空间是代码，减少解析出错；轻量好读，适合学原理；HF 生态（模型/空间）联动</li>
+<li><strong>缺点</strong>：代码执行要沙箱隔离（安全成本）；场景不如大框架全面</li>
+<li><strong>开源</strong>：✅ Apache 2.0</li>
+</ul>
+<h3 id="8-dify平台型">8. Dify（平台型）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#8-dify平台型" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>核心功能</strong>：Web 界面可视化编排工作流；内置 RAG、工具调用、知识库、模型管理；一次编排多端发布</li>
+<li><strong>优点</strong>：低代码，非程序员也能搭 Agent；自部署简单（Docker）；工作流+Agent 混合模式实用</li>
+<li><strong>缺点</strong>：复杂逻辑受限于画布节点；深度定制要写代码但平台约束多；修改版 Apache 协议对多租户 SaaS 有限制</li>
+<li><strong>开源</strong>：✅（可自部署），商业版云服务收费</li>
+</ul>
+<h3 id="9-coze字节跳动">9. Coze（字节跳动）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#9-coze字节跳动" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>核心功能</strong>：零代码 Bot 搭建——插件/工作流/知识库/数据库/定时任务，发布到飞书、微信、Discord 等渠道</li>
+<li><strong>优点</strong>：上手门槛最低，产品体验好；渠道发布一键完成；提示词优化、卡片交互等周边全</li>
+<li><strong>缺点</strong>：国内版闭源，数据走平台云端；深度可控性差；开源版（Coze Studio）自部署需一定运维能力</li>
+<li><strong>开源</strong>：⚠️ 国内 SaaS 闭源；海外有开源版可自部署</li>
+</ul>
+<h3 id="10-claude-agent-sdk">10. Claude Agent SDK<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#10-claude-agent-sdk" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>核心功能</strong>：Anthropic 官方 Agent 开发套件——文件系统操作、Shell 执行、网页搜索等内置工具；深度绑定 MCP（Model Context Protocol）工具协议</li>
+<li><strong>优点</strong>：Claude 模型原生优化，长任务（数小时级）能力强；MCP 已成为工具接入的事实标准，生态扩张快</li>
+<li><strong>缺点</strong>：强绑定 Claude 模型；较新，成熟度/社区资料不如 LangChain 系</li>
+<li><strong>开源</strong>：✅ MIT</li>
+</ul>
+<h3 id="11-pipi-mono--pi-agent">11. Pi（pi-mono / pi-agent）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#11-pipi-mono--pi-agent" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>核心功能</strong>：分层的极简工具箱（“harness not framework”）——<code>pi-ai</code>（统一多厂商 LLM API）、<code>pi-agent-core</code>（Agent 循环 + 工具调用 + 状态管理）、<code>pi-coding-agent</code>（交互式编码 Agent CLI）、<code>pi-tui</code>（终端 UI）；支持 MCP，最特色的<strong>自扩展</strong>：Agent 可以自己写代码给自己加工具/扩展</li>
+<li><strong>优点</strong>：无过度抽象，代码量小、可通读，适合学”Agent 到底是什么”；多模型统一 API 干净；GitHub 110k+ stars，“极简主义”流派代表作</li>
+<li><strong>缺点</strong>：偏编码 Agent 场景，通用业务编排能力弱；<strong>无内置权限系统</strong>（文件/进程/网络不做限制，需自行 Docker/沙箱隔离）；TypeScript 生态，Python 用户上手成本高；中文资料少</li>
+<li><strong>开源</strong>：✅ MIT</li>
+<li><strong>定位提醒</strong>：它和 Claude Code、Codex CLI、OpenCode、aider 同属”编码 Agent”赛道，与上面 LangChain/AutoGen 等”通用编排框架”不是一个类别</li>
+</ul>
+<h2 id="三怎么选经验法则">三、怎么选（经验法则）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#三怎么选经验法则" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<pre><code>想深入理解原理        → 先手写 ReAct（见学习路径），别急着上框架
+复杂可控流程/生产级    → LangGraph
+RAG 为主             → LlamaIndex
+多角色讨论/研究多Agent → AutoGen
+快速搭多 Agent 原型    → CrewAI
+只用 OpenAI、要轻量    → OpenAI Agents SDK
+C#/.NET 企业项目      → Semantic Kernel
+不想写代码/做产品 Demo  → Dify 或 Coze
+用 Claude 模型        → Claude Agent SDK（+ MCP 工具）
+极简主义/讨厌重框架     → Pi（或干脆手写循环）
+</code></pre>
+<blockquote>
+<p>⚠️ 共同的坑：框架都解决不了”Prompt 写不好”和”工具设计不合理”这两个根本问题；Token 消耗 = 轮数 × 上下文长度，多 Agent 系统尤其烧钱，先小跑通再放规模。</p>
+</blockquote></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="toc"><button type="button" class="toc-header" aria-controls="toc-62" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-0"><a href="#一总览对比表" data-for="一总览对比表">一、总览对比表</a></li><li class="depth-0"><a href="#二逐个拆解" data-for="二逐个拆解">二、逐个拆解</a></li><li class="depth-1"><a href="#1-langchain--langgraph" data-for="1-langchain--langgraph">1. LangChain / LangGraph</a></li><li class="depth-1"><a href="#2-llamaindex" data-for="2-llamaindex">2. LlamaIndex</a></li><li class="depth-1"><a href="#3-autogen微软" data-for="3-autogen微软">3. AutoGen（微软）</a></li><li class="depth-1"><a href="#4-semantic-kernel微软" data-for="4-semantic-kernel微软">4. Semantic Kernel（微软）</a></li><li class="depth-1"><a href="#5-crewai" data-for="5-crewai">5. CrewAI</a></li><li class="depth-1"><a href="#6-openai-agents-sdk" data-for="6-openai-agents-sdk">6. OpenAI Agents SDK</a></li><li class="depth-1"><a href="#7-smolagentshuggingface" data-for="7-smolagentshuggingface">7. smolagents（HuggingFace）</a></li><li class="depth-1"><a href="#8-dify平台型" data-for="8-dify平台型">8. Dify（平台型）</a></li><li class="depth-1"><a href="#9-coze字节跳动" data-for="9-coze字节跳动">9. Coze（字节跳动）</a></li><li class="depth-1"><a href="#10-claude-agent-sdk" data-for="10-claude-agent-sdk">10. Claude Agent SDK</a></li><li class="depth-1"><a href="#11-pipi-mono--pi-agent" data-for="11-pipi-mono--pi-agent">11. Pi（pi-mono / pi-agent）</a></li><li class="depth-0"><a href="#三怎么选经验法则" data-for="三怎么选经验法则">三、怎么选（经验法则）</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jackyzha0/quartz">GitHub</a></li><li><a href="https://discord.gg/cRFFHYye7t">Discord Community</a></li></ul></footer></div></div></body><script src="../../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../../postscript-4afe16b2.js" type="module" data-persist="true"></script></html>

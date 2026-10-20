@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head><title>1-Pi Agent简介 - 知识库</title><meta charset="utf-8"/><link rel="preload" href="../../../index-bb6c1746.css" as="style"/><link rel="preload" href="../../../prescript-2bfc6315.js" as="script"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="文档"/><meta property="og:title" content="1-Pi Agent简介 - 知识库"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="1-Pi Agent简介 - 知识库"/><meta name="twitter:description" content="Pi Agent 是什么、能干什么、整体介绍与使用入门"/><meta property="og:description" content="Pi Agent 是什么、能干什么、整体介绍与使用入门"/><meta property="og:image:alt" content="Pi Agent 是什么、能干什么、整体介绍与使用入门"/><meta property="twitter:domain" content="lisw-01.github.io/knowledge-base-qzweb"/><meta property="og:url" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent框架/pi-agent/1-pi-agent简介"/><meta property="twitter:url" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent框架/pi-agent/1-pi-agent简介"/><link rel="icon" href="../../../static/icon.png"/><meta name="description" content="Pi Agent 是什么、能干什么、整体介绍与使用入门"/><meta name="generator" content="Quartz"/><link href="../../../index-bb6c1746.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-735924e0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-589c1cea.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-bbc3f7c0.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-2911f5d1.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-e427079e.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-53b25b2b.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-c93c6a44.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-8a06014f.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-77d6a441.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-6ee21cee.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-1ea6ad18.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-788c9ca3.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-642859cd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-4abc06bd.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-274a3dfe.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-94cb6c84.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-58d5ff56.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-34bdfded.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../component-7262b5a7.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../static/resource-style-11d41004.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../static/resource-style-26a99b87.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../static/resource-style-a5c806d2.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../static/resource-style-6bd36952.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../static/resource-style-9857b007.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="../../../static/resource-style-d3a1a224.css" rel="stylesheet" type="text/css" data-persist="true"/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" data-persist="true"/><script src="../../../prescript-2bfc6315.js" type="application/javascript" data-persist="true"></script><script type="application/javascript" data-persist="true">const fetchData = fetch("../../../static/contentIndex.json").then(data => data.json())</script><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted%20Grotesk%3Awght%40400%3B700&amp;family=Source%20Sans%20Pro%3Aital%2Cwght%400%2C400%3B0%2C600%3B1%2C400%3B1%2C600&amp;family=IBM%20Plex%20Mono%3Awght%40400%3B600&amp;display=swap"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent框架/pi-agent/1-pi-agent简介-og-image.webp"/><meta property="og:image:url" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent框架/pi-agent/1-pi-agent简介-og-image.webp"/><meta name="twitter:image" content="https://lisw-01.github.io/knowledge-base-qzweb/5-agent/agent框架/pi-agent/1-pi-agent简介-og-image.webp"/><meta property="og:image:type" content="image/webp"/></head><body data-slug="5-agent/agent框架/pi-agent/1-pi-agent简介" data-basepath="/knowledge-base-qzweb"><div id="quartz-root" class="page" data-frame="default"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../../..">文档</a></h2><div class="mobile-only"><div class="spacer"></div></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 0.5rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button" aria-label="Search" aria-expanded="false"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg><p>Search</p></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something..." placeholder="Search for something..."/><div class="search-layout" data-preview="true" data-field-priority="[&quot;title&quot;,&quot;content&quot;,&quot;tags&quot;]"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode" aria-label="Dark mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode" aria-label="Reader mode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer nav-files-container" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a2, b2) => {\n    if (!a2.isFolder &amp;&amp; !b2.isFolder || a2.isFolder &amp;&amp; b2.isFolder) {\n      return (a2.displayName || \&quot;\&quot;).localeCompare(b2.displayName || \&quot;\&quot;, void 0, {\n        numeric: true,\n        sensitivity: \&quot;base\&quot;\n      });\n    }\n    if (!a2.isFolder &amp;&amp; b2.isFolder) {\n      return 1;\n    }\n    return -1;\n  }&quot;,&quot;filterFn&quot;:&quot;(node) => node.slugSegment !== \&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;(node) => {\n    return node;\n  }&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-54" aria-label="Explorer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-54" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#" class="nav-file-title tree-item-self"></a></li></template><template id="template-folder"><li><div class="folder-container nav-folder-title tree-item-self"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon nav-folder-collapse-indicator collapse-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content tree-item-children"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../5-agent/">5-agent</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../5-agent/agent框架/">agent框架</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../../5-agent/agent框架/pi-agent/">pi-agent</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>1-Pi Agent简介</a></div></nav><h1 class="article-title">1-Pi Agent简介</h1><details class="note-properties metadata-container" open data-collapsed="false"><summary class="note-properties-header"><span class="note-properties-title">Properties</span><span class="note-properties-count">2</span></summary><table class="note-properties-table"><tbody><tr class="note-properties-row metadata-property"><td class="note-properties-key metadata-property-key">description</td><td class="note-properties-value metadata-property-value"><span class="note-properties-text">Pi Agent 是什么、能干什么、整体介绍与使用入门</span></td></tr><tr class="note-properties-row metadata-property"><td class="note-properties-key metadata-property-key">tags</td><td class="note-properties-value metadata-property-value"><span class="note-properties-tags"><a href="../../../tags/agent" class="internal internal-link tag-link">agent</a><span class="note-properties-separator">, </span><a href="../../../tags/ai编程" class="internal internal-link tag-link">ai编程</a><span class="note-properties-separator">, </span><a href="../../../tags/工具" class="internal internal-link tag-link">工具</a></span></td></tr></tbody></table></details><p show-comma="true" class="content-meta"><time datetime="2026-09-29T16:00:00.000Z">Sep 30, 2026</time><span>15 min read</span></p></div></div><article class="popover-hint"><div class="markdown-preview-view markdown-rendered"><h1 id="pi-agent">Pi Agent<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#pi-agent" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<blockquote>
+<p>极简开源终端编程智能体（Coding Agent）：模型无关、核心极简、扩展随心。GitHub 90K+ Star，MIT 协议。</p>
+</blockquote>
+<ul>
+<li>官网：<a href="https://pi.dev" class="external external-link">https://pi.dev<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>代码仓库：<a href="https://github.com/badlogic/pi-mono" class="external external-link">https://github.com/badlogic/pi-mono<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>协议：MIT（可商用）</li>
+<li>作者：Mario Zechner（libGDX 游戏框架作者，GitHub @badlogic），现由 Earendil Works 维护</li>
+</ul>
+<blockquote>
+<p>📌 笔记入口：<a href="../../../5-agent/agent框架/pi-agent/0-pi-agent总览" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/0-pi-agent总览">0-Pi Agent总览</a>（认知地图 + 三条阅读路径）｜ 功能设计点系列：<code>设计点/</code> 1~9 ｜ 下一篇：<a href="../../../5-agent/agent框架/pi-agent/2-pi-agent架构" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/2-pi-agent架构">2-Pi Agent架构</a></p>
+</blockquote>
+<hr/>
+<h2 id="一pi-agent-是什么">一、Pi Agent 是什么<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#一pi-agent-是什么" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p><strong>Pi 是一个运行在终端里的极简编程智能体</strong>：你用自然语言提需求，它会自己读文件、写代码、改代码、执行命令，循环往复直到任务完成。</p>
+<p>它的定位是 <strong>minimal terminal coding harness（极简终端编码脚手架）</strong>——不是聊天机器人，也不是 IDE 插件，而是一套把<strong>模型、工具、上下文、会话和扩展系统</strong>串起来的终端执行框架。</p>
+<p>核心哲学一句话：</p>
+<blockquote>
+<p>An autonomous agent is just an LLM + tools + a loop.<br/>
+自主智能体本质就三件事：大模型、工具集、循环调度。多余能力全部外置，不塞进内核。</p>
+</blockquote>
+<p>名字 pi 体现了它的定位：像圆周率一样<strong>简单、纯粹、无限延展</strong>。</p>
+<h3 id="11-解决了什么痛点">1.1 解决了什么痛点<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#11-解决了什么痛点" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>传统 AI 编程工具的痛点</th><th>Pi 的答案</th></tr></thead><tbody><tr><td>厂商锁定</td><td>内置 30+ 家模型接入：Claude、GPT、Gemini、DeepSeek、Kimi、MiniMax、xAI、OpenRouter……支持本地 llama.cpp，/model 一键切换</td></tr><tr><td>订阅/价格贵</td><td>复用已有订阅：Claude Pro/Max、ChatGPT Plus/Pro、GitHub Copilot 订阅都能直接登录使用；也可用 API Key 按量付费</td></tr><tr><td>黑盒难定制</td><td>完全开源（MIT），TypeScript 写几行代码就能加自定义工具、命令、组件；社区包 pi install 一条命令安装</td></tr><tr><td>功能堆砌</td><td>刻意不内置子智能体、计划模式、任务清单、权限弹窗——核心只保留最必要的部分</td></tr><tr><td>隐私顾虑</td><td>完全本地运行，模型调用走自己的 Key/订阅；支持离线模式（—offline）</td></tr></tbody></table></div>
+<h3 id="12-工作原理一分钟看懂">1.2 工作原理（一分钟看懂）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#12-工作原理一分钟看懂" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Pi 本质是一个「Agent 循环 + 终端界面」：</p>
+<ol>
+<li>你输入自然语言，如”帮我修复登录页面的这个 Bug”</li>
+<li>Pi 把请求发给 AI 模型，模型默认只有 4 个工具：</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>工具</th><th>功能</th></tr></thead><tbody><tr><td>read</td><td>读文件</td></tr><tr><td>write</td><td>写文件</td></tr><tr><td>edit</td><td>补丁式精确编辑文件</td></tr><tr><td>bash</td><td>执行 shell 命令（跑测试、装依赖、git 提交）</td></tr></tbody></table></div>
+<ol start="3">
+<li>模型自主决定”读哪个文件 -> 怎么改 -> 跑什么命令验证”，循环直到任务完成</li>
+<li>全程终端可见每一步操作，随时可打断、补充指令</li>
+</ol>
+<p>大道至简，四个工具足以完成绝大多数编程任务。在 Databricks 内部基准测试中，使用 Claude Opus 时 Pi 通过率最高，且成本显著低于 Claude Code 和 Codex，原因是它每轮发送的上下文只有其他工具的约 1/3。</p>
+<h3 id="13-不做什么的设计哲学">1.3 「不做什么」的设计哲学<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#13-不做什么的设计哲学" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Pi 官网有一个罕见板块——「What we didn’t build」（我们没做什么）。作者的核心假设是：前沿模型经过大量 RL 训练，本身就理解什么是编码代理，框架不需要过度指导模型。</p>
+<p>Pi 刻意省略的功能：</p>
+<ul>
+<li>没有内置 MCP 协议（需要时通过扩展接入）</li>
+<li>没有子代理（用 tmux 多开终端，或安装 pi-sub-agent 扩展）</li>
+<li>没有权限确认弹窗（跑在容器里就好）</li>
+<li>没有计划模式（新建一个 TODO.md 文件）</li>
+<li>没有内置任务列表（任务列表占用模型上下文）</li>
+</ul>
+<p>对比数据：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>维度</th><th>Claude Code 等主流工具</th><th>Pi</th></tr></thead><tbody><tr><td>核心 agent 循环代码量</td><td>数千行 TypeScript</td><td>约 418 行</td></tr><tr><td>系统提示 + 工具定义</td><td>数千 tokens</td><td>&lt; 1,000 tokens</td></tr><tr><td>默认工具数量</td><td>十几个</td><td>4 个</td></tr></tbody></table></div>
+<hr/>
+<h2 id="二能干什么使用入门">二、能干什么：使用入门<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#二能干什么使用入门" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="21-安装">2.1 安装<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#21-安装" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># 全局安装（需要 Node.js 18+）</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;" data-token-type="function">npm</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> install</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> -g</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> --ignore-scripts</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> @earendil-works/pi-coding-agent</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># 或 macOS / Linux 一键脚本</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;" data-token-type="function">curl</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> -fsSL</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> https://pi.dev/install.sh</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator"> |</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;" data-token-type="function"> sh</span></span></code></pre></figure>
+<p>—ignore-scripts 跳过依赖的生命周期脚本，Pi 正常运行不需要它们（供应链安全加固）。</p>
+<h3 id="22-配置模型">2.2 配置模型<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#22-配置模型" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># 方式 1：环境变量（API Key 按量付费）</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">export</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="normal"> ANTHROPIC_API_KEY</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="normal">sk-ant-...</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">export</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="normal"> OPENAI_API_KEY</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="normal">sk-...</span></span>
+<span data-line><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">export</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="normal"> DEEPSEEK_API_KEY</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">...</span></span>
+<span data-line> </span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># 方式 2：复用已有订阅（Claude Pro/Max、ChatGPT Plus、GitHub Copilot）</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># 首次启动 pi 时按提示 OAuth 登录</span></span></code></pre></figure>
+<h3 id="23-配置非内置模型自定义-provider">2.3 配置非内置模型（自定义 Provider）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#23-配置非内置模型自定义-provider" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Pi 内置了 30+ 家模型厂商，但仍有部分厂商（如智谱 BigModel）没有内置。任何提供 <strong>OpenAI 兼容 API</strong> 的服务都可以通过 <code>models.json</code> 手动接入。</p>
+<h4 id="配置文件位置">配置文件位置<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#配置文件位置" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>系统</th><th>路径</th></tr></thead><tbody><tr><td>Windows</td><td><code>C:\Users\&lt;用户名>\.pi\agent\models.json</code></td></tr><tr><td>macOS / Linux</td><td><code>~/.pi/agent/models.json</code></td></tr></tbody></table></div>
+<blockquote>
+<p>该文件默认<strong>不存在</strong>，首次配置需要手动创建（<code>.pi\agent</code> 目录在 Pi 首次运行后自动生成）。文件在每次打开 <code>/model</code> 时重新加载，编辑后无需重启 Pi。</p>
+</blockquote>
+<h4 id="完整示例接入智谱-glm-45-air">完整示例：接入智谱 GLM-4.5-air<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#完整示例接入智谱-glm-45-air" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="json" data-theme="github-light github-dark"><code data-language="json" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">{</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">  &quot;providers&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: {</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">    &quot;zhipu&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: {</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">      &quot;name&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;智谱 BigModel&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">      &quot;baseUrl&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;https://open.bigmodel.cn/api/paas/v4&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">      &quot;api&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;openai-completions&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">      &quot;apiKey&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;$ZHIPU_API_KEY&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">      &quot;compat&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: {</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">        &quot;supportsDeveloperRole&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">false</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">        &quot;supportsReasoningEffort&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">false</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">      },</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">      &quot;models&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: [</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">        {</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">          &quot;id&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;glm-4.5-air&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">          &quot;name&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;GLM 4.5 Air&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">          &quot;reasoning&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">          &quot;input&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;text&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">],</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">          &quot;contextWindow&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">128000</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">          &quot;maxTokens&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">32000</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">,</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">          &quot;cost&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: { </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">&quot;input&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">&quot;output&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">&quot;cacheRead&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="punctuation">&quot;cacheWrite&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> }</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">        }</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">      ]</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">    }</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">  }</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">}</span></span></code></pre></figure>
+<h4 id="字段说明">字段说明<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#字段说明" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>baseUrl</code></td><td>API 端点，填厂商的 OpenAI 兼容地址</td></tr><tr><td><code>api</code></td><td>API 类型：<code>openai-completions</code>（最通用）/ <code>openai-responses</code> / <code>anthropic-messages</code> / <code>google-generative-ai</code></td></tr><tr><td><code>apiKey</code></td><td><code>$环境变量名</code>（推荐）或 key 明文</td></tr><tr><td><code>compat</code></td><td>兼容性开关（见下方）</td></tr><tr><td><code>models[].id</code></td><td>模型 ID（发送给 API 的名字）</td></tr><tr><td><code>models[].reasoning</code></td><td>是否推理模型</td></tr><tr><td><code>models[].contextWindow</code> / <code>maxTokens</code></td><td>上下文窗口 / 最大输出 token</td></tr><tr><td><code>models[].cost</code></td><td>单价（元或美元/token），填 0 表示不追踪费用</td></tr></tbody></table></div>
+<h4 id="compat-兼容性开关">compat 兼容性开关<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#compat-兼容性开关" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>部分 OpenAI 兼容服务（智谱、Ollama、vLLM 等）不支持 <code>developer</code> 角色或 <code>reasoning_effort</code> 参数，不关闭会报错：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>supportsDeveloperRole: false</code></td><td>Pi 改用 <code>system</code> 消息发送系统提示</td></tr><tr><td><code>supportsReasoningEffort: false</code></td><td>不发送 <code>reasoning_effort</code> 参数</td></tr></tbody></table></div>
+<h4 id="设置-api-key环境变量方式">设置 API Key（环境变量方式）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#设置-api-key环境变量方式" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="powershell" data-theme="github-light github-dark"><code data-language="powershell" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># Windows PowerShell（永久设置，设置后需重开终端）</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">[</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="keyword">Environment</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">]::SetEnvironmentVariable(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">&quot;ZHIPU_API_KEY&quot;</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">,</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> &quot;你的key&quot;</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">,</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> &quot;User&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation">)</span></span></code></pre></figure>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># macOS / Linux</span></span>
+<span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="function">echo</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> 'export ZHIPU_API_KEY=你的key'</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator"> >></span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> ~/.bashrc</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="punctuation"> &amp;&amp; </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="function">source</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> ~/.bashrc</span></span></code></pre></figure>
+<h4 id="使用">使用<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#使用" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>启动 <code>pi</code> 后按 <code>Ctrl+L</code>（或输入 <code>/model</code>），列表中会出现自定义 provider 的模型，选中即可。</p>
+<p>命令行直接指定：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;" data-token-type="function">pi</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> --model</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> zhipu/glm-4.5-air</span></span>
+<span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># 或临时传 key</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;" data-token-type="function">pi</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> --model</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> zhipu/glm-4.5-air</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> --api-key</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> 你的key</span></span></code></pre></figure>
+<h4 id="鉴权方式优先级">鉴权方式优先级<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#鉴权方式优先级" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>Pi 支持四种鉴权方式，优先级从高到低：</p>
+<ol>
+<li><code>--api-key</code> 命令行参数（仅内存，不落盘）</li>
+<li><code>~/.pi/agent/auth.json</code> 配置文件</li>
+<li>环境变量</li>
+<li><code>models.json</code> 中 provider 的 <code>apiKey</code></li>
+</ol>
+<h4 id="常见厂商的-openai-兼容-baseurl-参考">常见厂商的 OpenAI 兼容 baseUrl 参考<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#常见厂商的-openai-兼容-baseurl-参考" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>厂商</th><th>baseUrl</th></tr></thead><tbody><tr><td>智谱 BigModel</td><td><code>https://open.bigmodel.cn/api/paas/v4</code></td></tr><tr><td>Z.ai（智谱海外）</td><td><code>https://api.z.ai/api/paas/v4</code></td></tr><tr><td>DeepSeek</td><td><code>https://api.deepseek.com/v1</code></td></tr><tr><td>Moonshot (Kimi)</td><td><code>https://api.moonshot.ai/v1</code></td></tr><tr><td>MiniMax</td><td><code>https://api.minimax.io/v1</code></td></tr><tr><td>OpenRouter</td><td><code>https://openrouter.ai/api/v1</code></td></tr><tr><td>Ollama（本地）</td><td><code>http://localhost:11434/v1</code></td></tr><tr><td>vLLM（本地）</td><td><code>http://localhost:8000/v1</code></td></tr></tbody></table></div>
+<blockquote>
+<p>进阶：Extension 中用 <code>pi.registerProvider()</code> 也可以注册 provider（支持自定义鉴权、动态拉取模型列表、非标准流式 API），见官方文档 Custom Providers 章节。</p>
+</blockquote>
+<h3 id="24-基本使用">2.4 基本使用<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#24-基本使用" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="function">cd</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> 你的项目目录</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;" data-token-type="function">pi</span></span></code></pre></figure>
+<p>进入交互式终端界面后直接打字对话：</p>
+<pre><code>> 帮我修复登录页面的这个 Bug
+> 给 utils/date.ts 补几个单元测试
+> 重构这个函数，太长了
+</code></pre>
+<p>常用快捷键：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>快捷键</th><th>功能</th></tr></thead><tbody><tr><td>Ctrl+L</td><td>弹出模型选择器</td></tr><tr><td>Shift+Tab</td><td>循环切换思考级别</td></tr><tr><td>Esc</td><td>中断当前生成</td></tr></tbody></table></div>
+<p>常用命令（会话内输入）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>命令</th><th>功能</th></tr></thead><tbody><tr><td>/model</td><td>切换模型</td></tr><tr><td>/compact</td><td>压缩会话上下文（长会话省钱利器）</td></tr><tr><td>/review</td><td>代码审查（可指定 focus）</td></tr><tr><td>/tree</td><td>查看会话树，分支/回放历史</td></tr><tr><td>/steer</td><td>任务运行中补充方向（纠偏）</td></tr></tbody></table></div>
+<h3 id="25-四种使用模式">2.5 四种使用模式<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#25-四种使用模式" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>模式</th><th>说明</th><th>适用场景</th></tr></thead><tbody><tr><td>Interactive</td><td>终端交互式编码</td><td>日常读代码、试方案、连续追问</td></tr><tr><td>Print / JSON</td><td>把 Pi 当脚本命令，输出被其他程序消费</td><td>CI 流水线、自动化脚本</td></tr><tr><td>RPC</td><td>其他进程通过协议调用 Pi</td><td>接入已有工具链、编辑器集成</td></tr><tr><td>SDK</td><td>在 TypeScript/Node 项目里直接组合 Pi 能力</td><td>构建产品、内部工具集成</td></tr></tbody></table></div>
+<p>非交互式示例：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># 一条命令完成审查并输出 JSON（供 CI 消费）</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;" data-token-type="function">pi</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> -p</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> &quot;审查 src/ 下的改动，输出发现的问题&quot;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF;" data-token-type="value"> --json</span></span></code></pre></figure>
+<h3 id="26-项目上下文文件">2.6 项目上下文文件<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#26-项目上下文文件" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>在项目根目录放置以下文件，Pi 每次开工前自动读取：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>文件</th><th>作用</th></tr></thead><tbody><tr><td>AGENTS.md</td><td>项目规则：改完代码要跑什么命令、禁止执行什么操作、团队约定</td></tr><tr><td>SYSTEM.md</td><td>Agent 稳定行为边界，减少每次临场补充</td></tr></tbody></table></div>
+<p>AGENTS.md 示例：</p>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="markdown" data-theme="github-light github-dark"><code data-language="markdown" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold;" data-token-type="punctuation"># 项目规则</span></span>
+<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;" data-token-type="important">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="normal"> 改完代码必须跑 npm run check 验证</span></span>
+<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;" data-token-type="important">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="normal"> 禁止本地执行生产数据库迁移</span></span>
+<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;" data-token-type="important">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="normal"> 提交信息遵循 conventional commits</span></span>
+<span data-line><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;" data-token-type="important">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;" data-token-type="normal"> 使用 pnpm，不要用 npm</span></span></code></pre></figure>
+<h3 id="27-安装扩展包">2.7 安装扩展包<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#27-安装扩展包" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="bash" data-theme="github-light github-dark"><code data-language="bash" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;" data-token-type="comment"># 安装社区扩展（如 MCP 支持、子代理等）</span></span>
+<span data-line><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;" data-token-type="function">pi</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string"> install</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator"> &lt;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;" data-token-type="string">package-nam</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">e</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;" data-token-type="operator">></span></span></code></pre></figure>
+<hr/>
+<h2 id="三能干什么三层定制能力总览">三、能干什么：三层定制能力（总览）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#三能干什么三层定制能力总览" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Pi 不仅是成品工具，更是一个可深度定制的 Agent 底座。定制能力按投入成本从低到高分三层：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>路线</th><th>定制方式</th><th>成本</th><th>适用场景</th></tr></thead><tbody><tr><td>路线 1</td><td>Skills + Prompt 模板 + AGENTS.md</td><td>小时级</td><td>统一团队工作流、沉淀最佳实践</td></tr><tr><td>路线 2</td><td>Extensions（TS 代码扩展）+ 自定义工具</td><td>天级</td><td>接入内部系统、增加领域工具、安全拦截</td></tr><tr><td>路线 3</td><td>SDK 内嵌（createAgentSession）</td><td>周级</td><td>做成产品、Web 界面、自动化流水线</td></tr></tbody></table></div>
+<ul>
+<li>三条路线的<strong>代码级落地细节</strong>（自定义工具、安全拦截、企业架构参考）见 <a href="../../../5-agent/agent框架/pi-agent/3-pi-agent分析" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/3-pi-agent分析">3-Pi Agent分析</a> 第二部分</li>
+<li>逐个功能设计点的渐进式讲解见 <code>设计点/</code> 系列（顺序对应〔（2）agent开发需要处理的功能点和设计原则〕的七层功能地图：工具 → <a href="../../../5-agent/agent框架/pi-agent/设计点/3-工具系统" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/设计点/3-工具系统">3-工具系统</a>，扩展 → <a href="../../../5-agent/agent框架/pi-agent/设计点/6-扩展系统" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/设计点/6-扩展系统">6-扩展系统</a>，安全 → <a href="../../../5-agent/agent框架/pi-agent/设计点/8-安全与可观测" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/设计点/8-安全与可观测">8-安全与可观测</a>……共 9 篇）</li>
+<li>SDK 各能力逐项示例（13 个可运行 Demo）见 <a href="../../../5-agent/agent框架/pi-agent/pi-sdk-demo/readme" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/pi-sdk-demo/readme">pi-sdk-demo</a></li>
+</ul>
+<hr/>
+<h2 id="四整体概览">四、整体概览<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#四整体概览" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="41-分包一览monorepo">4.1 分包一览（monorepo）<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#41-分包一览monorepo" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Pi 拆成职责边界干净的多个 npm 包，依赖单向：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>包名</th><th>职责</th></tr></thead><tbody><tr><td>@earendil-works/pi-ai</td><td>模型适配层：统一 30+ 厂商、300+ 模型的 LLM API，抹平消息格式、toolCall、流式事件差异</td></tr><tr><td>@earendil-works/pi-agent-core</td><td>Agent 核心运行时（灵魂）：Agent Loop、消息会话管理、事件流，不含 UI 和编码业务逻辑</td></tr><tr><td>@earendil-works/pi-coding-agent</td><td>编码业务层：会话、工具、持久化、压缩、扩展、Skills、模式</td></tr><tr><td>@earendil-works/pi-tui</td><td>终端交互层：渲染界面</td></tr></tbody></table></div>
+<blockquote>
+<p>分层详解、依赖图、调用链路与远程协议栈见 <a href="../../../5-agent/agent框架/pi-agent/2-pi-agent架构" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/2-pi-agent架构">2-Pi Agent架构</a>。</p>
+</blockquote>
+<h3 id="42-pi-vs-主流工具对比">4.2 Pi vs 主流工具对比<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#42-pi-vs-主流工具对比" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>维度</th><th>Claude Code</th><th>Codex CLI</th><th>Pi</th></tr></thead><tbody><tr><td>开源</td><td>否</td><td>否</td><td>是（MIT）</td></tr><tr><td>模型绑定</td><td>Anthropic</td><td>OpenAI</td><td>无绑定，30+ 厂商</td></tr><tr><td>核心大小</td><td>重</td><td>重</td><td>约 418 行核心循环</td></tr><tr><td>内置功能</td><td>大而全</td><td>大而全</td><td>极简，按需扩展</td></tr><tr><td>上下文效率</td><td>-</td><td>-</td><td>约 1/3（基准测试）</td></tr><tr><td>定制能力</td><td>有限</td><td>有限</td><td>Tools/Extensions/SDK 全开</td></tr><tr><td>沙箱/权限</td><td>内置审批</td><td>内置审批</td><td>无（自行容器化）</td></tr></tbody></table></div>
+<blockquote>
+<p>⚠️ Pi 没有内置权限系统和沙箱，它以启动用户的完整权限运行。生产环境必须容器化隔离或用扩展钩子自建拦截（见 <a href="../../../5-agent/agent框架/pi-agent/3-pi-agent分析" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/3-pi-agent分析">3-Pi Agent分析</a>）。</p>
+</blockquote>
+<h3 id="43-适合谁">4.3 适合谁<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#43-适合谁" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li>想要多模型自由切换、不被单一厂商锁定的开发者/团队</li>
+<li>已有 Claude/ChatGPT/Copilot 订阅想复用、不想额外付费的用户</li>
+<li>需要深度定制 Agent 行为、把 Agent 嵌入自有产品的工程团队</li>
+<li>对代码隐私有要求、需要本地/私有化部署的企业</li>
+<li>不适合：想要开箱即用、全功能大礼包的用户（更适合 Claude Code 这类成品）</li>
+<li>不适合：没有能力/意愿做容器隔离就直接跑生产（Pi 无内置沙箱）</li>
+</ul>
+<hr/>
+<h2 id="参考链接">参考链接<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#参考链接" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>官网：<a href="https://pi.dev" class="external external-link">https://pi.dev<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>GitHub：<a href="https://github.com/badlogic/pi-mono" class="external external-link">https://github.com/badlogic/pi-mono<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>官方文档（SDK / Extensions / Skills）：<a href="https://pi.dev/docs" class="external external-link">https://pi.dev/docs<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>中文指南（社区）：<a href="https://pi-agent.org" class="external external-link">https://pi-agent.org<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li>系列笔记：<a href="../../../5-agent/agent框架/pi-agent/0-pi-agent总览" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/0-pi-agent总览">0-Pi Agent总览</a> ｜ <a href="../../../5-agent/agent框架/pi-agent/2-pi-agent架构" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/2-pi-agent架构">2-Pi Agent架构</a> ｜ <a href="../../../5-agent/agent框架/pi-agent/3-pi-agent分析" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/3-pi-agent分析">3-Pi Agent分析</a> ｜ <code>设计点/</code> 系列（1~9）｜ <a href="../../../5-agent/agent框架/pi-agent/pi-sdk-demo/readme" class="internal internal-link alias" data-slug="5-agent/agent框架/pi-agent/pi-sdk-demo/readme">pi-sdk-demo</a></li>
+</ul>
+<h3 id="npm-包地址">npm 包地址<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#npm-包地址" class="internal internal-link"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container"><table><thead><tr><th>包名</th><th>用途</th><th>npm 地址</th></tr></thead><tbody><tr><td><code>@earendil-works/pi-coding-agent</code></td><td>主包：CLI + SDK（含 createAgentSession）</td><td><a href="https://www.npmjs.com/package/@earendil-works/pi-coding-agent" class="external external-link">https://www.npmjs.com/package/@earendil-works/pi-coding-agent<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td></tr><tr><td><code>@earendil-works/pi-agent-core</code></td><td>Agent 核心运行时（Agent Loop / 事件流）</td><td><a href="https://www.npmjs.com/package/@earendil-works/pi-agent-core" class="external external-link">https://www.npmjs.com/package/@earendil-works/pi-agent-core<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td></tr><tr><td><code>@earendil-works/pi-ai</code></td><td>模型适配层（统一 30+ 厂商 LLM API）</td><td><a href="https://www.npmjs.com/package/@earendil-works/pi-ai" class="external external-link">https://www.npmjs.com/package/@earendil-works/pi-ai<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td></tr><tr><td><code>@earendil-works/pi-tui</code></td><td>终端交互渲染层</td><td><a href="https://www.npmjs.com/package/@earendil-works/pi-tui" class="external external-link">https://www.npmjs.com/package/@earendil-works/pi-tui<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></td></tr></tbody></table></div>
+<blockquote>
+<p>日常使用只需安装主包 <code>@earendil-works/pi-coding-agent</code>（其余三个是它的依赖，会自动安装）；做深度定制时才需要单独引用。</p>
+</blockquote></div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="toc"><button type="button" class="toc-header" aria-controls="toc-48" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-0" class="toc-content overflow"><li class="depth-0"><a href="#pi-agent" data-for="pi-agent">Pi Agent</a></li><li class="depth-1"><a href="#一pi-agent-是什么" data-for="一pi-agent-是什么">一、Pi Agent 是什么</a></li><li class="depth-2"><a href="#11-解决了什么痛点" data-for="11-解决了什么痛点">1.1 解决了什么痛点</a></li><li class="depth-2"><a href="#12-工作原理一分钟看懂" data-for="12-工作原理一分钟看懂">1.2 工作原理（一分钟看懂）</a></li><li class="depth-2"><a href="#13-不做什么的设计哲学" data-for="13-不做什么的设计哲学">1.3 「不做什么」的设计哲学</a></li><li class="depth-1"><a href="#二能干什么使用入门" data-for="二能干什么使用入门">二、能干什么：使用入门</a></li><li class="depth-2"><a href="#21-安装" data-for="21-安装">2.1 安装</a></li><li class="depth-2"><a href="#22-配置模型" data-for="22-配置模型">2.2 配置模型</a></li><li class="depth-2"><a href="#23-配置非内置模型自定义-provider" data-for="23-配置非内置模型自定义-provider">2.3 配置非内置模型（自定义 Provider）</a></li><li class="depth-2"><a href="#24-基本使用" data-for="24-基本使用">2.4 基本使用</a></li><li class="depth-2"><a href="#25-四种使用模式" data-for="25-四种使用模式">2.5 四种使用模式</a></li><li class="depth-2"><a href="#26-项目上下文文件" data-for="26-项目上下文文件">2.6 项目上下文文件</a></li><li class="depth-2"><a href="#27-安装扩展包" data-for="27-安装扩展包">2.7 安装扩展包</a></li><li class="depth-1"><a href="#三能干什么三层定制能力总览" data-for="三能干什么三层定制能力总览">三、能干什么：三层定制能力（总览）</a></li><li class="depth-1"><a href="#四整体概览" data-for="四整体概览">四、整体概览</a></li><li class="depth-2"><a href="#41-分包一览monorepo" data-for="41-分包一览monorepo">4.1 分包一览（monorepo）</a></li><li class="depth-2"><a href="#42-pi-vs-主流工具对比" data-for="42-pi-vs-主流工具对比">4.2 Pi vs 主流工具对比</a></li><li class="depth-2"><a href="#43-适合谁" data-for="43-适合谁">4.3 适合谁</a></li><li class="depth-1"><a href="#参考链接" data-for="参考链接">参考链接</a></li><li class="depth-2"><a href="#npm-包地址" data-for="npm-包地址">npm 包地址</a></li><li class="overflow-end"></li></ul></div><div class="backlinks"><h3>Backlinks</h3><ul id="list-0" class="overflow"><li><a href="../../../5-agent/agent框架/pi-agent/0-pi-agent总览" class="internal">0-Pi Agent总览</a></li><li><a href="../../../5-agent/agent框架/pi-agent/2-pi-agent架构" class="internal">2-Pi Agent架构</a></li><li><a href="../../../5-agent/agent框架/pi-agent/设计点/1-模型适配" class="internal">设计点1-模型适配</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v5.0.0</a> © 2026</p><ul><li><a href="https://github.com/jackyzha0/quartz">GitHub</a></li><li><a href="https://discord.gg/cRFFHYye7t">Discord Community</a></li></ul></footer></div></div></body><script src="../../../static/resource-after-e13fffa1.js" type="application/javascript" data-persist="true"></script><script src="../../../static/resource-after-8b336f9a.js" type="application/javascript" data-persist="true"></script><script src="../../../static/resource-after-baba652b.js" type="application/javascript" data-persist="true"></script><script src="../../../static/resource-after-5eb75950.js" type="module" data-persist="true"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript" data-persist="true"></script><script src="../../../postscript-4afe16b2.js" type="module" data-persist="true"></script></html>
