@@ -7,6 +7,10 @@ tsconfig.tsbuildinfo
 .obsidian
 .quartz-cache
 private/
+.workbuddy/
+.cache/
+.trash/
+content.broken-*/
 .replit
 replit.nix
 .quartz/
