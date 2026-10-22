@@ -1,0 +1,33 @@
+{
+  "name": "quartz-ai",
+  "version": "0.1.0",
+  "description": "AI search & ask panel for Quartz - local notes as knowledge base (low-coupling local plugin)",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./index.js",
+    "./components": "./components/index.js"
+  },
+  "main": "./index.js",
+  "sideEffects": false,
+  "peerDependencies": {
+    "preact": "^10.0.0"
+  },
+  "quartz": {
+    "name": "ai-ask",
+    "displayName": "AI Ask",
+    "category": "component",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "dependencies": [],
+    "defaultOrder": 90,
+    "defaultEnabled": true,
+    "components": {
+      "AIAsk": {
+        "displayName": "AI Ask",
+        "defaultPosition": "afterBody",
+        "defaultPriority": 90
+      }
+    }
+  }
+}

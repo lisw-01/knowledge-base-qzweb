@@ -17,6 +17,41 @@
 
 ***
 
+
+## 本地/远程仓库
+#### 简易的命令行入门教程:
+
+Git 全局设置:
+
+git config --global user.name "lsw"
+git config --global user.email "5623687+lsw_space@user.noreply.gitee.com"
+
+创建 git 仓库【本地文件夹->创建本地仓库->推送已有的远程仓库】:
+
+mkdir lsw-template-cli
+cd lsw-template-cli
+git init 
+touch README.md
+git add README.md
+git commit -m "first commit"
+git remote add origin https://gitee.com/lsw_space/lsw-template-cli.git
+git push -u origin "master"
+
+已有本地仓库【已有本地仓库->推送已有远程仓库】
+
+cd existing_git_repo
+git remote add origin https://gitee.com/lsw_space/lsw-template-cli.git
+git push -u origin "master"
+
+
+已有远程空仓库
+git clone  https://gitee.com/lsw_space/lsw-template-cli.git
+
+
+
+
+
+
 ## 仓库操作
 
 | 命令 | 说明 |
