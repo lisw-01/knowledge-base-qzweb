@@ -4,6 +4,13 @@
   display: contents;
 }
 
+/* display:flex 会覆盖 UA 的 [hidden] 规则，这里显式兜底 */
+.qa-panel[hidden],
+.qa-answer[hidden],
+.qa-status[hidden] {
+  display: none;
+}
+
 .qa-fab {
   position: fixed;
   right: 1.4rem;

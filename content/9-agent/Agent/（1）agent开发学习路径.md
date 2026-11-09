@@ -32,8 +32,8 @@
 
 4. **记忆（Memory）**
 
-    - 短期记忆：对话历史，塞在 [messages](5-agent/LLM/link_messages参数) 里，受上下文窗口限制 → 超限就摘要压缩
-    - 长期记忆：对话/知识向量化存入[向量库](5-agent/Agent/link_向量库)，用 Embedding 检索相关记忆（见 LLM/embedding.md）
+    - 短期记忆：对话历史，塞在 [messages](9-agent/LLM/link_messages参数) 里，受上下文窗口限制 → 超限就摘要压缩
+    - 长期记忆：对话/知识向量化存入[向量库](9-agent/Agent/link_向量库)，用 Embedding 检索相关记忆（见 LLM/embedding.md）
 
 5. **规划（Planning）**
 
@@ -59,7 +59,7 @@ Prompt 写死格式（Thought/Action/Observation）
 
 > 📄 示例 Demo 见 [[_Demo.阶段1&2]] —— `agent_fc.py`（与阶段 1 同任务，只换"声明工具"和"解析输出"两处，对比着看）
 
-### 阶段 3：加记忆与 [RAG](5-agent/Agent/link_RAG)
+### 阶段 3：加记忆与 [RAG](9-agent/Agent/link_RAG)
 
 - 接入向量库（先用内存列表手写余弦检索，再换 FAISS / Chroma）
 - 给 Agent 加一个 `search_knowledge` 工具，实现"知识库问答 Agent"

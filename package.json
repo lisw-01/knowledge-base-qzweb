@@ -17,6 +17,7 @@
     "dev": "npx quartz build --serve",
     "sync": "npx quartz sync",
     "ai:index": "node scripts/ai-index.mjs",
+    "ai:watch": "node scripts/ai-index.mjs --watch",
     "build:site": "npx quartz build && node scripts/ai-index.mjs",
     "check": "tsc --noEmit && npx prettier . --check",
     "format": "npx prettier . --write",

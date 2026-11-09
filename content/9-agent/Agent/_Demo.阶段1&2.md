@@ -1,5 +1,5 @@
 > 本文是 [[（1）agent开发学习路径]] 阶段 1、阶段 2 的配套示例 Demo，两个都已实测跑通。
-> 依赖：[mypackage包下的__init__.py](obsidian://open?vault=knowledge-base&file=5-agent%2FAgent%2Flink_%E5%8C%85%E4%B8%8B%E7%9A%84__init__.py)，返回完整 message 字典。
+> 依赖：[mypackage包下的__init__.py](obsidian://open?vault=knowledge-base&file=9-agent%2FAgent%2Flink_%E5%8C%85%E4%B8%8B%E7%9A%84__init__.py)，返回完整 message 字典。
 > 源码文件：`F:\agent-study\agent_react.py`、`F:\agent-study\agent_fc.py`。
 
 ## 任务设计

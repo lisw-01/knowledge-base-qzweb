@@ -63,9 +63,9 @@ messages.append({"role": "tool", "content": result})  # 错误也拼回上下文
 
 ### ④ 记忆层 —— 上下文
 
-- 短期：[messages](5-agent/LLM/link_messages参数) 拼装规则（system + 历史 + 本轮）、超窗裁剪/摘要压缩
+- 短期：[messages](9-agent/LLM/link_messages参数) 拼装规则（system + 历史 + 本轮）、超窗裁剪/摘要压缩
 - 上下文膨胀的大头：多轮工具调用后，messages 里涨最快的不是聊天记录，而是**工具返回**
-- 长期（进阶）：写入时机（会话结束总结 / 每轮提取）、检索 topK、去重合并；原理见 [LLM长期记忆原理](5-agent/Agent/link_LLM长期记忆原理)，存储选型见 [向量库](5-agent/Agent/link_向量库)，知识库问答见 [RAG](5-agent/Agent/link_RAG)
+- 长期（进阶）：写入时机（会话结束总结 / 每轮提取）、检索 topK、去重合并；原理见 [LLM长期记忆原理](9-agent/Agent/link_LLM长期记忆原理)，存储选型见 [向量库](9-agent/Agent/link_向量库)，知识库问答见 [RAG](9-agent/Agent/link_RAG)
 
 > 一句话口诀：**近期带原文，远期压摘要，事实存卡片，知识进向量库**。
 

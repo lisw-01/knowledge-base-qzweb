@@ -50,20 +50,32 @@
       .replace(/"/g, "&quot;")
   }
 
-  function resolveBase() {
-    if (state.prefix) return state.prefix
+  /**
+   * 解析相对路径基准：
+   *  - root: 当前页到站点根的前缀（如 "../../"），用于笔记链接
+   *  - aiUrl / ciUrl: 站内索引文件地址
+   * 依据是 Quartz 在每页注入的 `const fetchData = fetch("<相对路径>/static/contentIndex.json")`
+   */
+  function resolveBases() {
+    if (state.bases) return state.bases
+    var prefix = null
     var scripts = document.querySelectorAll("script")
     for (var i = 0; i < scripts.length; i++) {
       var m = (scripts[i].textContent || "").match(
         /fetch\(["']([^"']*contentIndex\.json)["']\)/,
       )
       if (m) {
-        state.prefix = m[1].replace(/contentIndex\.json$/, "")
-        return state.prefix
+        prefix = m[1].replace(/static\/contentIndex\.json$/, "")
+        break
       }
     }
-    state.prefix = new URL("static/", document.baseURI).toString()
-    return state.prefix
+    if (prefix === null) prefix = "./"
+    state.bases = {
+      root: prefix,
+      aiUrl: new URL(prefix + "static/ai-index.json", document.baseURI).toString(),
+      ciUrl: new URL(prefix + "static/contentIndex.json", document.baseURI).toString(),
+    }
+    return state.bases
   }
 
   /* ---------- 数据加载与检索 ---------- */
@@ -72,16 +84,15 @@
     if (state.loaded) return Promise.resolve()
     if (state.loading) return state.loading
     state.loading = (function () {
-      var prefix = resolveBase()
-      var aiUrl = new URL("ai-index.json", prefix).toString()
+      var bases = resolveBases()
       return Promise.all([
-        fetch(aiUrl).then(function (r) {
+        fetch(bases.aiUrl).then(function (r) {
           if (!r.ok) throw new Error("INDEX_MISSING")
           return r.json()
         }),
         typeof fetchData !== "undefined"
           ? fetchData
-          : fetch(new URL("contentIndex.json", prefix).toString()).then(function (r) {
+          : fetch(bases.ciUrl).then(function (r) {
               return r.json()
             }),
       ]).then(function (res) {
@@ -257,9 +268,13 @@
     })
     ui.askBtn.addEventListener("click", runAsk)
 
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !ui.panel.hidden) ui.panel.hidden = true
-    })
+    // SPA 导航会重建 DOM，mount 可能重复执行，全局监听只绑一次
+    if (!state.keyBound) {
+      state.keyBound = true
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && ui.panel && !ui.panel.hidden) ui.panel.hidden = true
+      })
+    }
   }
 
   function buildSettings() {
@@ -361,7 +376,7 @@
     for (var i = 0; i < hits.length; i++) {
       var d = hits[i].d
       var a = el("a", "qa-item")
-      a.href = new URL(d.url, resolveBase()).toString()
+      a.href = new URL(d.url, resolveBases().root).toString()
       var t = el("div", "qa-item-title", d.title)
       var s = el("div", "qa-item-snippet", makeSnippet(d, q))
       a.appendChild(t)
@@ -466,7 +481,7 @@
     var n = Math.min(ASK_CONTEXTS, hits.length)
     for (var i = 0; i < n; i++) {
       var a = el("a", "qa-ctx-item", "[" + (i + 1) + "] " + hits[i].d.title)
-      a.href = new URL(hits[i].d.url, resolveBase()).toString()
+      a.href = new URL(hits[i].d.url, resolveBases().root).toString()
       box.appendChild(a)
     }
     ui.results.appendChild(box)
@@ -476,7 +491,7 @@
     var html = escapeHtml(text).replace(/\[(\d+)\]/g, function (m, num) {
       var c = contexts[parseInt(num, 10) - 1]
       if (!c) return m
-      var href = new URL(c.url, resolveBase()).toString()
+      var href = new URL(c.url, resolveBases().root).toString()
       return '<a class="qa-cite" href="' + href + '">[' + num + "]</a>"
     })
     var body = el("div", "qa-answer-body")
@@ -541,10 +556,19 @@
 
   window.__quartzAI = {
     mount: mount,
+    // 调试/测试入口（不影响正常使用）
+    _debug: {
+      state: state,
+      tokenize: tokenize,
+      prepareDocs: prepareDocs,
+      search: search,
+    },
   }
 
   mount()
   document.addEventListener("nav", function () {
+    // SPA 导航后当前页深度变了，相对路径基准必须重算
+    state.bases = null
     setTimeout(mount, 30)
   })
 })()

@@ -10,11 +10,11 @@
  *  - 每个 chunk 带 sha1 hash，为将来接入 embedding 向量检索预留增量缓存键
  *  - 索引是构建产物的派生品：笔记变更 -> 重新 build -> 索引自动同步
  */
-import { readFileSync, writeFileSync, existsSync } from "node:fs"
+import { readFileSync, writeFileSync, existsSync, statSync } from "node:fs"
 import { createHash } from "node:crypto"
 import path from "node:path"
 import { parse as parseYaml } from "yaml"
-import GithubSlugger from "github-slugger"
+import { slugifyFilePath } from "@quartz-community/utils"
 
 const ROOT = process.cwd()
 const SRC = path.join(ROOT, "public", "static", "contentIndex.json")
@@ -90,7 +90,6 @@ function main() {
     process.exit(1)
   }
   const index = JSON.parse(readFileSync(SRC, "utf8"))
-  const slugger = new GithubSlugger()
   const notes = {}
   const chunks = []
 
@@ -99,8 +98,8 @@ function main() {
     const title = String(entry.title || slug)
     const tags = Array.isArray(entry.tags) ? entry.tags : []
 
-    // 与 Quartz slugify 规则保持一致（sitemap 中的 URL 即此形态）
-    const urlPath = slug === "index" ? "" : `${slugger.slug(slug)}.html`
+    // 复用 Quartz 官方的 slugify 规则，保证与产出文件名完全一致
+    const urlPath = slug === "index" ? "" : `${slugifyFilePath(slug + ".md")}.html`
     notes[slug] = { t: title, g: tags, u: urlPath }
 
     for (const r of chunkRanges(content)) {
@@ -128,3 +127,28 @@ function main() {
 }
 
 main()
+
+// --watch: 本地开发用，轮询 contentIndex.json 变化后重建（避免文件被重建时 fs.watch 失效）
+if (process.argv.includes("--watch")) {
+  const stamp = () => {
+    try {
+      const s = statSync(SRC)
+      return `${s.mtimeMs}:${s.size}`
+    } catch {
+      return ""
+    }
+  }
+  let last = stamp()
+  console.log("[ai-index] watch 模式启动，监听 contentIndex.json …")
+  setInterval(() => {
+    const cur = stamp()
+    if (cur && cur !== last) {
+      last = cur
+      try {
+        main()
+      } catch (e) {
+        console.error(`[ai-index] 重建失败: ${e.message}`)
+      }
+    }
+  }, 1000)
+}

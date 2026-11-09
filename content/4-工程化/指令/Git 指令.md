@@ -6,14 +6,14 @@
 
 ## 初始配置
 
-| 命令 | 说明 |
-|------|------|
-| `git config --global user.name "名字"` | 设置用户名 |
-| `git config --global user.email "邮箱"` | 设置邮箱 |
-| `git config --global core.editor "vim"` | 设置默认编辑器 |
-| `git config --global init.defaultBranch main` | 设置默认分支名 |
-| `git config --list` | 查看所有配置 |
-| `git config --global alias.st status` | 设置别名（`git st` = `git status`） |
+| 命令                                            | 说明                            |
+| --------------------------------------------- | ----------------------------- |
+| `git config --global user.name "名字"`          | 设置用户名                         |
+| `git config --global user.email "邮箱"`         | 设置邮箱                          |
+| `git config --global core.editor "vim"`       | 设置默认编辑器                       |
+| `git config --global init.defaultBranch main` | 设置默认分支名                       |
+| `git config --list`                           | 查看所有配置                        |
+| `git config --global alias.st status`         | 设置别名（`git st` = `git status`） |
 
 ***
 
